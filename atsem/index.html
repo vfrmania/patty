@@ -372,11 +372,11 @@
     <p style="font-size:.9rem">Commencez l'entraînement oral dès que vous êtes admissible — mais posez les bases dès maintenant, 10 minutes par dimanche suffisent :</p>
     <table>
       <tr><th>Quand</th><th>Quoi</th><th>Durée</th></tr>
-      <tr><td>Dès maintenant (chaque dimanche)</td><td>Lire à voix haute une question du jury et y répondre en 1 min chrono, comme si le jury était en face</td><td>10 min</td></tr>
-      <tr><td>3 semaines avant l'oral</td><td>Rédiger la trame de présentation (Parcours → Déclic → Atouts → Projet), la tester à voix haute, la chronométrer</td><td>2 × 1 h</td></tr>
-      <tr><td>2 semaines avant</td><td>Simulations complètes : un proche joue le jury avec la liste des questions fréquentes ; enregistrez-vous au téléphone et réécoutez</td><td>2 × 1 h</td></tr>
-      <tr><td>1 semaine avant</td><td>Révision ciblée : missions, décret, hygiène, sécurité, textes (fiches 1, 4, 10) + revoir les mises en situation ; préparer tenue et itinéraire</td><td>2 × 1 h</td></tr>
-      <tr><td>La veille</td><td>Relire uniquement la trame + la fiche « Rôle de l'ATSEM » ; repos</td><td>20 min</td></tr>
+      <tr id="oral-r1"><td>Dès maintenant (chaque dimanche)</td><td>Lire à voix haute une question du jury et y répondre en 1 min chrono, comme si le jury était en face</td><td>10 min</td></tr>
+      <tr id="oral-r2"><td>3 semaines avant l'oral</td><td>Rédiger la trame de présentation (Parcours → Déclic → Atouts → Projet), la tester à voix haute, la chronométrer</td><td>2 × 1 h</td></tr>
+      <tr id="oral-r3"><td>2 semaines avant</td><td>Simulations complètes : un proche joue le jury avec la liste des questions fréquentes ; enregistrez-vous au téléphone et réécoutez</td><td>2 × 1 h</td></tr>
+      <tr id="oral-r4"><td>1 semaine avant</td><td>Révision ciblée : missions, décret, hygiène, sécurité, textes (fiches 1, 4, 10) + revoir les mises en situation ; préparer tenue et itinéraire</td><td>2 × 1 h</td></tr>
+      <tr id="oral-r5"><td>La veille</td><td>Relire uniquement la trame + la fiche « Rôle de l'ATSEM » ; repos</td><td>20 min</td></tr>
     </table>
     <div class="tip">💡 Le secret d'un bon oral : <b>l'ancrer dans ce que vous savez déjà</b>. Chaque réponse aux questions métier = une de vos fiches ou un de vos QCM. Vous avez déjà la matière ; l'oral, c'est la même chose, à voix haute.</div>
   </section>
@@ -696,6 +696,25 @@ try {
     _tr.className = 'tr-now';
     var _td = _tr.cells[0];
     _td.innerHTML = _td.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
+  }
+} catch(e) {}
+
+try {
+  // Surlignage de la ligne du plan d'entraînement oral correspondant à aujourd'hui.
+  // Oraux d'admission : automne 2027 — estimation : 15 novembre 2027 (à ajuster
+  // dès que la notice du CDG80 publie les dates réelles).
+  var _oral = new Date(2027, 10, 15);
+  var _days = Math.floor((_oral - new Date()) / 86400000);
+  var _oi = _days <= 1 ? 5              // la veille
+          : _days <= 7 ? 4              // 1 semaine avant
+          : _days <= 14 ? 3             // 2 semaines avant
+          : _days <= 21 ? 2             // 3 semaines avant l'oral
+          : 1;                          // dès maintenant
+  var _otr = document.getElementById('oral-r' + _oi);
+  if (_otr) {
+    _otr.className = 'tr-now';
+    var _otd = _otr.cells[0];
+    _otd.innerHTML = _otd.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
   }
 } catch(e) {}
 </script>
