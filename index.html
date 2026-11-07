@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concours ATSEM — Somme | Préparation et QCM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  header.hero { background: linear-gradient(135deg, #2563eb, #4f46e5); color: #fff; border-radius: 20px; padding: 36px 28px; margin-bottom: 20px; }
+  header.hero h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header.hero p { color: #dbeafe; font-size: .95rem; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); padding: 3px 12px; border-radius: 999px; font-size: .78rem; }
+  nav.tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  nav.tabs button { flex: 1; padding: 12px; border: none; border-radius: 14px; background: #fff; color: #475569; font-weight: 600; font-size: .95rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.08); transition: all .15s; }
+  nav.tabs button.active { background: #2563eb; color: #fff; }
+  section.card { background: #fff; border-radius: 18px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  section.card h2 { font-size: 1.25rem; margin-bottom: 14px; color: #1e3a8a; }
+  section.card h3 { font-size: 1.02rem; margin: 20px 0 8px; color: #334155; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 10px 0; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+  th { background: #f8fafc; color: #475569; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+  .warn { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .tip { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  blockquote.ex { border-left: 3px solid #93c5fd; padding: 8px 14px; margin: 8px 0; background: #f8fafc; font-size: .88rem; border-radius: 0 8px 8px 0; }
+  ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; font-size: .92rem; }
+  .btn { display: inline-block; padding: 12px 22px; border: none; border-radius: 12px; font-weight: 600; font-size: .95rem; cursor: pointer; transition: all .15s; }
+  .btn-primary { background: #2563eb; color: #fff; width: 100%; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .theme-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .9rem; margin: 6px 0; transition: all .15s; }
+  .theme-btn:hover { border-color: #60a5fa; background: #eff6ff; }
+  .cnt { font-size: .75rem; background: #e2e8f0; border-radius: 999px; padding: 2px 10px; color: #64748b; }
+  #quiz-app h2.q { font-size: 1.15rem; margin-bottom: 20px; }
+  .choice { width: 100%; text-align: left; padding: 13px 16px; margin: 8px 0; background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: all .15s; }
+  .choice:hover { border-color: #93c5fd; background: #eff6ff; }
+  .choice.sel { border-color: #2563eb; background: #eff6ff; }
+  .choice.ok { border-color: #10b981; background: #ecfdf5; }
+  .choice.ko { border-color: #ef4444; background: #fef2f2; }
+  .choice.dim { opacity: .55; }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: #2563eb; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
+  .timer { font-family: monospace; font-size: 1rem; background: #e2e8f0; color: #334155; padding: 4px 12px; border-radius: 8px; }
+  .timer.low { background: #fee2e2; color: #dc2626; }
+  .bar { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+  .bar > div { height: 100%; background: #2563eb; transition: width 1s linear; }
+  .bar > div.low { background: #ef4444; }
+  .nav-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 18px; }
+  .nav-grid button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; color: #64748b; font-size: .75rem; font-weight: 700; cursor: pointer; }
+  .nav-grid button.answered { background: #d1fae5; border-color: #6ee7b7; color: #047857; }
+  .nav-grid button.cur { background: #2563eb; border-color: #2563eb; color: #fff; }
+  .expl { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px; font-size: .86rem; margin-top: 14px; }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+  .btn-small { padding: 9px 18px; font-size: .85rem; }
+  .btn-gray { background: #64748b; color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+  .btn-gray:disabled { opacity: .4; cursor: not-allowed; }
+  .res-note { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+  .res-card { border-radius: 14px; padding: 10px 14px; background: #f8fafc; margin: 6px 0; font-size: .88rem; }
+  .green { color: #059669; } .red { color: #dc2626; }
+  footer { text-align: center; font-size: .78rem; color: #94a3b8; margin-top: 40px; }
+  a { color: #2563eb; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>🎯 Préparation au concours ATSEM — Somme (voie externe)</h1>
+    <p>Guide de révision complet et QCM interactif au format de l'épreuve officielle.</p>
+    <div class="badges">
+      <span class="badge">📅 Écrit : 29 sept. 2027</span>
+      <span class="badge">✍️ QCM 20 questions / 45 min</span>
+      <span class="badge">🗣️ Oral coef. 2</span>
+      <span class="badge">🏢 CDG de la Somme</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button id="tab-guide" class="active" onclick="showTab('guide')">📘 Guide de préparation</button>
+    <button id="tab-quiz" onclick="showTab('quiz')">🧪 QCM d'entraînement</button>
+  </nav>
+
+  <div id="view-guide">
+    <section class="card">
+      <h2>📅 Le calendrier 2027</h2>
+      <table>
+        <tr><th>Étape</th><th>Date</th></tr>
+        <tr><td>Inscriptions en ligne</td><td><b>16 mars → 21 avril 2027</b></td></tr>
+        <tr><td>Dépôt du dossier complet</td><td><b>29 avril 2027</b></td></tr>
+        <tr><td>Épreuve écrite d'admissibilité</td><td><b>29 septembre 2027</b> (à confirmer)</td></tr>
+        <tr><td>Oraux d'admission</td><td>Automne 2027</td></tr>
+      </table>
+      <div class="warn">⚠️ La liste des organisateurs est encore « non définitive » : vérifiez sur concours-territorial.fr et le site du CDG80 dès février 2027. Traitez le <b>21 avril</b> comme votre vraie date limite.</div>
+      <p style="font-size:.9rem"><b>Conditions d'inscription (externe)</b> : 18 ans minimum, aucun diplôme exigé, nationalité française (ou UE sous conditions), casier judiciaire compatible avec les fonctions.</p>
+    </section>
+
+    <section class="card">
+      <h2>✍️ Les épreuves</h2>
+      <h3>Admissibilité — QCM (coef. 1)</h3>
+      <ul>
+        <li><b>20 questions</b> à choix multiples en <b>45 minutes</b></li>
+        <li>Situations concrètes : hygiène, sécurité, accueil, rôle de l'ATSEM, relations avec l'enseignant et les parents…</li>
+        <li><b>Barème piège</b> : mauvaises réponses pénalisées (−0,5), note ≤ 5/20 éliminatoire</li>
+      </ul>
+      <h3>Admission — Entretien (coef. 2)</h3>
+      <ul>
+        <li>~20 min avec le jury : motivation, connaissance du métier et de la fonction publique territoriale, situations professionnelles</li>
+        <li>L'oral compte <b>deux fois plus</b> que l'écrit : à préparer dès le début</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🗓️ Planning de révision — 4 h/semaine</h2>
+      <table>
+        <tr><th>Période</th><th>Objectif</th></tr>
+        <tr><td>Mois 1–2</td><td>Bases : rôle de l'ATSEM, statut, sécurité, hygiène (2 fiches/sem. + 1 QCM)</td></tr>
+        <tr><td>Mois 3–4</td><td>Santé, développement de l'enfant, PPMS, PAI, protocoles (2 fiches/sem. + 1 QCM)</td></tr>
+        <tr><td>Mois 5–6</td><td>Entraînement intensif QCM en temps limité + annales (2 séries/sem.)</td></tr>
+        <tr><td>2 derniers mois</td><td>Simulations d'écrit (45 min chrono) + préparation orale (1/sem.)</td></tr>
+      </table>
+      <div class="tip">💡 <b>Rythme hebdomadaire type</b> : 1 h fiche active (lundi) · 1 h QCM + correction (mercredi) · 1 h révision espacée (vendredi) · 1 h oral/motivation (dimanche).</div>
+    </section>
+
+    <section class="card">
+      <h2>📚 Les 10 thèmes à maîtriser</h2>
+      <ul>
+        <li><b>Rôle et statut de l'ATSEM</b> : agent communal, sous la responsabilité pédagogique de l'enseignant. Ni auxiliaire de puériculture, ni agent d'entretien.</li>
+        <li><b>Fonction publique territoriale</b> : catégorie C, liste d'aptitude, stage, titularisation, employeur = la commune.</li>
+        <li><b>Hygiène et propreté</b> : hygiène corporelle, alimentaire (HACCP), entretien des locaux, produits (dosage, pictogrammes).</li>
+        <li><b>Sécurité et prévention</b> : surveillance, protocoles d'urgence, registre de sécurité, <b>PSC1</b>.</li>
+        <li><b>Santé de l'enfant</b> : maladies infantiles et éviction scolaire, <b>PAI</b>, médicaments à l'école, allergies.</li>
+        <li><b>Développement de l'enfant (2–6 ans)</b> : motricité, langage, propreté, autonomie, rythmes (sieste, fatigue).</li>
+        <li><b>Aide à l'enseignant</b> : matériel, ateliers, accueil, sorties — en appui, jamais en remplacement.</li>
+        <li><b>Relation avec les familles</b> : discrétion, secret professionnel, signalement (CRIP / 119).</li>
+        <li><b>Sigles</b> : PAI, PPMS, EMA, PMI, IEN, PEVR, TAP, MDS…</li>
+        <li><b>Textes de référence</b> : décret n° 2010-1068 du 8 septembre 2010, code de l'éducation, code de la santé publique.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🎯 Stratégie QCM — marquer des points</h2>
+      <ul>
+        <li>Lisez la consigne : une ou plusieurs réponses ? Réponses fausses pénalisées ?</li>
+        <li>Éliminez les réponses contraires au principe clé : <i>la sécurité de l'enfant prime, l'ATSEM agit sous la responsabilité de l'enseignant</i>.</li>
+        <li>Mots-pièges : « immédiatement », « toujours », « uniquement » sont souvent faux.</li>
+        <li>2 min/question max, gardez 5 min de relecture. En cas de doute : abstenez-vous (0 pt) plutôt que risquer (−0,5).</li>
+        <li>Objectif : ≥ 12/20 au mois 4, ≥ 14/20 le dernier mois.</li>
+      </ul>
+      <h3>Exemples de raisonnement</h3>
+      <blockquote class="ex"><b>Un enfant se blesse dans la cour</b> → protéger, alerter l'enseignant, gestes de secours (PSC1), rendre compte.</blockquote>
+      <blockquote class="ex"><b>Un parent demande un renseignement scolaire</b> → renvoyer poliment à l'enseignant : secret professionnel.</blockquote>
+      <blockquote class="ex"><b>Un parent demande de donner un médicament</b> → refus sans PAI ; orienter vers le directeur.</blockquote>
+    </section>
+
+    <section class="card">
+      <h2>🗣️ Préparer l'oral (coefficient 2)</h2>
+      <ul>
+        <li>Construisez un récit « expériences → compétences → métier d'ATSEM ». Votre expérience en petite enfance est votre atout.</li>
+        <li>Questions probables : <i>Pourquoi la maternelle plutôt que la crèche ? Que savez-vous de la FPT ? Une situation difficile avec un enfant/parent ?</i></li>
+        <li>Entraînez-vous à voix haute, chronométrrez 20 minutes, faites-vous interroger par un proche.</li>
+        <li>Connaissez le fonctionnement d'une école maternelle : PS/MS/GS, EMA, rôle de chacun (directeur, IEN, maire, PMI).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Ressources utiles</h2>
+      <ul>
+        <li><a href="https://www.concours-territorial.fr" target="_blank">concours-territorial.fr</a> — calendrier officiel et inscription</li>
+        <li><a href="https://www.cdg80.fr" target="_blank">cdg80.fr</a> — notice du concours, rapports de jury, annales de la Somme</li>
+        <li>Annales officielles des CDG (sujets corrigés, format identique)</li>
+        <li>Banques de QCM gratuites : digischool, LaBoîteAConcours, travaillerdanslapetiteenfance.com</li>
+        <li>Rapports de jury du CDG80 : à lire absolument</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>✅ Prochaines actions</h2>
+      <ul>
+        <li><b>Février 2027</b> : vérifier l'ouverture officielle de la session Somme</li>
+        <li><b>16 mars 2027</b> : s'inscrire dès l'ouverture (ne pas attendre avril)</li>
+        <li>Réunir dès maintenant : pièce d'identité, justificatifs, attestation PSC1</li>
+        <li>Démarrer les fiches thèmes 1 et 2 cette semaine</li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="view-quiz" style="display:none">
+    <div id="quiz-app"></div>
+  </div>
+
+  <footer>Préparation au concours ATSEM — Somme · Voie externe · Site personnel de révision<br>Vérifiez toujours les informations officielles sur concours-territorial.fr et cdg80.fr</footer>
+</div>
+
+<script>
+var QUESTIONS = [{"t":"Rôle de l'ATSEM","q":"En classe, l'ATSEM travaille sous la responsabilité :","c":["du maire de la commune","de l'enseignant de la classe","du directeur de l'école","de l'ATSEM lui-même"],"a":1,"e":"L'ATSEM est un agent communal (recruté par la mairie) mais, en classe, il agit sous la responsabilité pédagogique de l'enseignant."},{"t":"Rôle de l'ATSEM","q":"L'ATSEM peut-il remplacer l'enseignant en son absence ?","c":["Oui, s'il est titulaire depuis plus d'un an","Oui, avec l'accord du directeur","Non, jamais","Oui, uniquement pour la sieste"],"a":2,"e":"Non. L'ATSEM n'a pas de rôle d'enseignement : il ne peut ni remplacer l'enseignant ni encadrer seul un groupe d'élèves à visée pédagogique."},{"t":"Rôle de l'ATSEM","q":"Qui est l'employeur de l'ATSEM ?","c":["L'État (Éducation nationale)","Le département","La commune (ou l'EPCI compétent)","Le directeur de l'école"],"a":2,"e":"L'ATSEM est un agent territorial : son employeur est la commune (ou la communauté de communes ayant la compétence RH)."},{"t":"Fonction publique","q":"L'ATSEM appartient à quel cadre d'emplois ?","c":["Catégorie A","Catégorie B","Catégorie C","Hors catégorie"],"a":2,"e":"Le cadre d'emplois des ATSEM (décret n° 2010-1068 du 8 septembre 2010) est un cadre d'emplois de catégorie C de la fonction publique territoriale."},{"t":"Fonction publique","q":"Après réussite au concours, le candidat est :","c":["recruté d'office par la commune","inscrit sur une liste d'aptitude valable 3 ans (plus prolongations)","directement titularisé","affecté automatiquement dans une école du département"],"a":1,"e":"La réussite au concours donne accès à la liste d'aptitude. Il faut ensuite être recruté par une commune, effectuer un stage, puis être titularisé."},{"t":"Hygiène","q":"Vous devez nettoyer le sol de la classe avec un produit d'entretien. Que faites-vous ?","c":["Vous augmentez la dose pour un meilleur résultat","Vous suivez strictement le protocole de dosage et ventilez la pièce","Vous mélangez deux produits pour plus d'efficacité","Vous nettoyez pendant la sieste, fenêtres fermées"],"a":1,"e":"Toujours respecter le dosage et ventiler. Ne JAMAIS mélanger les produits (risque de réactions toxiques) et ne pas appliquer en présence des enfants."},{"t":"Hygiène","q":"Un enfant a fait un accident pendant la sieste. Quelle est la bonne attitude ?","c":["Le gronder pour qu'il apprenne la propreté","Le changer avec discrétion et bienveillance, sans le culpabiliser","Attendre la fin de la sieste pour le changer","Prévenir immédiatement les parents par téléphone"],"a":1,"e":"L'ATSEM agit avec discrétion et bienveillance : il préserve la dignité de l'enfant et en informe simplement les parents à la sortie."},{"t":"Hygiène alimentaire","q":"Le respect de la chaîne du froid pour les repas implique :","c":["de sortir les plats 2 h avant le service","de conserver les produits à température réglementaire et de vérifier les DLC","de goûter chaque plat","de laisser les denrées sur le chariot tant que les enfants n'ont pas fini"],"a":1,"e":"Principe HACCP : respect des températures de conservation, contrôle des DLC et de l'aspect des produits, hygiène des mains et des surfaces."},{"t":"Sécurité","q":"L'alarme incendie se déclenche pendant un atelier. Que faites-vous ?","c":["Vous courez immédiatement vers la sortie avec les enfants","Vous appliquez le PPMS","Vous suivez les consignes d'évacuation de l'école avec les enfants, dans le calme, sous la conduite de l'enseignant","Vous prenez les enfants dans vos bras et sortez par l'ascenseur"],"a":2,"e":"On suit la procédure d'évacuation prévue : calme, file indienne, point de rassemblement, appel des enfants par l'enseignant. Ni ascenseur, ni panique."},{"t":"Sécurité","q":"Le PSC1 est :","c":["un projet personnalisé de scolarisation","la formation aux premiers secours","un plan de prévention des risques","un certificat médical obligatoire pour les ATSEM"],"a":1,"e":"Le PSC1 (prévention et secours civiques de niveau 1) est la formation de base aux gestes de premiers secours."},{"t":"Santé","q":"Un enfant couvert d'hématomes suspects arrive à l'école. Que faites-vous ?","c":["Vous en parlez aux autres parents pour avoir des avis","Vous signalez les faits à votre hiérarchie et/ou aux services compétents (CRIP, 119)","Vous ne faites rien, ce n'est pas votre rôle","Vous interrogez longuement l'enfant sur ce qui s'est passé"],"a":1,"e":"Toute personne travaillant avec des enfants doit signaler une situation de danger : direction puis services compétents (CRIP, 119). L'ATSEM n'enquête pas."},{"t":"Santé","q":"Un parent demande de donner un médicament à son enfant à midi. Que répondez-vous ?","c":["Vous acceptez, c'est un geste simple","Vous refusez : sans PAI en cours de validité, aucun médicament ne peut être administré","Vous acceptez si le parent fournit une ordonnance","Vous demandez l'avis de l'enseignant"],"a":1,"e":"La loi interdit l'administration de médicaments à l'école hors PAI (projet d'accueil individualisé) formalisé avec la famille, le médecin scolaire et le directeur."},{"t":"Santé","q":"Un enfant présente une éruption cutanée et de la fièvre. Quelle attitude ?","c":["Vous le laissez en classe, ce n'est pas grave","Vous informez le directeur : une maladie contagieuse peut justifier une éviction scolaire","Vous appliquez une crème","Vous appelez le médecin vous-même"],"a":1,"e":"L'ATSEM signale ses observations au directeur qui contacte la famille ; certaines maladies infantiles (varicelle, scarlatine, rougeole…) imposent une éviction temporaire."},{"t":"Développement de l'enfant","q":"À l'école maternelle, les classes sont organisées en :","c":["CP, CE1, CE2","PS, MS, GS","TPS, PS, MS","petite, moyenne et grande sections (PS, MS, GS)"],"a":3,"e":"École maternelle = petite, moyenne et grande section (2-6 ans environ). L'instruction est obligatoire dès 3 ans."},{"t":"Développement de l'enfant","q":"Vers quel âge l'enfant est-il généralement propre le jour ?","c":["12 mois","18 mois","2 à 3 ans","4 à 5 ans"],"a":2,"e":"La propreté diurne s'acquiert en général entre 2 et 3 ans : l'ATSEM accompagne sans jamais brusquer ni punir."},{"t":"Développement de l'enfant","q":"La sieste des petits répond surtout :","c":["à un besoin physiologique de l'enfant","à l'organisation de la mairie","au confort des adultes","aux obligations réglementaires"],"a":0,"e":"Le rythme de l'enfant prime : la sieste répond à un besoin physiologique. L'ATSEM assure des conditions calmes et sûres."},{"t":"Aide à l'enseignant","q":"Lors d'une sortie scolaire, l'ATSEM :","c":["reste à l'école, les sorties ne le concernent pas","participe à l'encadrement et à la surveillance des enfants","est responsable du groupe si l'enseignant est absent","peut emmener les enfants seul en déplacement"],"a":1,"e":"L'ATSEM participe à la sécurité et à l'encadrement des sorties sous la responsabilité de l'enseignant."},{"t":"Aide à l'enseignant","q":"L'ATSEM peut participer à des ateliers avec les enfants :","c":["en décidant seul des activités pédagogiques","en appui de l'enseignant, dans le cadre défini par lui","uniquement s'il a un diplôme d'auxiliaire de puériculture","seulement pour les tâches de nettoyage"],"a":1,"e":"L'ATSEM seconde l'enseignant : il prépare le matériel, accompagne les ateliers, aide à l'autonomie — mais le projet pédagogique relève de l'enseignant."},{"t":"Relation familles","q":"Un parent vous demande comment progresse son enfant en langage. Que faites-vous ?","c":["Vous donnez votre avis sur ses progrès","Vous renvoyez poliment le parent vers l'enseignant","Vous montrez les cahiers de l'enfant","Vous en parlez à d'autres parents pour comparer"],"a":1,"e":"Le suivi des apprentissages relève de l'enseignant. L'ATSEM, soumis au secret professionnel, renvoie la question à l'enseignant avec tact."},{"t":"Relation familles","q":"L'ATSEM est tenu au secret professionnel :","c":["faux, il n'est pas fonctionnaire","vrai, pour tout ce qu'il connaît des enfants et des familles","vrai, uniquement en cas de maltraitance","faux, sauf en présence du directeur"],"a":1,"e":"En tant qu'agent public, l'ATSEM est soumis au secret professionnel pour les informations connues dans l'exercice de ses fonctions."},{"t":"Sigles","q":"Que signifie PAI ?","c":["Projet d'activité intégrée","Projet d'accueil individualisé","Plan d'action interne","Protocole d'assistance aux enfants"],"a":1,"e":"Le PAI permet l'accueil d'un enfant atteint de maladie chronique (allergie, asthme...) : protocole d'urgence, administration de médicaments."},{"t":"Sigles","q":"Que signifie PPMS ?","c":["Plan particulier de mise en sûreté","Projet pédagogique de la maternelle","Personnel permanent de la mairie","Plan prévention maternelle et santé"],"a":0,"e":"Le PPMS (plan particulier de mise en sûreté) prépare les écoles aux risques majeurs : confinement, évacuation, exercices réguliers."},{"t":"Sigles","q":"La PMI (protection maternelle et infantile) est un service :","c":["de la commune","du département","de l'Éducation nationale","de l'État"],"a":1,"e":"La PMI est un service départemental : suivi des jeunes enfants, vaccination, agrément des assistantes maternelles, conseils aux familles."},{"t":"Textes","q":"L'instruction est obligatoire en France dès l'âge de :","c":["6 ans","5 ans","3 ans","2 ans"],"a":2,"e":"Depuis la loi de 2019 (application 2020), l'instruction est obligatoire dès 3 ans : la maternelle joue un rôle essentiel de socialisation."},{"t":"Textes","q":"Le cadre d'emplois ATSEM est régi principalement par :","c":["le décret n° 2010-1068 du 8 septembre 2010","le code du travail","une circulaire de l'Éducation nationale","le décret n° 94-1010 de 1994"],"a":0,"e":"Le décret n° 2010-1068 du 8 septembre 2010 fixe les conditions de recrutement (3 voies d'accès), les fonctions et le déroulement de carrière des ATSEM."}];
+var THEMES = [];
+QUESTIONS.forEach(function(q){ if (THEMES.indexOf(q.t) < 0) THEMES.push(q.t); });
+var EXAM_SIZE = 20, EXAM_SECONDS = 45 * 60;
+
+var app = document.getElementById('quiz-app');
+var state = { mode: 'menu', questions: [], idx: 0, answers: {}, showExp: false, timeLeft: EXAM_SECONDS, timer: null, currentTheme: null };
+var history = [];
+try { history = JSON.parse(localStorage.getItem('atsem_history') || '[]'); } catch(e) { history = []; }
+
+function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function fmt(s){ var m = Math.floor(s / 60), x = s % 60; return (m < 10 ? '0' : '') + m + ':' + (x < 10 ? '0' : '') + x; }
+function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function showTab(name) {
+  document.getElementById('view-guide').style.display = name === 'guide' ? '' : 'none';
+  document.getElementById('view-quiz').style.display = name === 'quiz' ? '' : 'none';
+  document.getElementById('tab-guide').className = name === 'guide' ? 'active' : '';
+  document.getElementById('tab-quiz').className = name === 'quiz' ? 'active' : '';
+}
+
+function render() {
+  if (state.mode === 'menu') return renderMenu();
+  if (state.mode === 'result') return renderResult();
+  renderQuiz();
+}
+
+function renderMenu() {
+  var h = '<section class="card"><h2>🧪 Mode examen (simulation)</h2><p style="font-size:.9rem;margin-bottom:16px">' + EXAM_SIZE + ' questions tirées au hasard · 45 minutes · barème officiel : bonne réponse +1, mauvaise réponse −0,5, absence de réponse 0. Note éliminatoire ≤ 5/20.</p><button class="btn btn-primary" onclick="startExam()">Démarrer l\'examen blanc</button></section>';
+  h += '<section class="card"><h2>📚 Mode entraînement par thème</h2><p style="font-size:.9rem;margin-bottom:14px">Réponse immédiate avec explication.</p>';
+  THEMES.forEach(function(t) {
+    var n = QUESTIONS.filter(function(q){ return q.t === t; }).length;
+    h += '<button class="theme-btn" onclick="startTraining(\'' + t.replace(/'/g, "\\'") + '\')"><span>' + esc(t) + '</span><span class="cnt">' + n + ' q.</span></button>';
+  });
+  h += '</section>';
+  if (history.length) {
+    h += '<section class="card"><h2>📈 Vos examens blancs</h2>';
+    history.forEach(function(x, i) {
+      h += '<div class="res-card"><span style="color:#64748b">Essai ' + (i + 1) + ' — ' + esc(x.date) + '</span> <span style="float:right" class="' + (x.elim ? 'red' : 'green') + '"><b>' + x.note + '/20</b>' + (x.elim ? ' (éliminatoire)' : '') + '</span></div>';
+    });
+    h += '<button class="btn-gray btn-small" style="margin-top:12px" onclick="clearHistory()">Effacer l\'historique</button></section>';
+  }
+  app.innerHTML = h;
+}
+
+function clearHistory(){ history = []; localStorage.setItem('atsem_history', '[]'); render(); }
+
+function initQuiz(qs) {
+  state.questions = qs;
+  state.answers = {};
+  qs.forEach(function(_, i){ state.answers[i] = -1; });
+  state.idx = 0; state.showExp = false; state.timeLeft = EXAM_SECONDS;
+  if (state.timer) clearInterval(state.timer);
+}
+
+function startTraining(t) { state.currentTheme = t; initQuiz(shuffle(QUESTIONS.filter(function(q){ return q.t === t; }))); state.mode = 'training'; render(); }
+function startExam() { initQuiz(shuffle(QUESTIONS).slice(0, EXAM_SIZE)); state.mode = 'exam'; render(); startTimer(); }
+
+function startTimer() {
+  if (state.timer) clearInterval(state.timer);
+  state.timer = setInterval(function() {
+    state.timeLeft--;
+    var el = document.getElementById('timer');
+    if (el) { el.textContent = '⏱ ' + fmt(state.timeLeft); el.className = state.timeLeft < 300 ? 'timer low' : 'timer'; }
+    var bar = document.getElementById('bar-fill');
+    if (bar) { bar.style.width = (state.timeLeft / EXAM_SECONDS * 100) + '%'; bar.className = state.timeLeft < 300 ? 'low' : ''; }
+    if (state.timeLeft <= 0) { clearInterval(state.timer); finishExam(); }
+  }, 1000);
+}
+
+function select(c) {
+  if (state.mode === 'training' && state.showExp) return;
+  state.answers[state.idx] = c;
+  if (state.mode === 'training') { state.showExp = true; render(); }
+  else { render(); }
+}
+
+function nextQ() {
+  if (state.mode === 'training') state.showExp = false;
+  if (state.idx < state.questions.length - 1) { state.idx++; render(); }
+  else if (state.mode === 'exam') finishExam();
+  else { state.mode = 'result'; render(); }
+}
+function prevQ() { if (state.idx > 0) { state.idx--; state.showExp = false; render(); } }
+function gotoQ(i) { state.idx = i; state.showExp = false; render(); }
+
+function finishExam() {
+  if (state.timer) clearInterval(state.timer);
+  var pts = 0;
+  state.questions.forEach(function(q, i) {
+    var a = state.answers[i];
+    if (a === -1) return;
+    pts += a === q.a ? 1 : -0.5;
+  });
+  var note = Math.round(Math.max(0, pts) / state.questions.length * 20 * 10) / 10;
+  history.push({ date: new Date().toLocaleDateString('fr-FR'), note: note, elim: note <= 5 });
+  localStorage.setItem('atsem_history', JSON.stringify(history));
+  state.mode = 'result';
+  render();
+}
+
+function renderQuiz() {
+  var q = state.questions[state.idx];
+  var isExam = state.mode === 'exam';
+  var showCorrect = state.mode === 'training' && state.showExp;
+  var h = '<section class="card">';
+  h += '<div class="meta"><span>' + esc(q.t) + '</span>';
+  h += isExam ? '<span class="timer" id="timer">⏱ ' + fmt(state.timeLeft) + '</span>' : '<span style="color:#64748b">Question ' + (state.idx + 1) + '/' + state.questions.length + '</span>';
+  h += '</div>';
+  if (isExam) {
+    h += '<div class="bar"><div id="bar-fill" style="width:' + (state.timeLeft / EXAM_SECONDS * 100) + '%"></div></div>';
+    h += '<div class="nav-grid">';
+    state.questions.forEach(function(_, i) {
+      var cls = i === state.idx ? 'cur' : (state.answers[i] !== -1 ? 'answered' : '');
+      h += '<button class="' + cls + '" onclick="gotoQ(' + i + ')">' + (i + 1) + '</button>';
+    });
+    h += '</div>';
+  }
+  h += '<h2 class="q">' + (isExam ? 'Question ' + (state.idx + 1) + ' / ' + state.questions.length + '. ' : '') + esc(q.q) + '</h2>';
+  q.c.forEach(function(c, ci) {
+    var cls = 'choice';
+    if (showCorrect) {
+      if (ci === q.a) cls += ' ok';
+      else if (ci === state.answers[state.idx]) cls += ' ko';
+      else cls += ' dim';
+    } else if (state.answers[state.idx] === ci) cls += ' sel';
+    h += '<button class="' + cls + '" onclick="select(' + ci + ')"><b style="color:#94a3b8;margin-right:8px">' + String.fromCharCode(65 + ci) + '.</b>' + esc(c) + (showCorrect && ci === q.a ? ' ✓' : '') + (showCorrect && ci === state.answers[state.idx] && ci !== q.a ? ' ✗' : '') + '</button>';
+  });
+  if (showCorrect) h += '<div class="expl">💡 <b>Explication :</b> ' + esc(q.e) + '</div>';
+  if (isExam) h += '<p style="font-size:.75rem;color:#94a3b8;margin-top:12px">Barème : bonne réponse +1 · mauvaise réponse −0,5 · sans réponse 0. En cas de doute, abstenez-vous. <a href="#" onclick="state.answers[state.idx]=-1;render();return false">Effacer ma réponse</a></p>';
+  h += '<div class="quiz-foot">';
+  h += '<button class="btn-gray btn-small" onclick="prevQ()" ' + (state.idx === 0 ? 'disabled' : '') + '>← Précédent</button>';
+  var last = state.idx === state.questions.length - 1;
+  var disabled = (!isExam && state.answers[state.idx] === -1);
+  h += '<button class="btn btn-primary btn-small" style="width:auto;background:' + (disabled ? '#cbd5e1' : '#2563eb') + '" onclick="nextQ()" ' + (disabled ? 'disabled' : '') + '>' + (last ? (isExam ? 'Terminer l\'examen ✓' : 'Voir le bilan ✓') : 'Suivant →') + '</button>';
+  h += '</div></section>';
+  app.innerHTML = h;
+}
+
+function renderResult() {
+  var isExamMode = state.questions.length === EXAM_SIZE;
+  var good = 0, bad = 0, blank = 0, pts = 0;
+  state.questions.forEach(function(q, i) {
+    var a = state.answers[i];
+    if (a === -1) blank++;
+    else if (a === q.a) { good++; pts += 1; }
+    else { bad++; pts -= 0.5; }
+  });
+  var note = Math.round(Math.max(0, pts) / state.questions.length * 20 * 10) / 10;
+  var h = '<section class="card" style="text-align:center;background:' + (isExamMode ? (note <= 5 ? '#dc2626' : '#059669') : '#4f46e5') + ';color:#fff">';
+  h += '<h2 style="color:#fff">' + (isExamMode ? 'Résultat de l\'examen blanc' : 'Série terminée !') + '</h2>';
+  if (isExamMode) {
+    h += '<div class="res-note">' + note + '/20</div>';
+    h += '<p>' + (note <= 5 ? '⚠️ Note éliminatoire (≤ 5/20) — révisez les fiches avant de retenter.' : '✅ Vous êtes au-dessus du seuil éliminatoire. Objectif : 14/20 le jour J.') + '</p>';
+    h += '<p style="font-size:.82rem;opacity:.85;margin-top:6px">Score brut : ' + pts + ' pts (' + state.questions.length + ' questions)</p>';
+  } else {
+    h += '<p style="margin-top:10px">' + good + ' bonnes réponses · ' + bad + ' erreurs · ' + blank + ' sans réponse</p>';
+  }
+  h += '</section>';
+  state.questions.forEach(function(q, i) {
+    var a = state.answers[i];
+    var ok = a === q.a;
+    h += '<section class="res-card"><b style="color:#2563eb;font-size:.75rem">' + esc(q.t) + '</b><br>' + esc(q.q);
+    h += '<br><span class="' + (ok ? 'green' : 'red') + '" style="font-weight:600">' + (a === -1 ? '→ Non répondue' : ok ? '✅ Correcte' : '❌ Votre réponse : ' + esc(q.c[a])) + (!ok ? ' — bonne réponse : ' + esc(q.c[q.a]) : '') + '</span>';
+    h += '<br><span style="color:#64748b;font-size:.8rem">' + esc(q.e) + '</span></section>';
+  });
+  h += '<div style="display:flex;gap:10px;margin-top:18px">';
+  h += '<button class="btn-gray" style="flex:1;padding:12px" onclick="backMenu()">← Retour au menu</button>';
+  h += '<button class="btn btn-primary" style="flex:1;width:auto" onclick="restart()">Recommencer 🔁</button>';
+  h += '</div>';
+  app.innerHTML = h;
+}
+
+function backMenu(){ state.mode = 'menu'; if (state.timer) clearInterval(state.timer); render(); }
+function restart(){
+  if (state.questions.length === EXAM_SIZE) startExam();
+  else if (state.currentTheme) startTraining(state.currentTheme);
+  else backMenu();
+}
+
+window.gotoQ = gotoQ; window.select = select; window.nextQ = nextQ; window.prevQ = prevQ;
+window.startExam = startExam; window.startTraining = startTraining; window.showTab = showTab;
+window.backMenu = backMenu; window.restart = restart; window.clearHistory = clearHistory;
+window.state = state;
+
+render();
+</script>
+</body>
+</html>
