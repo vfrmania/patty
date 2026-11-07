@@ -2,11 +2,90 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=atsem/">
-<title>Redirection — Préparation Concours ATSEM</title>
-<style>body{font-family:system-ui;background:#f1f5f9;color:#1e293b;display:flex;min-height:100vh;align-items:center;justify-content:center}a{color:#2563eb}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accueil — Patricia</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fdf2f8 0%, #eff6ff 45%, #f0fdfa 100%);
+    color: #1e293b; line-height: 1.6;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 48px 20px 64px;
+  }
+  .wrap { width: 100%; max-width: 760px; }
+  header { text-align: center; margin-bottom: 40px; }
+  .avatar {
+    width: 84px; height: 84px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f472b6, #8b5cf6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; box-shadow: 0 10px 30px rgba(139,92,246,.35);
+  }
+  header h1 { font-size: 2rem; color: #312e81; letter-spacing: -.02em; }
+  header p { color: #64748b; font-size: 1rem; margin-top: 6px; }
+  h2.section {
+    font-size: .8rem; text-transform: uppercase; letter-spacing: .12em;
+    color: #94a3b8; margin: 34px 0 14px; text-align: left;
+  }
+  .cards { display: grid; gap: 14px; }
+  a.card {
+    display: flex; align-items: center; gap: 18px;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(255,255,255,.9);
+    border-radius: 20px; padding: 22px 26px;
+    text-decoration: none; color: #1e293b;
+    box-shadow: 0 4px 14px rgba(2,6,23,.06);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  a.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(2,6,23,.12);
+    border-color: #c4b5fd;
+  }
+  .card .icon {
+    width: 54px; height: 54px; flex-shrink: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+  }
+  .card.pink .icon { background: linear-gradient(135deg, #f472b6, #8b5cf6); }
+  .card .txt { flex: 1; min-width: 0; }
+  .card .txt b { display: block; font-size: 1.08rem; color: #1e3a8a; }
+  .card.pink .txt b { color: #831843; }
+  .card .txt span { font-size: .88rem; color: #64748b; display: block; margin-top: 3px; }
+  .card .arrow { color: #94a3b8; font-size: 1.3rem; transition: transform .18s ease; }
+  a.card:hover .arrow { transform: translateX(4px); color: #2563eb; }
+  .card.pink:hover .arrow { color: #db2777; }
+  .soon { color: #94a3b8; font-size: .78rem; text-align: center; margin-top: 10px; font-style: italic; }
+  footer { margin-top: 48px; font-size: .78rem; color: #94a3b8; text-align: center; }
+  footer b { color: #64748b; }
+</style>
 </head>
 <body>
-<p>Le site a déménagé : <a href="atsem/">redirection automatique vers le nouveau site ATSEM…</a></p>
+  <div class="wrap">
+    <header>
+      <div class="avatar">🌸</div>
+      <h1>Bienvenue, Patricia</h1>
+      <p>Vos sites et projets personnels, réunis au même endroit.</p>
+    </header>
+
+    <h2 class="section">📚 Sites de préparation aux concours</h2>
+    <div class="cards">
+      <a class="card" href="atsem/">
+        <div class="icon">🎯</div>
+        <div class="txt">
+          <b>Préparation au concours ATSEM — Somme</b>
+          <span>Guide, fiches de révision et QCM interactif — voie externe, session 2027</span>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+    <p class="soon">D'autres sites viendront s'ajouter ici au fil de vos projets…</p>
+
+    <footer>Fait avec 💜 pour <b>Patricia</b> · <a href="https://github.com/vfrmania/patty" style="color:#94a3b8">vfrmania/patty</a></footer>
+  </div>
 </body>
 </html>
