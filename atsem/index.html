@@ -72,6 +72,8 @@
   .fiche-actions { display: flex; justify-content: flex-end; margin: 6px 0 10px; }
   .btn-pdf { background: #fff; color: #2563eb; border: 1.5px solid #2563eb; border-radius: 10px; padding: 8px 14px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
   .btn-pdf:hover { background: #eff6ff; }
+  tr.tr-now td { background: #fef9c3; font-weight: 700; }
+  tr.tr-now td:first-child { border-left: 4px solid #2563eb; }
   .piege { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 8px; font-size: .87rem; margin: 12px 0; }
   @media print {
     header.hero, nav.tabs, footer, .no-print { display: none !important; }
@@ -142,10 +144,10 @@
       <h2>🗓️ Planning de révision — 4 h/semaine</h2>
       <table>
         <tr><th>Période</th><th>Objectif</th></tr>
-        <tr><td>Mois 1–2</td><td>Bases : rôle de l'ATSEM, statut, sécurité, hygiène (fiches 1 à 4, 1 QCM/sem.)</td></tr>
-        <tr><td>Mois 3–4</td><td>Santé, développement de l'enfant, PPMS, PAI, protocoles (fiches 5 à 8, 1 QCM/sem.)</td></tr>
-        <tr><td>Mois 5–6</td><td>Entraînement intensif QCM en temps limité + annales (2 séries/sem.)</td></tr>
-        <tr><td>2 derniers mois</td><td>Simulations d'écrit (45 min chrono) + préparation orale (1/sem.)</td></tr>
+        <tr id="plan-r1"><td>Mois 1–2</td><td>Bases : rôle de l'ATSEM, statut, sécurité, hygiène (fiches 1 à 4, 1 QCM/sem.)</td></tr>
+        <tr id="plan-r2"><td>Mois 3–4</td><td>Santé, développement de l'enfant, PPMS, PAI, protocoles (fiches 5 à 8, 1 QCM/sem.)</td></tr>
+        <tr id="plan-r3"><td>Mois 5–6</td><td>Entraînement intensif QCM en temps limité + annales (2 séries/sem.)</td></tr>
+        <tr id="plan-r4"><td>2 derniers mois</td><td>Simulations d'écrit (45 min chrono) + préparation orale (1/sem.)</td></tr>
       </table>
       <div class="tip">💡 <b>Rythme hebdomadaire type</b> : 1 h fiche active (lundi) · 1 h QCM + correction (mercredi) · 1 h révision espacée (vendredi) · 1 h oral/motivation (dimanche). Toutes les fiches détaillées sont dans l'onglet <b>🗂️ Fiches</b>.</div>
     </section>
@@ -680,6 +682,22 @@ try { tooltipAcronymes(document.body); } catch(e2) {}
 var _render0 = render;
 render = function() { _render0(); try { tooltipAcronymes(document.getElementById('quiz-app')); } catch(e3) {} };
 try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
+
+try {
+  // Surlignage de la ligne du planning correspondant à aujourd'hui
+  // (écrit : 29 septembre 2027). Plan de 6 mois calé sur l'épreuve.
+  var _now = new Date();
+  var _ri = _now >= new Date(2027, 6, 29) ? 4        // 2 derniers mois
+          : _now >= new Date(2027, 4, 29) ? 3        // Mois 5-6
+          : _now >= new Date(2027, 2, 29) ? 2        // Mois 3-4
+          : 1;                                       // Mois 1-2 (ou avant le plan : prendre de l'avance)
+  var _tr = document.getElementById('plan-r' + _ri);
+  if (_tr) {
+    _tr.className = 'tr-now';
+    var _td = _tr.cells[0];
+    _td.innerHTML = _td.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
+  }
+} catch(e) {}
 </script>
 </body>
 </html>
