@@ -141,7 +141,7 @@ function tooltipAcronymes(root) {
     var n = walker.currentNode;
     if (n.nodeValue && n.nodeValue.length > 1) nodes.push(n);
   }
-  nodes = nodes.filter(function(n) { return !n.parentElement || !n.parentElement.closest || !n.parentElement.closest('summary'); });
+  nodes = nodes.filter(function(n) { return !n.parentElement || !n.parentElement.closest || !n.parentElement.closest('summary, header.hero'); });
   nodes.forEach(function(n) {
     ACR_RE.lastIndex = 0;
     if (!ACR_RE.test(n.nodeValue)) return;
