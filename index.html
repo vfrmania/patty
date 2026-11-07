@@ -357,6 +357,7 @@ function renderQuiz() {
   var h = '<section class="card">';
   h += '<div class="meta"><span>' + esc(q.t) + '</span>';
   h += isExam ? '<span class="timer" id="timer">⏱ ' + fmt(state.timeLeft) + '</span>' : '<span style="color:#64748b">Question ' + (state.idx + 1) + '/' + state.questions.length + '</span>';
+  h += '<button class="btn-gray btn-small" style="background:#ef4444;padding:4px 14px" onclick="confirmQuit()">✖ Quitter</button>';
   h += '</div>';
   if (isExam) {
     h += '<div class="bar"><div id="bar-fill" style="width:' + (state.timeLeft / EXAM_SECONDS * 100) + '%"></div></div>';
@@ -422,6 +423,7 @@ function renderResult() {
   app.innerHTML = h;
 }
 
+function confirmQuit() { if (state.mode === 'exam' && !window.confirm('Quitter l\'examen en cours ? Votre progression et votre score seront perdus.')) return; backMenu(); }
 function backMenu(){ state.mode = 'menu'; if (state.timer) clearInterval(state.timer); render(); }
 function restart(){
   if (state.questions.length === EXAM_SIZE) startExam();
@@ -431,7 +433,7 @@ function restart(){
 
 window.gotoQ = gotoQ; window.select = select; window.nextQ = nextQ; window.prevQ = prevQ;
 window.startExam = startExam; window.startTraining = startTraining; window.showTab = showTab;
-window.backMenu = backMenu; window.restart = restart; window.clearHistory = clearHistory;
+window.backMenu = backMenu; window.confirmQuit = confirmQuit; window.restart = restart; window.clearHistory = clearHistory;
 window.printFiche = printFiche; window.state = state;
 
 try { renderFiches(); } catch(e) { document.getElementById('fiches-list').innerHTML = '<section class="card"><b>Erreur fiches :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
