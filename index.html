@@ -62,6 +62,7 @@
   .soon { color: #94a3b8; font-size: .78rem; text-align: center; margin-top: 10px; font-style: italic; }
   footer { margin-top: 48px; font-size: .78rem; color: #94a3b8; text-align: center; }
   footer b { color: #64748b; }
+  abbr.acr { text-decoration: underline dotted #2563eb; text-underline-offset: 3px; cursor: help; color: #2563eb; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -87,5 +88,80 @@
 
     <footer>Fait avec 💜 pour <b>Patricia</b> · <a href="https://github.com/vfrmania/patty" style="color:#94a3b8">vfrmania/patty</a></footer>
   </div>
+<script>
+var ACRONYMS = {
+  "ATSEM": "Agent territorial spécialisé des écoles maternelles",
+  "ASEM": "Agent spécialisé des écoles maternelles (ancien nom de l'ATSEM)",
+  "ASE": "Aide sociale à l'enfance",
+  "AESH": "Accompagnant d'élève en situation de handicap",
+  "AVS": "Auxiliaire de vie scolaire (ancien nom de l'AESH)",
+  "BO": "Bulletin officiel de l'Éducation nationale",
+  "CAF": "Caisse d'allocations familiales",
+  "CDG": "Centre de gestion",
+  "CGCT": "Code général des collectivités territoriales",
+  "CNFPT": "Centre national de la fonction publique territoriale",
+  "CNRACL": "Caisse nationale de retraites des agents des collectivités locales",
+  "CRIP": "Cellule de recueil des informations préoccupantes",
+  "DDM": "Date de durabilité minimale (ex-DLUO)",
+  "DLC": "Date limite de consommation",
+  "DSDEN": "Direction des services départementaux de l'Éducation nationale",
+  "EPCI": "Établissement public de coopération intercommunale",
+  "ERP": "Établissement recevant du public",
+  "FPT": "Fonction publique territoriale",
+  "FNCDG": "Fédération nationale des centres de gestion",
+  "HACCP": "Hazard Analysis Critical Control Points — méthode d'hygiène alimentaire",
+  "IEN": "Inspecteur de l'Éducation nationale",
+  "MDPH": "Maison départementale des personnes handicapées",
+  "MDS": "Maison départementale des solidarités",
+  "PAI": "Projet d'accueil individualisé",
+  "PAP": "Plan d'accompagnement personnalisé",
+  "PMI": "Protection maternelle et infantile",
+  "PSC1": "Prévention et secours civiques de niveau 1",
+  "PPS": "Projet personnalisé de scolarisation",
+  "PPMS": "Plan particulier de mise en sûreté",
+  "PS": "Petite section de l'école maternelle (3-4 ans)",
+  "MS": "Moyenne section de l'école maternelle (4-5 ans)",
+  "GS": "Grande section de l'école maternelle (5-6 ans)",
+  "TPS": "Toute petite section de l'école maternelle (2-3 ans)",
+  "SAMU": "Service d'aide médicale urgente (numéro 15)",
+  "TAP": "Temps d'activités périscolaires",
+  "ULIS": "Unité localisée pour l'inclusion scolaire"
+};
+
+var ACR_KEYS = Object.keys(ACRONYMS).sort(function(a, b) { return b.length - a.length; });
+var ACR_RE = new RegExp("(^|[^A-Za-z0-9À-ſ])(" + ACR_KEYS.join("|") + ")(?![A-Za-z0-9À-ſ])", "g");
+
+
+function tooltipAcronymes(root) {
+  root = root || document.body;
+  if (!root) return;
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+  var nodes = [];
+  while (walker.nextNode()) {
+    var n = walker.currentNode;
+    if (n.nodeValue && n.nodeValue.length > 1) nodes.push(n);
+  }
+  nodes = nodes.filter(function(n) { return !n.parentElement || !n.parentElement.closest || !n.parentElement.closest('summary'); });
+  nodes.forEach(function(n) {
+    ACR_RE.lastIndex = 0;
+    if (!ACR_RE.test(n.nodeValue)) return;
+    ACR_RE.lastIndex = 0;
+    var txt = n.nodeValue, frag = document.createDocumentFragment(), last = 0, m;
+    while ((m = ACR_RE.exec(txt)) !== null) {
+      var s = m.index + m[1].length;
+      if (s > last) frag.appendChild(document.createTextNode(txt.slice(last, s)));
+      var ab = document.createElement('abbr');
+      ab.className = 'acr';
+      ab.title = ACRONYMS[m[2]];
+      ab.textContent = m[2];
+      frag.appendChild(ab);
+      last = s + m[2].length;
+    }
+    if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+    n.parentNode.replaceChild(frag, n);
+  });
+}
+try { tooltipAcronymes(document.body); } catch(e) {}
+</script>
 </body>
 </html>

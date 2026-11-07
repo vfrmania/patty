@@ -486,8 +486,8 @@ var ACRONYMS = {
 };
 var ACR_KEYS = Object.keys(ACRONYMS).sort(function(a, b) { return b.length - a.length; });
 var ACR_RE = new RegExp("(^|[^A-Za-z0-9À-ſ])(" + ACR_KEYS.join("|") + ")(?![A-Za-z0-9À-ſ])", "g");
-function tooltipAcronymes() {
-  var root = document.getElementById('fiches-list');
+function tooltipAcronymes(root) {
+  root = root || document.body;
   if (!root) return;
   var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
   var nodes = [];
@@ -516,7 +516,9 @@ function tooltipAcronymes() {
   });
 }
 try { renderFiches(); } catch(e) { document.getElementById('fiches-list').innerHTML = '<section class="card"><b>Erreur fiches :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
-try { tooltipAcronymes(); } catch(e2) {}
+try { tooltipAcronymes(document.body); } catch(e2) {}
+var _render0 = render;
+render = function() { _render0(); try { tooltipAcronymes(document.getElementById('quiz-app')); } catch(e3) {} };
 try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 </script>
 </body>
