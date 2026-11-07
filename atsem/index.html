@@ -737,6 +737,10 @@ try {
   window.addEventListener('scroll', check, { passive: true });
   check();
   b.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  var _tabs = document.querySelectorAll('nav.tabs button');
+  for (var i = 0; i < _tabs.length; i++) {
+    _tabs[i].addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
 })();
 </script>
 </body>
