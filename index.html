@@ -80,7 +80,7 @@
         <div class="icon">🎯</div>
         <div class="txt">
           <b>Préparation au concours ATSEM — Somme</b>
-          <span>Guide, fiches de révision et QCM interactif — voie externe, concours 2027</span>
+          <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="home-annee">2027</span></span>
         </div>
         <div class="arrow">→</div>
       </a>
@@ -173,6 +173,9 @@ function tooltipAcronymes(root) {
 @media print { .back-top { display: none !important; } }
 </style>
 <button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑<span class="lbl">Haut</span></button>
+<script>
+fetch('dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
+</script>
 <script>
 (function(){
   var b = document.getElementById('back-top');
