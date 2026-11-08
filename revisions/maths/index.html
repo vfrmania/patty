@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Révisions Mathématiques — Collège &amp; Lycée | Cours, fiches et QCM</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révisions — Mathématiques (collège & lycée)</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #eef2ff; color: #1e293b; line-height: 1.6; }
@@ -35,12 +35,10 @@
   .theme-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .9rem; margin: 6px 0; transition: all .15s; }
   .theme-btn:hover { border-color: #818cf8; background: #eef2ff; }
   .cnt { font-size: .75rem; background: #e2e8f0; border-radius: 999px; padding: 2px 10px; color: #64748b; }
-  /* Programme : liste des chapitres */
   .chap-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .92rem; margin: 6px 0; text-align: left; transition: all .15s; color: #1e293b; font-family: inherit; }
   .chap-btn:hover { border-color: #818cf8; background: #eef2ff; }
   .chap-btn .actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
-  .chap-btn .mini { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 9px; font-weight: 700; text-decoration: none; white-space: nowrap; }
-  .chap-btn .mini:hover { background: #c7d2fe; }
+  .chap-btn .mini { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 9px; font-weight: 700; white-space: nowrap; }
   .chap-btn.soon { opacity: .55; cursor: default; background: #f8fafc; }
   .chap-btn.soon:hover { border-color: #e2e8f0; background: #f8fafc; }
   .chap-btn .soon-badge { font-size: .72rem; color: #94a3b8; white-space: nowrap; }
@@ -75,6 +73,9 @@
   .btn-pdf:hover { background: #eef2ff; }
   .cours-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
   .cours-head .niv { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .chap-quick { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; }
+  .chap-quick a { font-size: .8rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 5px 12px; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .chap-quick a:hover { background: #c7d2fe; }
   @media print {
     header.hero, nav.tabs, footer, .no-print { display: none !important; }
     body { background: #fff; }
@@ -91,340 +92,184 @@
   .print-title { display: none; }
   .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
   .back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="hero">
-    <h1>📐 Révisions Mathématiques — du collège au lycée</h1>
-    <p>Programme complet par niveau, cours détaillés par notion, fiches synthétiques et QCM d'entraînement.</p>
-    <div class="badges">
-      <span class="badge">🧭 6e → Terminale</span>
-      <span class="badge">📖 Cours complets</span>
-      <span class="badge">🖨️ Fiches PDF</span>
-      <span class="badge">🧪 QCM par chapitre</span>
-    </div>
-  </header>
+<header class="hero">
+<h1>📐 Mathématiques</h1>
+<p>Révisions collège &amp; lycée — programme, cours complets, fiches synthétiques et QCM.</p>
+<div class="badges"><span class="badge">46 chapitres au programme</span><span class="badge">2 cours rédigés</span><span class="badge">📖 collège + lycée</span></div>
+</header>
+<nav class="tabs">
+<button id="tab-prog" onclick="showTab('prog')">📋 Programme</button>
+<button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
+<button id="tab-fiches" onclick="showTab('fiches')">🗂️ Fiche</button>
+<button id="tab-quiz" onclick="showTab('quiz')">🧪 QCM</button>
+</nav>
 
-  <nav class="tabs">
-    <button id="tab-prog" class="active" onclick="showTab('prog')">📋 Programme</button>
-    <button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
-    <button id="tab-fiches" onclick="showTab('fiches')">🗂️ Fiches</button>
-    <button id="tab-quiz" onclick="showTab('quiz')">🧪 QCM</button>
-  </nav>
+<section id="view-prog">
 
-  <div id="view-prog">
-    <section class="card no-print">
-      <h2>📋 Le programme de Mathématiques</h2>
-      <p style="font-size:.9rem">Toutes les notions du collège (6e–3e) et du lycée (2de–Terminale), par niveau et par chapitre. Cliquez sur un chapitre disponible pour accéder directement au cours, à la fiche synthétique et au QCM. Les autres chapitres seront ajoutés progressivement.</p>
-    </section>
-    <h2 class="niveau">Collège — 6e</h2>
-      <div class="chap-btn soon"><span>Nombres entiers et décimaux : opérations, divisibilité</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Fractions : comparaison, addition, soustraction</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Proportionnalité et pourcentages</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Géométrie de base : figures, angles, symétries</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Périmètres et aires</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Collège — 5e</h2>
-      <div class="chap-btn soon"><span>Nombres relatifs : repérage, addition, soustraction</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Premières expressions littérales et simplification</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Triangles : somme des angles, inégalité triangulaire</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Parallélogrammes et quadrilatères</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Statistiques : organisation et lecture de données</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Collège — 4e</h2>
-      <div class="chap-btn soon"><span>Puissances et écriture scientifique</span><span class="soon-badge">en préparation…</span></div>
-      <button class="chap-btn" onclick="goCours('pythagore')"><span>📘 Théorème de Pythagore et sa réciproque</span><span class="actions"><span class="mini">📖 cours</span><span class="mini">🗂️ fiche</span><span class="mini">🧪 QCM</span></span></button>
-      <div class="chap-btn soon"><span>Théorème des milieux et droite des milieux</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Calcul littéral : distributivité, réduction</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Équations du premier degré à une inconnue</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Proportionnalité : vitesses, échelles</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Pyramides et cônes : volumes</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Collège — 3e</h2>
-      <div class="chap-btn soon"><span>Théorème de Thalès et sa réciproque</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Trigonométrie dans le triangle rectangle (cos, sin, tan)</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Racines carrées et calculs associés</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Développement et factorisation, identités remarquables</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Notion de fonction : image, antécédent, lecture graphique</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Statistiques : moyennes, médiane, étendue</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Sphères et sections de solides ; rotation et translation</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Lycée — 2de</h2>
-      <div class="chap-btn soon"><span>Ensembles de nombres (ℕ, ℤ, ℚ, ℝ) et calcul littéral</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Fonctions de référence : carré, cube, inverse, racine</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Fonctions : variations, extremums, lectures graphiques</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Vecteurs et géométrie repérée</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Statistiques descriptives : quartiles, écart type</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Probabilités : événements, calculs de base</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Configurations du plan et trigonométrie ( fonctions sinus/cosinus)</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Lycée — 1re</h2>
-      <div class="chap-btn soon"><span>Second degré : discriminant, forme canonique, factorisation</span><span class="soon-badge">en préparation…</span></div>
-      <button class="chap-btn" onclick="goCours('derivation')"><span>📘 Dérivation : nombre dérivé, tangentes, dérivées usuelles</span><span class="actions"><span class="mini">📖 cours</span><span class="mini">🗂️ fiche</span><span class="mini">🧪 QCM</span></span></button>
-      <div class="chap-btn soon"><span>Dérivation : opérations et étude des variations</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Suites arithmétiques et géométriques</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Probabilités conditionnelles et indépendance</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Produit scalaire et applications</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Variables aléatoires, espérance, variance</span><span class="soon-badge">en préparation…</span></div>
-      <h2 class="niveau">Lycée — Terminale (spécialité)</h2>
-      <div class="chap-btn soon"><span>Suites : récurrence, convergence, limites</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Limites de fonctions et asymptotes</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Continuité et théorème des valeurs intermédiaires</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Primitives et calcul intégral</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Logarithmes népériens et exponentielles</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Lois de probabilité : binomiale, normale</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Équations différentielles</span><span class="soon-badge">en préparation…</span></div>
-      <div class="chap-btn soon"><span>Arithmétique et matrices (maths expertes)</span><span class="soon-badge">en préparation…</span></div>
-  </div>
+</section>
 
-  <div id="view-cours" style="display:none">
-    <section class="card no-print"><p style="font-size:.88rem;color:#64748b">📖 Cours complets par chapitre — le cours arrive du programme (cliquez un chapitre) ou parcourez la liste ci-dessous. <a href="#" onclick="showTab('prog');return false;">← Retour au programme</a></p></section>
-    <section class="card" id="cours-pythagore">
-      <div class="cours-head no-print"><h2>📘 Le théorème de Pythagore et sa réciproque</h2><span class="niv">Collège · 4e (révisé en 3e)</span></div>
-      <div class="cours-body">
-<h3>1. Le vocabulaire : le triangle rectangle</h3>
-<p>Un <b>triangle rectangle</b> est un triangle qui possède un <b>angle droit</b> (90°). Le côté opposé à l'angle droit s'appelle l'<b>hypoténuse</b> : c'est toujours le côté le plus long. Les deux autres côtés sont appelés les côtés de l'angle droit.</p>
-<p class="ex">Dans un triangle ABC rectangle en A : l'hypoténuse est [BC], et les côtés de l'angle droit sont [AB] et [AC].</p>
-<h3>2. L'énoncé du théorème</h3>
-<div class="tip">📐 <b>Théorème de Pythagore :</b> si un triangle est rectangle, alors le carré de la longueur de l'hypoténuse est égal à la somme des carrés des longueurs des deux autres côtés.<br>
-<b>ABC rectangle en A ⟺ BC² = AB² + AC²</b></div>
-<p>Ce théorème sert à <b>calculer une longueur</b> dans un triangle rectangle, quand on connaît les deux autres.</p>
-<h3>3. Calculer l'hypoténuse</h3>
-<p class="ex"><b>Exemple :</b> ABC rectangle en A, AB = 3 cm, AC = 4 cm. Combien vaut BC ?<br>
-BC² = AB² + AC² = 9 + 16 = 25, donc BC = √25 = <b>5 cm</b>. (Le triplet (3 ; 4 ; 5) est le plus célèbre des « triangles pythagoriciens ».)</p>
-<h3>4. Calculer un côté de l'angle droit</h3>
-<p class="ex"><b>Exemple :</b> ABC rectangle en A, BC = 13 cm, AB = 5 cm. Combien vaut AC ?<br>
-AC² = BC² − AB² = 169 − 25 = 144, donc AC = √144 = <b>12 cm</b>. (Triplet (5 ; 12 ; 13).)</p>
-<p class="ex"><b>Avec valeur non entière :</b> ABC rectangle en A, AB = 2, AC = 3. Alors BC² = 4 + 9 = 13 et BC = √13 ≈ 3,6 cm. On garde la <b>valeur exacte</b> (√13) dans les calculs et on ne donne la valeur approchée qu'à la fin — ou en valeur exacte si l'énoncé la demande.</p>
-<h3>5. La réciproque : prouver qu'un triangle est rectangle</h3>
-<div class="tip">🔁 <b>Réciproque du théorème :</b> si dans un triangle, le carré du plus long côté est égal à la somme des carrés des deux autres côtés, alors ce triangle est <b>rectangle</b> (l'angle droit est opposé au plus long côté).</p></div>
-<p class="ex"><b>Exemple :</b> un triangle a pour côtés 6 ; 8 ; 10. Le plus grand côté est 10 : 10² = 100 et 6² + 8² = 36 + 64 = 100. Les résultats sont égaux, donc le triangle est <b>rectangle</b>, l'hypoténuse mesurant 10.</p>
-<h3>6. La contraposée : prouver qu'un triangle n'est PAS rectangle</h3>
-<div class="tip">🚫 <b>Contraposée :</b> si BC² ≠ AB² + AC², alors le triangle ABC n'est pas rectangle.</div>
-<p class="ex"><b>Exemple :</b> un triangle a pour côtés 4 ; 5 ; 7. On teste : 7² = 49 et 4² + 5² = 16 + 25 = 41. Comme 49 ≠ 41, le triangle n'est pas rectangle.</p>
-<h3>7. Applications classiques au programme</h3>
-<ul>
-  <li><b>Distance dans un repère</b> (3e) : distance entre A(x<sub>A</sub> ; y<sub>A</sub>) et B(x<sub>B</sub> ; y<sub>B</sub>) en traçant un triangle rectangle de côtés |x<sub>B</sub> − x<sub>A</sub>| et |y<sub>B</sub> − y<sub>A</sub>|.</li>
-  <li><b>Hauteur d'un arbre, d'un mur</b> : décomposer la figure en triangle rectangle (hauteur, distance au sol).</li>
-  <li><b>Diagonale d'un rectangle</b> de dimensions L × l : d = √(L² + l²). Pour un carré de côté c : d = c√2.</li>
-  <li><b>Repère et longueurs</b> : les triplets connus (3;4;5), (6;8;10), (5;12;13), (8;15;17), (7;24;25) font gagner du temps au QCM.</li>
-</ul>
-<div class="piege">⚠️ <b>Pièges classiques</b> : toujours vérifier <b>lebon angle droit</b> avant d'écrire l'égalité (l'hypoténuse est le côté opposé à l'angle droit, jamais un côté de l'angle droit) ; ne pas confondre théorème (on calcule une longueur, le triangle étant déjà rectangle) et réciproque (on démontre que le triangle est rectangle) ; √(a² + b²) n'est PAS égal à a + b (√(9+16) = 5, pas 3+4 = 7).</div>
-<div class="tip">💡 <b>Réflexe QCM</b> : repérer les triplets pythagoriciens (multiples de (3;4;5) : (6;8;10), (9;12;15), (30;40;50)…) évite tout calcul.</div>
+<section id="view-cours" style="display:none">
+
+</section>
+
+<section id="view-fiches" style="display:none">
+<div id="fiches-zone"></div>
+</section>
+
+<section id="view-quiz" style="display:none">
+<div id="quiz-app"></div>
+</section>
+
+<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Haut de page">↑</button>
+<footer>Révisions — Mathématiques · <a href="../index.html">← Toutes les matières</a></footer>
 </div>
-      </section>
-      <section class="card" id="cours-derivation">
-      <div class="cours-head no-print"><h2>📘 Dérivation : nombre dérivé, tangentes, dérivées usuelles</h2><span class="niv">Lycée · 1re</span></div>
-      <div class="cours-body">
-<h3>1. Nombre dérivé : la définition</h3>
-<p>Soit f une fonction définie sur un intervalle I et a un point de I. Le <b>taux d'accroissement</b> de f entre a et a + h est : </p>
-<p class="ex">t(h) = [f(a + h) − f(a)] / h</p>
-<p>Si t(h) tend vers une limite finie ℓ quand h tend vers 0, on dit que f est <b>dérivable en a</b> et ℓ = <b>f′(a)</b>, le <b>nombre dérivé</b> de f en a.</p>
-<p class="ex"><b>Exemple :</b> f(x) = x², a = 3. t(h) = [(3+h)² − 9]/h = (6h + h²)/h = 6 + h. Quand h → 0, t(h) → 6 : donc f′(3) = 6.</p>
-<h3>2. Interprétation géométrique : la tangente</h3>
-<div class="tip">📐 Le nombre dérivé f′(a) est le <b>coefficient directeur (pente) de la tangente</b> à la courbe de f au point d'abscisse a.</div>
-<p><b>Équation de la tangente</b> au point d'abscisse a :</p>
-<p class="ex"><b>y = f′(a)(x − a) + f(a)</b></p>
-<p class="ex"><b>Exemple :</b> f(x) = x², a = 3 : f(3) = 9, f′(3) = 6. Tangente : y = 6(x − 3) + 9 = 6x − 9. Au point (3 ; 9), la pente vaut 6.</p>
-<h3>3. Dérivées des fonctions usuelles (à connaître par cœur)</h3>
-<table>
-  <tr><th>Fonction f</th><th>Dérivée f′ (sur son domaine)</th></tr>
-  <tr><td>f(x) = k (constante)</td><td>f′(x) = 0</td></tr>
-  <tr><td>f(x) = x</td><td>f′(x) = 1</td></tr>
-  <tr><td>f(x) = x²</td><td>f′(x) = 2x</td></tr>
-  <tr><td>f(x) = x³</td><td>f′(x) = 3x²</td></tr>
-  <tr><td>f(x) = x<sup>n</sup></td><td>f′(x) = n·x<sup>n−1</sup></td></tr>
-  <tr><td>f(x) = 1/x</td><td>f′(x) = −1/x²</td></tr>
-  <tr><td>f(x) = √x</td><td>f′(x) = 1/(2√x) (x &gt; 0)</td></tr>
-  <tr><td>f(x) = cos x</td><td>f′(x) = −sin x</td></tr>
-  <tr><td>f(x) = sin x</td><td>f′(x) = cos x</td></tr>
-</table>
-<h3>4. Opérations sur les dérivées</h3>
-<table>
-  <tr><th>Règle</th><th>Formule</th></tr>
-  <tr><td>Somme</td><td>(u + v)′ = u′ + v′</td></tr>
-  <tr><td>Produit par une constante</td><td>(k·u)′ = k·u′</td></tr>
-  <tr><td>Produit</td><td>(u × v)′ = u′v + uv′</td></tr>
-  <tr><td>Quotient</td><td>(u/v)′ = (u′v − uv′)/v² &nbsp;(v ≠ 0)</td></tr>
-  <tr><td>Inverse</td><td>(1/v)′ = −v′/v²</td></tr>
-</table>
-<p class="ex"><b>Exemple (produit) :</b> f(x) = x²·(x + 1). Posons u = x² (u′ = 2x) et v = x + 1 (v′ = 1) : f′(x) = 2x(x + 1) + x²·1 = 2x² + 2x + x² = <b>3x² + 2x</b>.</p>
-<p class="ex"><b>Exemple (quotient) :</b> f(x) = x/(x + 2). u = x, u′ = 1, v = x + 2, v′ = 1. f′(x) = [1·(x+2) − x·1]/(x+2)² = <b>2/(x + 2)²</b>.</p>
-<h3>5. Dérivée et variations : le lien fondamental</h3>
-<div class="tip">📈 <b>Sens de variation :</b> sur un intervalle I, si f′(x) &gt; 0 alors f est <b>croissante</b> ; si f′(x) &lt; 0 alors f est <b>décroissante</b> ; si f′(x) = 0 et change de signe, f présente un <b>extremum local</b> (minimum si la dérivée passe de − à +, maximum si elle passe de + à −).</div>
-<p class="ex"><b>Exemple :</b> f(x) = x³ − 3x. f′(x) = 3x² − 3 = 3(x − 1)(x + 1). f′ &gt; 0 sur ]−∞ ; −1[ et ]1 ; +∞[, f′ &lt; 0 sur ]−1 ; 1[. Donc f croît, décroît, recroît : <b>maximum local en x = −1</b> (f(−1) = 2), <b>minimum local en x = 1</b> (f(1) = −2).</p>
-<h3>6. Méthode type : étude complète d'une fonction</h3>
-<ul>
-  <li>1. Dériver f (fonctions usuelles + opérations).</li>
-  <li>2. Factoriser f′(x) au maximum pour étudier son signe.</li>
-  <li>3. Dresser le tableau de signes de f′, puis le tableau de variations de f.</li>
-  <li>4. Calculer les valeurs aux extremums et éventuellement l'équation des tangentes.</li>
-</ul>
-<div class="piege">⚠️ <b>Pièges classiques</b> : (u × v)′ n'est PAS u′ × v′ ; (u/v)′ : l'ordre de la formule compte (u′v − uv′, et non uv′ − u′v) ; √x n'est dérivable que sur ]0 ; +∞[ (dérivabilité à droite seulement en 0) ; une dérivée nulle ne suffit pas pour un extremum : il faut un <b>changement de signe</b> (contre-exemple : x³ a une dérivée nulle en 0 mais pas d'extremum).</div>
-<div class="tip">💡 <b>Réflexe QCM</b> : vérifier la cohérence — la dérivée d'une fonction croissante doit être positive ; une tangente horizontale correspond à f′(a) = 0.</div>
-</div>
-      </section>
-  </div>
-
-  <div id="view-fiches" style="display:none">
-    <section class="card no-print">
-      <h2>🗂️ Fiches synthétiques</h2>
-      <p style="font-size:.9rem">L'essentiel de chaque chapitre sur une fiche : énoncés clés, formules, pièges. Le bouton <b>🖨️ PDF</b> génère une version imprimable (une fiche par page) : dans la fenêtre d'impression, choisissez « Enregistrer au format PDF ».</p>
-    </section>
-    <details class="fiche" id="fiche-pythagore">
-      <summary><span class="fiche-num">F</span> Le théorème de Pythagore et sa réciproque</summary>
-      <div class="fiche-body">
-      <div class="print-title">Fiche synthétique — Le théorème de Pythagore et sa réciproque (Collège · 4e (révisé en 3e))</div>
-      <div class="fiche-actions"><button class="btn-pdf" onclick="printFiche('pythagore')">🖨️ PDF</button></div>
-      
-<h3>Énoncé (à connaître par cœur)</h3>
-<div class="tip">ABC rectangle en A ⟺ <b>BC² = AB² + AC²</b> (hypoténuse au carré = somme des carrés des deux autres côtés)</div>
-<h3>Trois outils, trois usages</h3>
-<table>
-  <tr><th>Outil</th><th>Quand ?</th><th>Conclusion</th></tr>
-  <tr><td><b>Théorème</b></td><td>Le triangle EST rectangle, on cherche une longueur</td><td>Calcul de l'hypoténuse : BC = √(AB² + AC²) ; d'un côté : AC = √(BC² − AB²)</td></tr>
-  <tr><td><b>Réciproque</b></td><td>On sait que BC² = AB² + AC²</td><td>Le triangle EST rectangle (hypoténuse = plus grand côté)</td></tr>
-  <tr><td><b>Contraposée</b></td><td>BC² ≠ AB² + AC²</td><td>Le triangle n'est PAS rectangle</td></tr>
-</table>
-<h3>Triplets pythagoriciens à repérer</h3>
-<ul><li>(3 ; 4 ; 5) et ses multiples : (6 ; 8 ; 10), (9 ; 12 ; 15), (30 ; 40 ; 50)</li><li>(5 ; 12 ; 13) · (8 ; 15 ; 17) · (7 ; 24 ; 25)</li></ul>
-<h3>Formules utiles</h3>
-<ul><li>Diagonale d'un rectangle L × l : d = √(L² + l²)</li><li>Diagonale d'un carré de côté c : d = c√2</li><li>Hauteur h d'un triangle équilatéral de côté c : h = c√3/2</li></ul>
-<div class="piege">⚠️ √(a² + b²) ≠ a + b · toujours identifier l'hypoténuse avant d'écrire l'égalité · garder la valeur exacte jusqu'au bout (√13, pas 3,6).</div>
-
-      </div></details>
-      <details class="fiche" id="fiche-derivation">
-      <summary><span class="fiche-num">F</span> Dérivation : nombre dérivé, tangentes, dérivées usuelles</summary>
-      <div class="fiche-body">
-      <div class="print-title">Fiche synthétique — Dérivation : nombre dérivé, tangentes, dérivées usuelles (Lycée · 1re)</div>
-      <div class="fiche-actions"><button class="btn-pdf" onclick="printFiche('derivation')">🖨️ PDF</button></div>
-      
-<h3>Définition</h3>
-<div class="tip">f′(a) = limite de [f(a+h) − f(a)]/h quand h → 0 · f′(a) = <b>pente de la tangente</b> en a</div>
-<h3>Tangente</h3>
-<div class="tip"><b>y = f′(a)(x − a) + f(a)</b></div>
-<h3>Usuelles</h3>
-<table>
-  <tr><th>f</th><th>k</th><th>x</th><th>x²</th><th>x³</th><th>x<sup>n</sup></th><th>1/x</th><th>√x</th><th>cos</th><th>sin</th></tr>
-  <tr><td><b>f′</b></td><td>0</td><td>1</td><td>2x</td><td>3x²</td><td>nx<sup>n−1</sup></td><td>−1/x²</td><td>1/(2√x)</td><td>−sin</td><td>cos</td></tr>
-</table>
-<h3>Opérations</h3>
-<ul>
-  <li>(u + v)′ = u′ + v′ · (ku)′ = ku′</li>
-  <li>(uv)′ = u′v + uv′</li>
-  <li>(u/v)′ = (u′v − uv′)/v² · (1/v)′ = −v′/v²</li>
-</ul>
-<h3>Variations</h3>
-<ul><li>f′ &gt; 0 ⟹ f croissante · f′ &lt; 0 ⟹ f décroissante</li><li>Extremum ⟺ f′ s'annule ET change de signe</li></ul>
-<div class="piege">⚠️ (uv)′ ≠ u′v′ · ordre du quotient : u′v − uv′ · extremum exige un changement de signe de f′.</div>
-
-      </div></details>
-  </div>
-
-  <div id="view-quiz" style="display:none">
-    <div id="quiz-app"></div>
-  </div>
-
-  <footer>Révisions — Mathématiques · Collège &amp; Lycée · <a href="../">📚 Toutes les matières</a> · <a href="../../">Accueil</a></footer>
-</div>
-<button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑</button>
 <script>
-var COURS_META = [{"id":"pythagore","titre":"Le théorème de Pythagore et sa réciproque","niveau":"Collège · 4e (révisé en 3e)"},{"id":"derivation","titre":"Dérivation : nombre dérivé, tangentes, dérivées usuelles","niveau":"Lycée · 1re"}];
-var QUESTIONS = [{"t":"Pythagore (collège)","q":"ABC est un triangle rectangle en A avec AB = 6 cm et AC = 8 cm. Quelle est la longueur de l'hypoténuse BC ?","c":["10 cm","14 cm","12 cm","48 cm"],"a":0,"e":"BC² = AB² + AC² = 36 + 64 = 100, donc BC = √100 = 10 cm (triplet 6-8-10, multiple de 3-4-5)."},{"t":"Pythagore (collège)","q":"Dans le théorème de Pythagore, l'hypoténuse est :","c":["le côté opposé à l'angle droit, le plus long","le côté adjacent à l'angle droit","un côté quelconque","toujours le côté le plus court"],"a":0,"e":"L'hypoténuse est le côté opposé à l'angle droit ; c'est obligatoirement le côté le plus long du triangle rectangle."},{"t":"Pythagore (collège)","q":"Un triangle possède des côtés mesurant 5 cm, 12 cm et 13 cm. Ce triangle :","c":["est rectangle (réciproque de Pythagore)","n'est pas rectangle","est équilatéral","ne peut pas exister"],"a":0,"e":"13² = 169 = 5² + 12² = 25 + 144 : l'égalité de Pythagore est vérifiée, donc le triangle est rectangle d'hypoténuse 13 (réciproque)."},{"t":"Pythagore (collège)","q":"Un triangle possède des côtés mesurant 4, 5 et 7. Que peut-on conclure ?","c":["Il n'est pas rectangle car 7² ≠ 4² + 5²","Il est rectangle car 4² + 5² = 7²","Il est rectangle d'hypoténuse 4","On ne peut rien conclure"],"a":0,"e":"7² = 49 alors que 4² + 5² = 16 + 25 = 41 : l'égalité n'est pas vérifiée, donc le triangle n'est pas rectangle (contraposée)."},{"t":"Pythagore (collège)","q":"ABC est rectangle en A avec BC = 13 cm et AB = 5 cm. Combien vaut AC ?","c":["12 cm","8 cm","18 cm","√18 cm"],"a":0,"e":"AC² = BC² − AB² = 169 − 25 = 144, donc AC = 12 cm (triplet 5-12-13)."},{"t":"Pythagore (collège)","q":"Quelle est la longueur de la diagonale d'un rectangle de dimensions 9 cm sur 12 cm ?","c":["15 cm","21 cm","13 cm","√21 cm"],"a":0,"e":"d² = 9² + 12² = 81 + 144 = 225, donc d = 15 cm (triplet 9-12-15)."},{"t":"Pythagore (collège)","q":"√(9 + 16) est égal à :","c":["5","7","25","3 + 4 = 7 uniquement si on développe"],"a":0,"e":"√(9 + 16) = √25 = 5. Attention : √(a² + b²) ≠ a + b : ici 3 + 4 = 7 serait faux."},{"t":"Pythagore (collège)","q":"La réciproque du théorème de Pythagore sert à :","c":["prouver qu'un triangle est rectangle","calculer une longueur dans un triangle rectangle","tracer une médiatrice","calculer un angle"],"a":0,"e":"Le théorème calcule une longueur (triangle déjà rectangle) ; sa réciproque démontre qu'un triangle est rectangle à partir des longueurs."},{"t":"Pythagore (collège)","q":"Un triangle rectangle en A a pour hypoténuse 10 et un côté AB = 6. La longueur AC vaut :","c":["8","4","16","√(10 + 6)"],"a":0,"e":"AC² = 100 − 36 = 64 donc AC = 8. La notation « hypoténuse 10 » impose de soustraire le carré du côté connu."},{"t":"Dérivation (1re)","q":"Si f(x) = x², que vaut f′(3) ?","c":["6","9","3","2"],"a":0,"e":"f′(x) = 2x, donc f′(3) = 6. On peut le vérifier par le taux d'accroissement : [(3+h)² − 9]/h = 6 + h → 6."},{"t":"Dérivation (1re)","q":"La dérivée de f(x) = 1/x (x ≠ 0) est :","c":["−1/x²","1/x²","−1/x","1/(2x)"],"a":0,"e":"(1/x)′ = −1/x² : à connaître par cœur, comme (uv)′ avec v = x (ou la formule de l'inverse)."},{"t":"Dérivation (1re)","q":"L'équation de la tangente à la courbe de f en x = a est :","c":["y = f′(a)(x − a) + f(a)","y = f(a)(x − a) + f′(a)","y = f′(a)x − f(a)","y = f(x) − f′(a)x"],"a":0,"e":"Tangente au point d'abscisse a : y = f′(a)(x − a) + f(a) — pente f′(a), passe par (a ; f(a))."},{"t":"Dérivation (1re)","q":"Si f′(x) > 0 sur un intervalle, alors f est :","c":["croissante sur cet intervalle","décroissante","constante","négative"],"a":0,"e":"Le signe de la dérivée donne les variations : f′ > 0 ⟹ croissante, f′ < 0 ⟹ décroissante."},{"t":"Dérivation (1re)","q":"La dérivée de f(x) = x³ + 2x est :","c":["3x² + 2","x² + 2","3x² + x","6x"],"a":0,"e":"Somme : (x³)′ = 3x² et (2x)′ = 2, donc f′(x) = 3x² + 2."},{"t":"Dérivation (1re)","q":"f(x) = x³ − 3x. Où f atteint-elle un minimum local ?","c":["En x = 1","En x = −1","En x = 0","En x = 3"],"a":0,"e":"f′(x) = 3x² − 3 = 3(x−1)(x+1) : f′ < 0 sur ]−1 ; 1[ puis f′ > 0 : minimum local en x = 1 (f(1) = −2). En x = −1, c'est un maximum local."},{"t":"Dérivation (1re)","q":"La dérivée de f(x) = x² · (x + 1) est :","c":["3x² + 2x","2x + 1","2x(x + 1)","x² + 2x"],"a":0,"e":"(uv)′ = u′v + uv′ = 2x(x+1) + x² = 2x² + 2x + x² = 3x² + 2x. Piège classique : 2x × 1 = 2x serait (uv)′ = u′v′, ce qui est faux."},{"t":"Dérivation (1re)","q":"La dérivée de f(x) = x/(x + 2) est :","c":["2/(x + 2)²","1/(x + 2)²","(x + 2)/x²","−2/(x + 2)²"],"a":0,"e":"(u/v)′ = (u′v − uv′)/v² = [1·(x+2) − x·1]/(x+2)² = 2/(x+2)²."},{"t":"Dérivation (1re)","q":"La dérivée de f(x) = √x sur ]0 ; +∞[ est :","c":["1/(2√x)","1/√x","2√x","−1/(2√x)"],"a":0,"e":"(√x)′ = 1/(2√x) sur ]0 ; +∞[. En 0, la fonction est définie mais non dérivable (tangente verticale)."},{"t":"Dérivation (1re)","q":"Si f′(a) = 0 et f′ change de signe en a (de − à +), alors f présente en a :","c":["un minimum local","un maximum local","une tangente verticale","aucun extremum"],"a":0,"e":"La dérivée s'annule ET change de signe de négatif à positif : la fonction décroît puis croît, c'est un minimum local. Sans changement de signe (ex. x³ en 0), pas d'extremum."},{"t":"Dérivation (1re)","q":"Le nombre dérivé f′(a) représente géométriquement :","c":["le coefficient directeur de la tangente en a","l'ordonnée du point d'abscisse a","l'aire sous la courbe","la distance à l'origine"],"a":0,"e":"f′(a) est la pente (coefficient directeur) de la tangente à la courbe au point d'abscisse a."}];
+var PROGRAMME = [{"n": "Collège — 6e", "ch": [{"t": "Nombres entiers et décimaux : opérations, divisibilité", "id": null}, {"t": "Fractions : comparaison, addition, soustraction", "id": null}, {"t": "Proportionnalité et pourcentages", "id": null}, {"t": "Géométrie de base : figures, angles, symétries", "id": null}, {"t": "Périmètres et aires", "id": null}]}, {"n": "Collège — 5e", "ch": [{"t": "Nombres relatifs : repérage, addition, soustraction", "id": null}, {"t": "Premières expressions littérales et simplification", "id": null}, {"t": "Triangles : somme des angles, inégalité triangulaire", "id": null}, {"t": "Parallélogrammes et quadrilatères", "id": null}, {"t": "Statistiques : organisation et lecture de données", "id": null}]}, {"n": "Collège — 4e", "ch": [{"t": "Puissances et écriture scientifique", "id": null}, {"t": "Théorème de Pythagore et sa réciproque", "id": "pythagore"}, {"t": "Théorème des milieux et droite des milieux", "id": null}, {"t": "Calcul littéral : distributivité, réduction", "id": null}, {"t": "Équations du premier degré à une inconnue", "id": null}, {"t": "Proportionnalité : vitesses, échelles", "id": null}, {"t": "Pyramides et cônes : volumes", "id": null}]}, {"n": "Collège — 3e", "ch": [{"t": "Théorème de Thalès et sa réciproque", "id": null}, {"t": "Trigonométrie dans le triangle rectangle (cos, sin, tan)", "id": null}, {"t": "Racines carrées et calculs associés", "id": null}, {"t": "Développement et factorisation, identités remarquables", "id": null}, {"t": "Notion de fonction : image, antécédent, lecture graphique", "id": null}, {"t": "Statistiques : moyennes, médiane, étendue", "id": null}, {"t": "Sphères et sections de solides ; rotation et translation", "id": null}]}, {"n": "Lycée — 2de", "ch": [{"t": "Ensembles de nombres (N, Z, Q, R) et calcul littéral", "id": null}, {"t": "Fonctions de référence : carré, cube, inverse, racine", "id": null}, {"t": "Fonctions : variations, extremums, lectures graphiques", "id": null}, {"t": "Vecteurs et géométrie repérée", "id": null}, {"t": "Statistiques descriptives : quartiles, écart type", "id": null}, {"t": "Probabilités : événements, calculs de base", "id": null}, {"t": "Configurations du plan et trigonométrie (sinus, cosinus)", "id": null}]}, {"n": "Lycée — 1re", "ch": [{"t": "Second degré : discriminant, forme canonique, factorisation", "id": null}, {"t": "Dérivation : nombre dérivé, tangentes, dérivées usuelles", "id": "derivation"}, {"t": "Dérivation : opérations et étude des variations", "id": null}, {"t": "Suites arithmétiques et géométriques", "id": null}, {"t": "Probabilités conditionnelles et indépendance", "id": null}, {"t": "Produit scalaire et applications", "id": null}, {"t": "Variables aléatoires, espérance, variance", "id": null}]}, {"n": "Lycée — Terminale (spécialité)", "ch": [{"t": "Suites : récurrence, convergence, limites", "id": null}, {"t": "Limites de fonctions et asymptotes", "id": null}, {"t": "Continuité et théorème des valeurs intermédiaires", "id": null}, {"t": "Primitives et calcul intégral", "id": null}, {"t": "Logarithmes népériens et exponentielles", "id": null}, {"t": "Lois de probabilité : binomiale, normale", "id": null}, {"t": "Équations différentielles", "id": null}, {"t": "Arithmétique et matrices (maths expertes)", "id": null}]}];
+var COURS_META = [{"id": "pythagore", "theme": "Pythagore (collège)", "niveau": "4e", "titre": "Théorème de Pythagore", "cours": "<div class=\"cours-head\"><h2>Théorème de Pythagore</h2><span class=\"niv\">4e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche de ce chapitre</a><a onclick=\"showTab('quiz')\">🧪 QCM de ce chapitre</a></div>\n<h3>1. Vocabulaire</h3>\n<p>Dans un triangle rectangle, l'hypoténuse est le côté opposé à l'angle droit. C'est <b>toujours le côté le plus long</b>. Le théorème de Pythagore ne s'applique <b>que dans un triangle rectangle</b>.</p>\n<h3>2. L'énoncé du théorème</h3>\n<div class=\"tip\"><b>Théorème :</b> si un triangle est rectangle, alors le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés.<br>Si ABC est rectangle en A : <b>BC² = AB² + AC²</b>.</div>\n<h3>3. Calculer une longueur</h3>\n<div class=\"ex\"><b>Exemple 1 — calcul de l'hypoténuse :</b> ABC rectangle en A, AB = 3 cm, AC = 4 cm. Alors BC² = 3² + 4² = 9 + 16 = 25, donc BC = √25 = <b>5 cm</b>.</div>\n<div class=\"ex\"><b>Exemple 2 — calcul d'un côté de l'angle droit :</b> ABC rectangle en A, BC = 13 cm, AC = 5 cm. Alors AB² = BC² − AC² = 169 − 25 = 144, donc AB = √144 = <b>12 cm</b>.</div>\n<h3>4. Réciproque et contraposée</h3>\n<div class=\"tip\"><b>Réciproque :</b> si, dans un triangle, le carré du plus long côté est égal à la somme des carrés des deux autres, alors ce triangle est rectangle (l'angle droit est opposé au plus long côté).</div>\n<div class=\"ex\"><b>Exemple :</b> triangle de côtés 6 ; 8 ; 10. On a 10² = 100 et 6² + 8² = 36 + 64 = 100. Le triangle est donc rectangle.</div>\n<div class=\"warn\"><b>Contraposée (pour démontrer qu'un triangle n'est PAS rectangle) :</b> si BC² ≠ AB² + AC², alors le triangle ABC n'est pas rectangle.</div>\n<h3>5. Applications</h3>\n<ul>\n<li><b>Démontrer qu'un triangle est rectangle</b> (réciproque) ou ne l'est pas (contraposée).</li>\n<li><b>Calculs de distances</b> : diagonale d'un rectangle (√(L² + l²)), hauteur dans un carré, déplacements « en escalier » (le plus court chemin est la diagonale).</li>\n<li>Base de la <b>trigonométrie</b> et du calcul de distances en géométrie repérée : distance entre deux points M(x<sub>M</sub>; y<sub>M</sub>) et N(x<sub>N</sub>; y<sub>N</sub>) : MN = √((x<sub>N</sub> − x<sub>M</sub>)² + (y<sub>N</sub> − y<sub>M</sub>)²).</li>\n</ul>\n<h3>6. Triplets pythagoriciens à connaître</h3>\n<table><tr><th>Triplet</th><th>Vérification</th></tr>\n<tr><td>(3 ; 4 ; 5)</td><td>9 + 16 = 25</td></tr>\n<tr><td>(5 ; 12 ; 13)</td><td>25 + 144 = 169</td></tr>\n<tr><td>(8 ; 15 ; 17)</td><td>64 + 225 = 289</td></tr>\n<tr><td>(6 ; 8 ; 10)</td><td>36 + 64 = 100 (= (3;4;5) × 2)</td></tr></table>\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b><ul>\n<li>Confondre le théorème (triangle <i>déjà</i> rectangle → calcul) et la réciproque (on <i>vérifie</i> s'il l'est).</li>\n<li>Écrire BC² = AB² + AC² dans un triangle rectangle en B (c'est AC² = AB² + BC² : l'hypoténuse est le côté qui apparaît <b>seul</b>).</li>\n<li>Oublier la racine carrée : BC² = 25 signifie BC = 5, pas 25.</li>\n<li>Donner une longueur négative : une longueur est toujours positive, on prend la racine carrée positive.</li></ul></div>"}, {"id": "derivation", "theme": "Dérivation (1re)", "niveau": "1re", "titre": "Dérivation", "cours": "<div class=\"cours-head\"><h2>Dérivation</h2><span class=\"niv\">1re</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche de ce chapitre</a><a onclick=\"showTab('quiz')\">🧪 QCM de ce chapitre</a></div>\n<h3>1. Nombre dérivé et taux d'accroissement</h3>\n<p>Soit f une fonction définie sur un intervalle I et a ∈ I. Le <b>taux d'accroissement</b> de f entre a et a + h est :</p>\n<div class=\"tip\">T(h) = (f(a + h) − f(a)) / h</div>\n<p>Si T(h) tend vers une limite finie ℓ quand h tend vers 0, on dit que f est <b>dérivable en a</b> et ℓ = <b>f′(a)</b>, le nombre dérivé de f en a.</p>\n<div class=\"ex\"><b>Exemple :</b> f(x) = x², a = 1. T(h) = ((1+h)² − 1)/h = (2h + h²)/h = 2 + h → 2 quand h → 0. Donc f′(1) = 2.</div>\n<h3>2. Interprétation géométrique : la tangente</h3>\n<div class=\"tip\"><b>Tangente en a :</b> la tangente à la courbe de f au point d'abscisse a est la droite d'équation <b>y = f′(a)(x − a) + f(a)</b>. Son coefficient directeur est f′(a).</div>\n<p>La tangente est la « meilleure approximation affine » de f au voisinage de a : f(a + h) ≈ f(a) + h·f′(a).</p>\n<h3>3. Dérivées des fonctions usuelles</h3>\n<table><tr><th>f(x)</th><th>f′(x)</th><th>Valable sur</th></tr>\n<tr><td>x<sup>n</sup> (n ∈ N*)</td><td>n·x<sup>n−1</sup></td><td>ℝ</td></tr>\n<tr><td>1/x</td><td>−1/x²</td><td>ℝ \\ {0} = ]−∞;0[ ∪ ]0;+∞[</td></tr>\n<tr><td>√x</td><td>1/(2√x)</td><td>]0; +∞[</td></tr>\n<tr><td>cos(x)</td><td>−sin(x)</td><td>ℝ</td></tr>\n<tr><td>sin(x)</td><td>cos(x)</td><td>ℝ</td></tr>\n<tr><td>x ↦ x</td><td>1</td><td>ℝ</td></tr>\n<tr><td>k (constante)</td><td>0</td><td>ℝ</td></tr></table>\n<h3>4. Opérations sur les dérivées</h3>\n<table><tr><th>Fonction</th><th>Dérivée</th><th>Conditions</th></tr>\n<tr><td>u + v</td><td>u′ + v′</td><td>u et v dérivables</td></tr>\n<tr><td>k·u (k constante)</td><td>k·u′</td><td>u dérivable</td></tr>\n<tr><td>u × v</td><td>u′v + uv′</td><td>u et v dérivables</td></tr>\n<tr><td>1/v</td><td>−v′/v²</td><td>v dérivable et v ≠ 0</td></tr>\n<tr><td>u/v</td><td>(u′v − uv′)/v²</td><td>v dérivable et v ≠ 0</td></tr>\n<tr><td>u(niveau entier) : u<sup>n</sup></td><td>n·u′·u<sup>n−1</sup></td><td>u dérivable</td></tr>\n<tr><td>√u</td><td>u′/(2√u)</td><td>u dérivable et u > 0</td></tr></table>\n<h3>5. Lien dérivée / variations</h3>\n<ul>\n<li>Si f′(x) &gt; 0 sur un intervalle, alors f est <b>strictement croissante</b> sur cet intervalle.</li>\n<li>Si f′(x) &lt; 0, f est <b>strictement décroissante</b>.</li>\n<li>Si f′(x) = 0 sur un intervalle, f est <b>constante</b>.</li>\n<li>Si f′ s'annule et <b>change de signe</b> en a : f présente un <b>extremum local</b> en a (maximum si f′ passe de + à −, minimum si de − à +).</li>\n</ul>\n<div class=\"warn\"><b>Attention :</b> f′(a) = 0 ne suffit pas pour un extremum : il faut que la dérivée <b>change de signe</b> (ex. f(x) = x³ en 0 : f′(0) = 0 mais pas d'extremum, la fonction reste croissante).</div>\n<h3>6. Méthode type d'étude de fonction</h3>\n<ul>\n<li>① Domaine de définition ;</li>\n<li>② Calcul de f′(x) (développer/factoriser pour étudier son signe) ;</li>\n<li>③ Tableau de signes de f′ ;</li>\n<li>④ Tableau de variations de f (f′ positive → flèche montante) ;</li>\n<li>⑤ Extremums locaux le cas échéant.</li>\n</ul>\n<div class=\"ex\"><b>Exemple :</b> f(x) = x³ − 3x sur ℝ. f′(x) = 3x² − 3 = 3(x − 1)(x + 1). f′ &gt; 0 sur ]−∞;−1[ ∪ ]1;+∞[, f′ &lt; 0 sur ]−1;1[. Donc f croît, décroît, recroît : maximum local en −1 (f(−1) = 2), minimum local en 1 (f(1) = −2).</div>\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b><ul>\n<li>(uv)′ n'est PAS u′v′ : c'est u′v + uv′.</li>\n<li>(u/v)′ : l'ordre dans « u′v − uv′ » compte (au numérateur) ; le dénominateur est v².</li>\n<li>(1/x)′ = −1/x² (le signe − est souvent oublié) ; (√x)′ = 1/(2√x) (le 2 aussi).</li>\n<li>Une fonction peut être dérivable partout sauf en un point (ex. √x en 0 : la tangente est verticale, f n'est pas dérivable en 0).</li>\n<li>Dérivable ⇒ continue, mais continue ⇏ dérivable (ex. valeur absolue en 0).</li></ul></div>"}];
+var FICHES_DATA = [{"id": "pythagore", "fiche": "<h3>📌 L'essentiel</h3>\n<p><b>Théorème :</b> triangle rectangle en A ⟹ BC² = AB² + AC² (hypoténuse au carré = somme des carrés des deux autres côtés).</p>\n<p><b>Réciproque :</b> BC² = AB² + AC² ⟹ triangle rectangle en A (le plus long côté est l'hypoténuse).</p>\n<p><b>Contraposée :</b> BC² ≠ AB² + AC² ⟹ le triangle n'est pas rectangle.</p>\n<h3>🧭 Méthodes</h3>\n<ul>\n<li><b>Calculer l'hypoténuse :</b> BC = √(AB² + AC²)</li>\n<li><b>Calculer un côté de l'angle droit :</b> AB = √(BC² − AC²)</li>\n<li><b>Vérifier si un triangle est rectangle :</b> comparer le plus grand carré à la somme des deux autres (réciproque).</li>\n</ul>\n<h3>🔢 Triplets utiles</h3>\n<p>(3 ; 4 ; 5) — (5 ; 12 ; 13) — (8 ; 15 ; 17) — et leurs multiples : (6 ; 8 ; 10), (9 ; 12 ; 15)…</p>\n<h3>🧮 Formules dérivées</h3>\n<ul>\n<li>Diagonale d'un rectangle : d = √(L² + l²)</li>\n<li>Distance MN = √((x<sub>N</sub>−x<sub>M</sub>)² + (y<sub>N</sub>−y<sub>M</sub>)²)</li>\n</ul>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>Ne s'applique QUE dans un triangle rectangle.</li>\n<li>L'hypoténuse est toujours le côté le plus long = celui qui est <b>seul</b> dans l'égalité.</li>\n<li>Ne pas oublier la racine carrée finale (√25 = 5).</li>\n</ul>"}, {"id": "derivation", "fiche": "<h3>📌 Définitions</h3>\n<p><b>Nombre dérivé :</b> f′(a) = lim<sub>h→0</sub> (f(a+h) − f(a)) / h.</p>\n<p><b>Tangente en a :</b> y = f′(a)(x − a) + f(a) (coefficient directeur : f′(a)).</p>\n<h3>🔢 Dérivées usuelles</h3>\n<table><tr><th>f</th><th>x<sup>n</sup></th><th>1/x</th><th>√x</th><th>cos x</th><th>sin x</th><th>k</th></tr>\n<tr><td><b>f′</b></td><td>n x<sup>n−1</sup></td><td>−1/x²</td><td>1/(2√x)</td><td>−sin x</td><td>cos x</td><td>0</td></tr></table>\n<h3>➕ Opérations</h3>\n<ul>\n<li>(u + v)′ = u′ + v′ ; (k u)′ = k u′</li>\n<li>(uv)′ = u′v + uv′</li>\n<li>(1/v)′ = −v′/v² ; (u/v)′ = (u′v − uv′)/v²</li>\n<li>(u<sup>n</sup>)′ = n u′ u<sup>n−1</sup> ; (√u)′ = u′/(2√u)</li>\n</ul>\n<h3>📈 Variations</h3>\n<ul>\n<li>f′ &gt; 0 ⟹ f croissante ; f′ &lt; 0 ⟹ f décroissante.</li>\n<li>f′ s'annule ET change de signe en a ⟹ extremum local en a.</li>\n</ul>\n<h3>🎯 Méthode d'étude</h3>\n<p>Domaine → f′(x) factorisée → signe de f′ → tableau de variations → extremums.</p>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>(uv)′ ≠ u′v′.</li>\n<li>f′(a) = 0 seul ne prouve pas un extremum (changement de signe obligatoire : x³ en 0).</li>\n<li>Dérivable ⇒ continue, mais pas l'inverse (|x| en 0).</li>\n</ul>"}];
+var QUESTIONS = [{"t": "Pythagore (collège)", "q": "Dans un triangle ABC rectangle en A, quelle égalité est toujours vraie ?", "c": ["BC = AB + AC", "AB² = BC² + AC²", "BC² = AB² + AC²", "AC² = AB² + BC²"], "a": 2, "e": "L'hypoténuse BC (côté opposé à l'angle droit) est seule dans l'égalité : BC² = AB² + AC²."}, {"t": "Pythagore (collège)", "q": "ABC est rectangle en A avec AB = 3 et AC = 4. Quelle est la longueur BC ?", "c": ["12", "25", "5", "7"], "a": 2, "e": "BC² = 3² + 4² = 25, donc BC = √25 = 5."}, {"t": "Pythagore (collège)", "q": "Comment s'appelle le côté opposé à l'angle droit dans un triangle rectangle ?", "c": ["Le côté adjacent", "La hauteur", "La médiane", "L'hypoténuse"], "a": 3, "e": "L'hypoténuse est le côté opposé à l'angle droit ; c'est toujours le plus long côté."}, {"t": "Pythagore (collège)", "q": "Un triangle a pour côtés 5, 12 et 13. Que peut-on conclure ?", "c": ["Il est rectangle (réciproque du théorème)", "On ne peut rien conclure", "Il est équilatéral", "Il n'est pas rectangle"], "a": 0, "e": "13² = 169 = 5² + 12² = 25 + 144. La réciproque du théorème de Pythagore s'applique : le triangle est rectangle."}, {"t": "Pythagore (collège)", "q": "Un triangle a pour côtés 4, 5 et 7. Ce triangle…", "c": ["est rectangle", "est isocèle", "n'est pas rectangle (contraposée)", "est rectangle en le sommet opposé au côté 4"], "a": 2, "e": "7² = 49 mais 4² + 5² = 41 ≠ 49 : la contraposée montre qu'il n'est pas rectangle."}, {"t": "Pythagore (collège)", "q": "ABC rectangle en A, BC = 13 et AC = 5. Combien vaut AB ?", "c": ["√18", "18", "8", "12"], "a": 3, "e": "AB² = BC² − AC² = 169 − 25 = 144, donc AB = √144 = 12."}, {"t": "Pythagore (collège)", "q": "Quelle est la diagonale d'un rectangle de longueur 8 et de largeur 6 ?", "c": ["14", "48", "10", "√14"], "a": 2, "e": "d² = 8² + 6² = 100, donc d = 10 (triplet (6 ; 8 ; 10))."}, {"t": "Pythagore (collège)", "q": "Le théorème de Pythagore permet de…", "c": ["calculer une longueur dans un triangle rectangle", "calculer un angle dans un triangle rectangle", "calculer l'aire d'un triangle", "démontrer qu'un triangle est isocèle"], "a": 0, "e": "Le théorème relie les longueurs des côtés d'un triangle rectangle ; la trigonométrie sert pour les angles."}, {"t": "Pythagore (collège)", "q": "Dans un triangle rectangle, l'hypoténuse est…", "c": ["le côté le plus court", "le côté le plus long", "toujours horizontal", "un côté de l'angle droit"], "a": 1, "e": "L'hypoténuse, opposée à l'angle droit, est toujours le côté le plus long du triangle rectangle."}, {"t": "Pythagore (collège)", "q": "BC² = 25 dans un triangle rectangle. Combien vaut BC ?", "c": ["625", "25", "50", "5"], "a": 3, "e": "BC est la racine carrée de 25 : BC = 5. Piège classique : ne pas oublier la racine !"}, {"t": "Dérivation (1re)", "q": "Quelle est la dérivée de f(x) = x³ ?", "c": ["f′(x) = 3x²", "f′(x) = x²", "f′(x) = 3x⁴", "f′(x) = 3x"], "a": 0, "e": "Pour xⁿ, la dérivée est n·xⁿ⁻¹ : (x³)′ = 3x²."}, {"t": "Dérivation (1re)", "q": "Quelle est la dérivée de f(x) = 1/x sur ]0 ; +∞[ ?", "c": ["f′(x) = −1/x²", "f′(x) = 1/x²", "f′(x) = 1/(2√x)", "f′(x) = −1/x"], "a": 0, "e": "La dérivée de 1/x est −1/x² (ne pas oublier le signe moins)."}, {"t": "Dérivation (1re)", "q": "Quelle est l'équation de la tangente à la courbe de f au point d'abscisse a ?", "c": ["y = f(a)(x) + f′(a)", "y = f′(a)(x + a) − f(a)", "y = f(a)(x − a) + f′(a)", "y = f′(a)(x − a) + f(a)"], "a": 3, "e": "Tangente : y = f′(a)(x − a) + f(a). f′(a) est le coefficient directeur."}, {"t": "Dérivation (1re)", "q": "Si f′(x) > 0 sur un intervalle I, alors f est…", "c": ["strictement croissante sur I", "négative sur I", "constante sur I", "strictement décroissante sur I"], "a": 0, "e": "Le signe de la dérivée donne le sens de variation : f′ > 0 ⟹ f strictement croissante."}, {"t": "Dérivation (1re)", "q": "Quelle est la dérivée de f(x) = √x sur ]0 ; +∞[ ?", "c": ["f′(x) = 1/(2√x)", "f′(x) = 1/√x", "f′(x) = −1/(2√x)", "f′(x) = 2√x"], "a": 0, "e": "(√x)′ = 1/(2√x) : le 2 au dénominateur est souvent oublié."}, {"t": "Dérivation (1re)", "q": "f(x) = x⁴ − 3x² + 7. Que vaut f′(x) ?", "c": ["4x³ − 6", "4x³ − 6x", "x⁴ − 6x", "4x³ − 3x + 7"], "a": 1, "e": "Terme à terme : (x⁴)′ = 4x³, (−3x²)′ = −6x, (7)′ = 0."}, {"t": "Dérivation (1re)", "q": "Quelle est la dérivée de g(x) = (2x + 1)(x − 3) ?", "c": ["g′(x) = 2(x − 3)·(2x + 1)", "g′(x) = (2x + 1) + (x − 3)", "g′(x) = 2", "g′(x) = 2(x − 3) + (2x + 1)·1"], "a": 3, "e": "Avec (uv)′ = u′v + uv′ : u′ = 2, v′ = 1. ATTENTION : (uv)′ ≠ u′v′."}, {"t": "Dérivation (1re)", "q": "f′ s'annule en a en changeant de signe (+ vers −). Que se passe-t-il ?", "c": ["f est constante après a", "f présente un minimum local en a", "f présente un point d'inflexion en a", "f présente un maximum local en a"], "a": 3, "e": "Changement de signe de la dérivée = extremum local ; + vers − = maximum."}, {"t": "Dérivation (1re)", "q": "f(x) = x³. En 0, f′(0) = 0. Peut-on conclure à un extremum en 0 ?", "c": ["Non, car f′ ne change pas de signe en 0", "Oui, car f′(0) = 0", "Oui, c'est un minimum", "Oui, c'est un maximum"], "a": 0, "e": "f′(x) = 3x² ≥ 0 partout : f reste croissante, pas d'extremum. f′(a) = 0 seul ne suffit pas."}, {"t": "Dérivation (1re)", "q": "Quelle affirmation est correcte ?", "c": ["Toute fonction dérivable est continue", "Continuité et dérivabilité sont équivalentes", "Une fonction dérivable n'est jamais continue", "Toute fonction continue est dérivable"], "a": 0, "e": "Dérivable ⇒ continue, mais la réciproque est fausse : |x| est continue en 0 mais non dérivable (tangente « en coin »)."}];
+var currentChap = null;
+var META_BY_ID = {}; var FICHE_BY_ID = {};
+COURS_META.forEach(function(c){ META_BY_ID[c.id] = c; });
+FICHES_DATA.forEach(function(f){ FICHE_BY_ID[f.id] = f.fiche; });
 
-var CHAP_TITRES = {};
-COURS_META.forEach(function(c){ CHAP_TITRES[c.id] = c.titre; });
-var THEMES = [];
-QUESTIONS.forEach(function(q){ if (THEMES.indexOf(q.t) < 0) THEMES.push(q.t); });
-
-var app = document.getElementById('quiz-app');
-var state = { mode: 'menu', questions: [], idx: 0, answers: {}, showExp: false };
-
-function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-function showTab(name) {
-  ['prog','cours','fiches','quiz'].forEach(function(t) {
-    var v = document.getElementById('view-' + t), b = document.getElementById('tab-' + t);
-    v.style.display = name === t ? '' : 'none';
-    b.className = name === t ? 'active' : '';
-  });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function showTab(t){
+  ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
+  ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
+  if (t === 'fiches') renderFiches();
+  if (t === 'quiz') {
+    if (currentChap && META_BY_ID[currentChap]) { startTraining(META_BY_ID[currentChap].theme); }
+    else { state.mode = 'menu'; render(); }
+  }
+  if (t === 'prog' || t === 'cours') window.scrollTo({top:0});
 }
+function clearChap(){ currentChap = null; }
 
-function goCours(id) {
+function goCours(id){
+  currentChap = id;
   showTab('cours');
   var el = document.getElementById('cours-' + id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function goCoursList(){ currentChap = null; showTab('cours'); }
+
+function ficheHTML(id, num){
+  var m = META_BY_ID[id]; var f = FICHE_BY_ID[id];
+  return '<details class="fiche" id="fiche-' + id + '">' +
+    '<summary><span class="fiche-num">' + num + '</span> Fiche — ' + esc(m.titre) + ' <span class="niv" style="font-size:.7rem;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:999px;padding:2px 10px;font-weight:700;margin-left:6px">' + esc(m.niveau) + '</span></summary>' +
+    '<div class="fiche-body">' +
+    '<div class="fiche-actions"><button class="btn-pdf" onclick="printFiche(\'' + id + '\')">🖨️ Imprimer / PDF</button></div>' +
+    '<div class="print-title">Fiche synthétique — ' + esc(m.titre) + ' (' + esc(m.niveau) + ')</div>' +
+    f +
+    '</div></details>';
 }
 
-function printFiche(id) {
-  var all = document.querySelectorAll('details.fiche');
-  for (var i = 0; i < all.length; i++) all[i].classList.remove('print-target');
-  var f = document.getElementById('fiche-' + id);
-  f.classList.add('print-target');
-  f.open = true;
+function renderFiches(){
+  var z = document.getElementById('fiches-zone'); var h = '';
+  if (currentChap && FICHE_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += '<section class="card"><h2>🗂️ Fiche du chapitre en cours</h2>' +
+      '<p style="font-size:.92rem;margin-bottom:12px">Chapitre en cours : <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ') — voici sa fiche synthétique.</p>' +
+      '<p style="font-size:.85rem"><a href="#" onclick="clearChap();showTab(\'prog\');return false;">📚 Voir toutes les fiches / tous les chapitres</a></p></section>';
+    h += ficheHTML(currentChap, 1);
+  } else {
+    h += '<section class="card"><h2>🗂️ Fiches synthétiques</h2><p style="font-size:.92rem">Toutes les fiches, une par chapitre. Ouvrez un cours : l\'onglet 🗂️ Fiche affichera uniquement la fiche de ce chapitre.</p></section>';
+    var i = 1;
+    FICHES_DATA.forEach(function(f){ h += ficheHTML(f.id, i); i++; });
+  }
+  z.innerHTML = h;
+}
+
+function printFiche(id){
+  var el = document.getElementById('fiche-' + id);
+  if (!el) return;
+  var details = document.querySelectorAll('details.fiche');
+  details.forEach(function(d){ d.classList.remove('print-target'); d.removeAttribute('open'); });
+  el.classList.add('print-target');
   window.print();
-  setTimeout(function(){ f.classList.remove('print-target'); }, 1000);
 }
 
-/* ---------- Moteur QCM (entraînement par chapitre) ---------- */
-function render() {
-  if (state.mode === 'menu') return renderMenu();
-  if (state.mode === 'result') return renderResult();
-  renderQuiz();
+var state = { mode:'menu', theme:null, idx:0, qs:[], answers:[] };
+function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function startTraining(theme){ state.mode='train'; state.theme = theme; state.qs = shuffle(QUESTIONS.filter(function(q){ return q.t === theme; })); state.idx = 0; state.answers = []; render(); }
+function backMenu(){ state.mode='menu'; render(); }
+function select(i){
+  if (state.mode !== 'train' || state.idx >= state.qs.length) return;
+  state.answers[state.idx] = i;
+  var q = state.qs[state.idx]; var btns = document.querySelectorAll('#quiz-app .choice');
+  btns.forEach(function(b, k){ b.classList.remove('sel'); if (k === q.a) b.classList.add('ok'); else if (k === i) b.classList.add('ko'); else b.classList.add('dim'); b.disabled = true; });
+  var ex = document.getElementById('expl'); if (ex) ex.style.display = 'block';
+  var nx = document.getElementById('btn-next'); if (nx) nx.disabled = false;
 }
-function renderMenu() {
-  var h = '<section class="card"><h2>🧪 Entraînement par chapitre</h2><p style="font-size:.9rem;margin-bottom:14px">Réponse immédiate avec explication. Les chapitres s\'étofferont au fil des ajouts de cours.</p>';
-  THEMES.forEach(function(t) {
-    var n = QUESTIONS.filter(function(q){ return q.t === t; }).length;
-    h += '<button class="theme-btn" onclick="startTraining(\'' + t.replace(/'/g, "\\\'") + '\')"><span>' + esc(t) + '</span><span class="cnt">' + n + ' q.</span></button>';
-  });
-  h += '</section>';
+function nextQ(){ if (state.idx < state.qs.length - 1){ state.idx++; render(); } else { state.mode='result'; render(); } }
+function prevQ(){ if (state.idx > 0){ state.idx--; render(); } }
+function render(){
+  var app = document.getElementById('quiz-app'); var h = '';
+  if (state.mode === 'menu'){
+    h += '<h2 class="q">Choisissez un chapitre à réviser</h2>';
+    COURS_META.forEach(function(c){
+      var n = QUESTIONS.filter(function(q){ return q.t === c.theme; }).length;
+      h += '<button class="theme-btn" onclick="startTraining(\'' + c.theme.replace(/\'/g, "\\'") + '\')"><span>🧪 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">' + n + ' q.</span></button>';
+    });
+    h += '<p style="margin-top:14px;font-size:.82rem;color:#64748b">Ouvrez un cours (onglet 📖) : l\'onglet 🧪 lancera directement son QCM.</p>';
+  } else if (state.mode === 'train'){
+    var q = state.qs[state.idx];
+    h += '<div class="meta"><span>' + esc(q.t) + '</span><span>' + (state.idx + 1) + ' / ' + state.qs.length + '</span></div>';
+    h += '<h2 class="q">' + esc(q.q) + '</h2>';
+    q.c.forEach(function(c, k){ h += '<button class="choice" onclick="select(' + k + ')">' + String.fromCharCode(65 + k) + '. ' + esc(c) + '</button>'; });
+    h += '<div class="expl" id="expl" style="display:none">💡 ' + esc(q.e) + '</div>';
+    h += '<div class="quiz-foot"><button class="btn-gray btn-small" id="btn-prev" onclick="prevQ()" ' + (state.idx === 0 ? 'disabled' : '') + '>← Précédent</button>' +
+      '<span><button class="btn-gray btn-small" onclick="backMenu()">✖ Quitter</button> <button class="btn btn-primary btn-small" id="btn-next" style="width:auto" onclick="nextQ()" ' + (state.answers[state.idx] === undefined ? '' : '') + (state.answers[state.idx] === undefined ? 'disabled' : '') + '>Suivant →</button></span></div>';
+  } else {
+    var ok = 0; state.qs.forEach(function(q, i){ if (state.answers[i] === q.a) ok++; });
+    var pct = Math.round(100 * ok / state.qs.length);
+    h += '<div class="meta"><span>Résultat — ' + esc(state.theme) + '</span><span>' + ok + ' / ' + state.qs.length + '</span></div>';
+    h += '<div class="res-note ' + (pct >= 70 ? 'green' : 'red') + '">' + pct + ' %</div>';
+    state.qs.forEach(function(q, i){
+      h += '<div class="res-card">' + (state.answers[i] === q.a ? '✅' : '❌') + ' <b>' + esc(q.q) + '</b><br>' +
+        (state.answers[i] === q.a ? '' : 'Réponse correcte : <b class="green">' + esc(q.c[q.a]) + '</b><br>') + '<span style="font-size:.82rem;color:#64748b">💡 ' + esc(q.e) + '</span></div>';
+    });
+    h += '<div style="margin-top:20px"><button class="btn btn-primary" onclick="startTraining(state.theme)">🔄 Recommencer</button></div>';
+    h += '<div style="margin-top:10px"><button class="btn-gray btn-small" onclick="backMenu()">← Autre chapitre</button></div>';
+  }
   app.innerHTML = h;
 }
-function initQuiz(qs) { state.questions = qs; state.answers = {}; qs.forEach(function(_, i){ state.answers[i] = -1; }); state.idx = 0; state.showExp = false; }
-function startTraining(t) { initQuiz(shuffle(QUESTIONS.filter(function(q){ return q.t === t; }))); state.mode = 'training'; render(); }
-function select(c) {
-  if (state.showExp) return;
-  state.answers[state.idx] = c; state.showExp = true; render();
-}
-function nextQ() { if (state.idx < state.questions.length - 1) { state.idx++; state.showExp = false; render(); } else { state.mode = 'result'; render(); } }
-function prevQ() { if (state.idx > 0) { state.idx--; state.showExp = false; render(); } }
-function backMenu() { state.mode = 'menu'; render(); }
-function renderQuiz() {
-  var q = state.questions[state.idx];
-  var h = '<section class="card"><div class="meta"><span>' + esc(q.t) + '</span><span style="color:#64748b">Question ' + (state.idx + 1) + '/' + state.questions.length + '</span><button class="btn-gray btn-small" style="background:#ef4444;padding:4px 14px" onclick="backMenu()">✖ Quitter</button></div>';
-  h += '<h2 class="q">' + esc(q.q) + '</h2>';
-  q.c.forEach(function(c, i) {
-    var cls = 'choice';
-    if (state.showExp) { if (i === q.a) cls += ' ok'; else if (i === state.answers[state.idx]) cls += ' ko'; else cls += ' dim'; }
-    h += '<button class="' + cls + '" onclick="select(' + i + ')">' + esc(c) + '</button>';
-  });
-  if (state.showExp) h += '<div class="expl">💡 ' + q.e + '</div>';
-  h += '<div class="quiz-foot"><button class="btn-gray btn-small" ' + (state.idx === 0 ? 'disabled' : '') + ' onclick="prevQ()">← Précédent</button><button class="btn btn-primary btn-small" style="width:auto" onclick="' + (state.idx === state.questions.length - 1 ? 'nextQ()' : 'nextQ()') + '">' + (state.idx === state.questions.length - 1 ? 'Résultat →' : 'Suivant →') + '</button></div>';
-  h += '</section>';
-  app.innerHTML = h;
-}
-function renderResult() {
-  var ok = 0;
-  state.questions.forEach(function(q, i){ if (state.answers[i] === q.a) ok++; });
-  var pct = Math.round(ok / state.questions.length * 100);
-  var note = Math.round(ok / state.questions.length * 20 * 10) / 10;
-  var h = '<section class="card"><h2>📊 Résultat</h2><div class="res-note ' + (note >= 10 ? 'green' : 'red') + '">' + note + '/20</div>';
-  h += '<p>' + ok + ' bonne' + (ok > 1 ? 's' : '') + ' réponse' + (ok > 1 ? 's' : '') + ' sur ' + state.questions.length + ' (' + pct + ' %).</p>';
-  h += '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn-primary btn" style="width:auto" onclick="startTraining(\'' + state.questions[0].t.replace(/'/g, "\\\'") + '\')">🔁 Recommencer ce chapitre</button><button class="btn-gray btn-small" onclick="backMenu()">📚 Autre chapitre</button></div></section>';
-  state.questions.forEach(function(q, i) {
-    var good = state.answers[i] === q.a;
-    h += '<div class="res-card"><span class="' + (good ? 'green' : 'red') + '"><b>' + (good ? '✔' : '✘') + '</b></span> ' + esc(q.q) + (good ? '' : '<br><span style="font-size:.82rem">Réponse : <b>' + esc(q.c[q.a]) + '</b> — ' + q.e + '</span>') + '</div>';
-  });
-  app.innerHTML = h;
-}
-render();
 
+// Programme : liste cliquable des niveaux/chapitres
 (function(){
-  var b = document.getElementById('back-top');
-  function check(){ if (window.scrollY > 300) b.classList.add('visible'); else b.classList.remove('visible'); }
-  window.addEventListener('scroll', check, { passive: true });
-  check();
-  b.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  var v = document.getElementById('view-prog'); var h = '';
+  PROGRAMME.forEach(function(niv){
+    h += '<h2 class="niveau">' + esc(niv[0]) + '</h2>';
+    niv[1].forEach(function(ch){
+      if (ch[1]) {
+        h += '<button class="chap-btn" onclick="goCours(\'' + ch[1] + '\')"><span>📖 ' + esc(ch[0]) + '</span><span class="actions"><span class="mini">Cours</span><span class="mini">Fiche</span><span class="mini">QCM</span></span></button>';
+      } else {
+        h += '<div class="chap-btn soon"><span>📖 ' + esc(ch[0]) + '</span><span class="soon-badge">à venir</span></div>';
+      }
+    });
+  });
+  v.innerHTML = '<section class="card"><h2>📋 Programme de mathématiques</h2><p style="font-size:.9rem;margin-bottom:8px">Cliquez sur un chapitre rédigé pour ouvrir son cours. Les onglets « 🗂️ Fiche » et « 🧪 QCM » suivront alors ce chapitre.</p>' + h + '</section>';
 })();
+
+// Cours : rendu
+(function(){
+  var v = document.getElementById('view-cours'); var h = '';
+  COURS_META.forEach(function(c){
+    h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
+  });
+  var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
+  v.innerHTML = '<section class="card"><h2>📖 Les cours</h2>' + list + '</section>' + h;
+})();
+
+var backTop = document.getElementById('back-top');
+window.addEventListener('scroll', function(){ if (window.scrollY > 300) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
+showTab('prog');
 </script>
 </body>
 </html>
