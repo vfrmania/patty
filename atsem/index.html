@@ -189,7 +189,7 @@
 
     <section class="card">
       <h2>🗣️ Préparer l'oral (coefficient 2)</h2>
-      <div class="tip">👉 <b>Guide complet pour l'oral</b> : format de l'épreuve, présentation, questions du jury, mises en situation, tenue et gestion du stress — <a href="#" onclick="showTab('oral');return false">onglet <span class="ico">🗣️</span> Oral</a>.</div>
+      <div class="tip">👉 <b>Guide complet pour l'oral</b> : format de l'épreuve, présentation, questions du jury, mises en situation, tenue et gestion du stress — <a href="#" onclick="showTab('oral');return false">onglet <span class="ico">🗣️ </span>Oral</a>.</div>
       <ul>
         <li>Construisez un récit « expériences → compétences → métier d'ATSEM ». Votre expérience en petite enfance est votre atout.</li>
         <li>Questions probables : <i>Pourquoi la maternelle plutôt que la crèche ? Que savez-vous de la FPT ? Une situation difficile avec un enfant/parent ?</i></li>
@@ -201,7 +201,7 @@
     <section class="card">
       <h2>🔗 Ressources utiles</h2>
       <ul>
-        <li><a href="metier.html"><span class="ico">📋</span> Informations sur le métier d'ATSEM</a> — fiche de poste, rémunération, congés et conditions d'embauche</li>
+        <li><a href="metier.html"><span class="ico">📋 </span>Informations sur le métier d'ATSEM</a> — fiche de poste, rémunération, congés et conditions d'embauche</li>
         <li><a href="https://www.concours-territorial.fr" target="_blank">concours-territorial.fr</a> — calendrier officiel et inscription</li>
         <li><a href="https://www.cdg80.fr" target="_blank">cdg80.fr</a> — notice du concours, rapports de jury, annales de la Somme</li>
         <li><a href="https://concours-atsem.com/annales/" target="_blank">Annales officielles des CDG</a> — sujets corrigés, format identique</li>
@@ -755,7 +755,7 @@ function applyDates(d) {
     el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
     el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
     el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
-    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a> · <a href="../update-dates.php" id="verif-dates"><span class="ico">🔄</span> Vérifier les dates maintenant</a>';
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a><br><a href="../update-dates.php" id="verif-dates"><span class="ico">🔄 </span>Vérifier les dates maintenant</a>';
     var _vl = document.getElementById('verif-dates'); if (_vl) _vl.addEventListener('click', verifierDates);
     var _vj = _d(d.verifie_le);
     var _age = Math.floor((new Date() - _vj) / 86400000);
