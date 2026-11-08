@@ -1580,6 +1580,10 @@ function tooltipAcronymes(root) {
   });
 }
 try { renderFiches(); } catch(e) { document.getElementById('fiches-list').innerHTML = '<section class="card"><b>Erreur fiches :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
+// Infobulles des acronymes : fiches, guide et oral — jamais le QCM
+try { tooltipAcronymes(document.getElementById('fiches-list')); } catch(e) {}
+try { tooltipAcronymes(document.getElementById('view-guide')); } catch(e) {}
+try { tooltipAcronymes(document.getElementById('view-oral')); } catch(e) {}
 
 try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 
