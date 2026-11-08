@@ -200,6 +200,7 @@ function printFiche(id){
   var details = document.querySelectorAll('details.fiche');
   details.forEach(function(d){ d.classList.remove('print-target'); d.removeAttribute('open'); });
   el.classList.add('print-target');
+  el.setAttribute('open','');
   window.print();
 }
 
