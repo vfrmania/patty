@@ -250,12 +250,12 @@ function render(){
 (function(){
   var v = document.getElementById('view-prog'); var h = '';
   PROGRAMME.forEach(function(niv){
-    h += '<h2 class="niveau">' + esc(niv[0]) + '</h2>';
-    niv[1].forEach(function(ch){
-      if (ch[1]) {
-        h += '<button class="chap-btn" onclick="goCours(\'' + ch[1] + '\')"><span>📖 ' + esc(ch[0]) + '</span><span class="actions"><span class="mini">Cours</span><span class="mini">Fiche</span><span class="mini">QCM</span></span></button>';
+    h += '<h2 class="niveau">' + esc(niv.n) + '</h2>';
+    niv.ch.forEach(function(ch){
+      if (ch.id) {
+        h += '<button class="chap-btn" onclick="goCours(\'' + ch.id + '\')"><span>📖 ' + esc(ch.t) + '</span><span class="actions"><span class="mini">Cours</span><span class="mini">Fiche</span><span class="mini">QCM</span></span></button>';
       } else {
-        h += '<div class="chap-btn soon"><span>📖 ' + esc(ch[0]) + '</span><span class="soon-badge">à venir</span></div>';
+        h += '<div class="chap-btn soon"><span>📖 ' + esc(ch.t) + '</span><span class="soon-badge">à venir</span></div>';
       }
     });
   });
