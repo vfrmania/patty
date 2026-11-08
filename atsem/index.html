@@ -782,7 +782,7 @@ function applyDates(d) {
     var _st = document.getElementById('dates-stale');
     if (_st && _age > 14) {
       _st.style.display = '';
-      _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant : le script PHP sera exécuté si l'hébergement le permet, sinon une vérification en direct sera tentée.";
+      _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant";
     }
   } catch(e) {}
   try {
