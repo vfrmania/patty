@@ -169,9 +169,9 @@ function goCours(id){
 }
 function goCoursList(){ currentChap = null; showTab('cours'); }
 
-function ficheHTML(id, num){
+function ficheHTML(id, num, open){
   var m = META_BY_ID[id]; var f = FICHE_BY_ID[id];
-  return '<details class="fiche" id="fiche-' + id + '">' +
+  return '<details class="fiche" id="fiche-' + id + '"' + (open ? ' open' : '') + '>' +
     '<summary><span class="fiche-num">' + num + '</span> Fiche — ' + esc(m.titre) + ' <span class="niv" style="font-size:.7rem;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:999px;padding:2px 10px;font-weight:700;margin-left:6px">' + esc(m.niveau) + '</span></summary>' +
     '<div class="fiche-body">' +
     '<div class="fiche-actions"><button class="btn-pdf" onclick="printFiche(\'' + id + '\')">🖨️ Imprimer / PDF</button></div>' +
@@ -185,8 +185,7 @@ function renderFiches(){
   if (currentChap && FICHE_BY_ID[currentChap]) {
     var m = META_BY_ID[currentChap];
     h += chapHeadHTML(m);
-    h += '<section class="card"><p style="font-size:.92rem;margin-bottom:0">Fiche synthétique du chapitre <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ').</p></section>';
-    h += ficheHTML(currentChap, 1);
+    h += ficheHTML(currentChap, 1, true);
   } else {
     h += '<section class="card"><h2>🗂️ Fiches synthétiques</h2><p style="font-size:.92rem">Toutes les fiches, une par chapitre. Ouvrez un cours : l\'onglet 🗂️ Fiche affichera uniquement la fiche de ce chapitre.</p></section>';
     var i = 1;
