@@ -129,8 +129,6 @@
 <button class="tab-back no-print" onclick="location.href='../index.html'" title="Autres matières" aria-label="Retour aux autres matières">↩ Matière</button>
 <button id="tab-prog" onclick="showTab('prog')">📋 Programme</button>
 <button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
-<button id="tab-fiches" onclick="showTab('fiches')">🗂️ Fiche</button>
-<button id="tab-quiz" onclick="showTab('quiz')">🧪 QCM</button>
 </nav>
 
 <section id="view-prog">
@@ -170,7 +168,7 @@ function chapHeadHTML(m){
 function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 function showTab(t){
   ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
-  ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
+  ['prog','cours'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
   if (t === 'fiches') renderFiches();
   if (t === 'cours') renderCours();
   if (t === 'quiz') {
@@ -288,7 +286,7 @@ function render(){
       }
     });
   });
-  v.innerHTML = '<section class="card"><h2>📋 Programme de mathématiques</h2><p style="font-size:.9rem;margin-bottom:8px">Cliquez sur un chapitre rédigé pour ouvrir son cours. Les onglets « 🗂️ Fiche » et « 🧪 QCM » suivront alors ce chapitre.</p>' + h + '</section>';
+  v.innerHTML = '<section class="card"><h2>📋 Programme de mathématiques</h2><p style="font-size:.9rem;margin-bottom:8px">Cliquez sur un chapitre rédigé pour ouvrir son cours, puis utilisez les boutons « 🗂️ Fiche de ce chapitre » et « 🧪 QCM de ce chapitre » placés en début de cours.</p>' + h + '</section>';
 })();
 
 // Cours : rendu contextuel
@@ -300,7 +298,7 @@ function renderCours(){
     h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
   } else {
     var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
-    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">Cliquez sur un chapitre : l\'onglet affichera ensuite uniquement ce cours, sa fiche et son QCM.</p>' + list + '</section>';
+    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">Cliquez sur un chapitre : le cours s\'affiche seul, avec ses boutons Fiche et QCM en tête.</p>' + list + '</section>';
     COURS_META.forEach(function(c){
       h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
     });
