@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révisions — Physique-chimie (collège & lycée)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #eef2ff; color: #1e293b; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  header.hero { background: linear-gradient(135deg, #0e7490, #0284c7); color: #fff; border-radius: 20px; padding: 36px 28px; margin-bottom: 20px; }
+  header.hero h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header.hero p { color: #e0e7ff; font-size: .95rem; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); padding: 3px 12px; border-radius: 999px; font-size: .78rem; }
+  nav.tabs .tab-back { background: #fff; color: #4f46e5; font-weight: 700; }
+  nav.tabs .tab-back:hover { background: #eef2ff; }
+  .hero-back { display: inline-block; margin-top: 14px; color: #e0e7ff; text-decoration: none; font-size: .88rem; font-weight: 600; }
+  .hero-back:hover { text-decoration: underline; }
+  nav.tabs { display: flex; gap: 8px; margin-bottom: 20px; position: sticky; top: 0; z-index: 100; padding: 10px 0; background: #eef2ff; border-radius: 0 0 14px 14px; }
+  nav.tabs button { flex: 1; padding: 12px; border: none; border-radius: 14px; background: #fff; color: #475569; font-weight: 600; font-size: .95rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.08); transition: all .15s; }
+  nav.tabs button.active { background: #4f46e5; color: #fff; }
+  section.card { background: #fff; border-radius: 18px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  section.card h2 { font-size: 1.25rem; margin-bottom: 14px; color: #312e81; }
+  section.card h3 { font-size: 1.02rem; margin: 20px 0 8px; color: #334155; }
+  h2.niveau { font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; color: #6366f1; margin: 26px 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 10px 0; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+  th { background: #f8fafc; color: #475569; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+  .warn { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .tip { background: #eef2ff; border-left: 4px solid #6366f1; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .piege { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 8px; font-size: .87rem; margin: 12px 0; }
+  .ex { border-left: 3px solid #a5b4fc; padding: 8px 14px; margin: 8px 0; background: #f8fafc; font-size: .9rem; border-radius: 0 8px 8px 0; }
+  ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; font-size: .92rem; }
+  .btn { display: inline-block; padding: 12px 22px; border: none; border-radius: 12px; font-weight: 600; font-size: .95rem; cursor: pointer; transition: all .15s; }
+  .btn-primary { background: #4f46e5; color: #fff; width: 100%; }
+  .btn-primary:hover { background: #4338ca; }
+  .theme-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .9rem; margin: 6px 0; transition: all .15s; }
+  .theme-btn:hover { border-color: #818cf8; background: #eef2ff; }
+  .cnt { font-size: .75rem; background: #e2e8f0; border-radius: 999px; padding: 2px 10px; color: #64748b; }
+  .chap-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .92rem; margin: 6px 0; text-align: left; transition: all .15s; color: #1e293b; font-family: inherit; }
+  .chap-btn:hover { border-color: #818cf8; background: #eef2ff; }
+  .chap-btn .actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+  .chap-btn .mini { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 9px; font-weight: 700; white-space: nowrap; }
+  .chap-btn.soon { opacity: .55; cursor: default; background: #f8fafc; }
+  .chap-btn.soon:hover { border-color: #e2e8f0; background: #f8fafc; }
+  .chap-btn .soon-badge { font-size: .72rem; color: #94a3b8; white-space: nowrap; }
+  #quiz-app h2.q { font-size: 1.15rem; margin-bottom: 20px; }
+  .choice { width: 100%; text-align: left; padding: 13px 16px; margin: 8px 0; background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: all .15s; font-family: inherit; }
+  .choice:hover { border-color: #a5b4fc; background: #eef2ff; }
+  .choice.sel { border-color: #4f46e5; background: #eef2ff; }
+  .choice.ok { border-color: #10b981; background: #ecfdf5; }
+  .choice.ko { border-color: #ef4444; background: #fef2f2; }
+  .choice.dim { opacity: .55; }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: #4f46e5; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
+  .expl .ex-detail { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; border-radius: 8px; margin-top: 8px; font-size: .9rem; line-height: 1.45; }
+  .res-card .ex-detail { margin-top: 6px; }
+  details.ex-util { margin: 16px 0; border: 1px solid #c7d2fe; border-radius: 12px; background: #f5f3ff; }
+  details.ex-util summary { cursor: pointer; padding: 11px 16px; font-weight: 700; color: #fff; font-size: .9rem; list-style: none; background: linear-gradient(135deg, #4f46e5, #7c3aed); border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(79,70,229,.25); }
+  details.ex-util summary::-webkit-details-marker { display: none; }
+  details.ex-util summary:hover { filter: brightness(1.08); }
+  details.ex-util[open] summary { border-radius: 12px 12px 0 0; }
+  details.ex-util .exu-body { padding: 14px 18px 16px; font-size: .9rem; line-height: 1.55; }
+  details.ex-util .exu-body .etu { padding: 6px 12px; border-left: 3px solid #7c3aed; background: #ede9fe; border-radius: 0 8px 8px 0; margin: 8px 0; }
+  details.ex-util .exu-body .etu b:first-child { color: #4f46e5; }
+  details.ex-util .exu-body .exu-enonce { background: #e0e7ff; border-radius: 8px; padding: 8px 12px; margin-bottom: 4px; }
+  .expl { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 12px; padding: 14px 16px; font-size: .86rem; margin-top: 14px; }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+  .btn-small { padding: 9px 18px; font-size: .85rem; }
+  .btn-gray { background: #64748b; color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+  .btn-gray:disabled { opacity: .4; cursor: not-allowed; }
+  .res-note { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+  .res-card { border-radius: 14px; padding: 10px 14px; background: #f8fafc; margin: 6px 0; font-size: .88rem; }
+  .green { color: #059669; } .red { color: #dc2626; }
+  footer { text-align: center; font-size: .78rem; color: #94a3b8; margin-top: 40px; }
+  a { color: #4f46e5; }
+  details.fiche { background: #fff; border-radius: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); overflow: hidden; }
+  details.fiche summary { cursor: pointer; padding: 18px 22px; font-weight: 700; color: #312e81; background: #f8fafc; list-style: none; display: flex; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.fiche summary::-webkit-details-marker { display: none; }
+  details.fiche summary::after { content: "▾"; margin-left: auto; color: #64748b; font-size: 1.1rem; }
+  details.fiche[open] summary::after { content: "▴"; }
+  .fiche-num { background: #4f46e5; color: #fff; min-width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+  .fiche-body { padding: 4px 26px 24px; }
+  .fiche-body h3 { font-size: .98rem; margin: 18px 0 6px; color: #334155; }
+  .fiche-actions { display: flex; justify-content: flex-end; margin: 6px 0 10px; gap: 8px; flex-wrap: wrap; }
+  .btn-pdf { background: #fff; color: #4f46e5; border: 1.5px solid #4f46e5; border-radius: 10px; padding: 8px 14px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .btn-pdf:hover { background: #eef2ff; }
+  .cours-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .cours-head .niv { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .chap-quick { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; }
+  .chap-quick a { font-size: .8rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 5px 12px; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .chap-quick a:hover { background: #c7d2fe; }
+  @media print {
+    header.hero, nav.tabs, footer, .no-print { display: none !important; }
+    body { background: #fff; }
+    .wrap { max-width: 100%; padding: 0; }
+    #view-prog, #view-cours, #view-quiz { display: none !important; }
+    details.fiche { display: none !important; box-shadow: none; page-break-inside: avoid; }
+    details.fiche.print-target { display: block !important; }
+    details.fiche.print-target summary { display: none; }
+    details.fiche.print-target .fiche-body { padding: 0 6px; }
+    .fiche-actions { display: none !important; }
+    .print-title { display: block !important; border-bottom: 3px solid #4f46e5; padding-bottom: 8px; margin-bottom: 16px; color: #312e81; font-size: 1.4rem; font-weight: 800; }
+    h3 { page-break-after: avoid; }
+  }
+  .print-title { display: none; }
+  .chap-head { position: sticky; top: 64px; z-index: 90; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-radius: 12px; padding: 12px 18px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(79,70,229,.35); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .chap-head .chap-title { font-weight: 700; font-size: 1rem; }
+  .chap-head .chap-links a { color: #e0e7ff; text-decoration: none; font-size: .82rem; cursor: pointer; white-space: nowrap; }
+  .chap-head .chap-links a:hover { text-decoration: underline; }
+  @media (max-width: 899px) { .chap-head .chap-links { display: none !important; } }
+  .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
+  .back-top:hover { filter: brightness(1.1); }
+  .back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .back-top .lbl { display: none; }
+  @media (min-width: 900px) { .back-top { width: auto; min-width: 56px; height: 56px; padding: 0 22px 0 18px; font-size: 1.05rem; border-radius: 999px; right: 26px; bottom: 26px; box-shadow: 0 6px 24px rgba(0,0,0,.35); } .back-top .lbl { display: inline; margin-left: 9px; font-weight: 700; } }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>🧬 SVT</h1>
+<p>Révisions collège &amp; lycée — programme, cours complets, fiches synthétiques et QCM.</p>
+<div class="badges"><span class="badge">28 chapitres au programme</span><span class="badge">1 cours rédigé</span><span class="badge">📖 collège + lycée</span></div>
+<a class="hero-back" href="../index.html">↩ Autres matières</a>
+</header>
+<nav class="tabs">
+<button class="tab-back no-print" onclick="location.href='../index.html'" title="Autres matières" aria-label="Retour aux autres matières">↩ SVT</button>
+<button id="tab-prog" onclick="showTab('prog')">📋 Programme</button>
+<button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
+</nav>
+
+<section id="view-prog">
+
+</section>
+
+<section id="view-cours" style="display:none">
+
+</section>
+
+<section id="view-fiches" style="display:none">
+<div id="fiches-zone"></div>
+</section>
+
+<section id="view-quiz" style="display:none">
+<div id="quiz-chapbar"></div>
+<div id="quiz-app"></div>
+</section>
+
+<button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑<span class="lbl">Haut</span></button>
+<footer>Révisions — SVT · <a href="../index.html">← Toutes les matières</a></footer>
+</div>
+<script>
+var PROGRAMME = [{"n": "Collège — 6e", "ch": [{"t": "La biodiversité et le vivant", "id": "biodiversite-6e"}, {"t": "La cellule, unité du vivant", "id": null}, {"t": "Les milieux de vie et leurs occupants", "id": null}, {"t": "La reproduction des êtres vivants", "id": null}]}, {"n": "Collège — 5e", "ch": [{"t": "La digestion et les nutriments", "id": null}, {"t": "La respiration et les échanges gazeux", "id": null}, {"t": "La circulation sanguine", "id": null}, {"t": "Les reins et l'élimination des déchets", "id": null}]}, {"n": "Collège — 4e", "ch": [{"t": "La puberté et les organes reproducteurs", "id": null}, {"t": "La fécondation, la grossesse et le développement", "id": null}, {"t": "La contraception, la sexualité et les IST", "id": null}, {"t": "Le système nerveux et la communication", "id": null}]}, {"n": "Collège — 3e", "ch": [{"t": "La génétique et l'hérédité", "id": null}, {"t": "L'immunité et les vaccins", "id": null}, {"t": "L'évolution des espèces", "id": null}, {"t": "Les écosystèmes et l'environnement", "id": null}]}, {"n": "Lycée — 2de", "ch": [{"t": "La Terre : structure et tectonique des plaques", "id": null}, {"t": "L'ADN, les protéines et la cellule", "id": null}, {"t": "La biodiversité et son évolution", "id": null}, {"t": "Le climat, l'atmosphère et les gaz à effet de serre", "id": null}]}, {"n": "Lycée — 1re", "ch": [{"t": "Le système immunitaire et sa mémoire", "id": null}, {"t": "Le génome et l'expression des gènes", "id": null}, {"t": "La tectonique et les risques géologiques", "id": null}]}, {"n": "Lycée — Terminale (spécialité)", "ch": [{"t": "La génétique et l'évolution", "id": null}, {"t": "L'immunité adaptative et la vaccination", "id": null}, {"t": "Le climat : histoire et avenir", "id": null}, {"t": "Les écosystèmes et l'espèce humaine", "id": null}, {"t": "Le corps humain et l'homéostasie", "id": null}]}];
+var COURS_META = [
+{"id": "biodiversite-6e", "theme": "La biodiversité et le vivant (6e)", "niveau": "6e", "titre": "La biodiversité et le vivant", "cours": "<div class=\"cours-head\"><h2>La biodiversité et le vivant</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n<h3>1. Qu'est-ce qu'un être vivant ?</h3>\n<div class=\"tip\"><b>Critères du vivant :</b> naître, se <b>nourrir</b>, respirer, <b>grandir</b>, se reproduire, réagir à son environnement, et mourir. Un objet non vivant (une pierre, une voiture) ne fait AUCUNE de ces choses tout seul.<br><b>Frontières :</b> une graine en dormance paraît inerte mais est vivante (elle peut germer) ; le feu grandit et « mange » mais n'est pas vivant : il ne se reproduit pas ni ne respire.</div>\n<details class=\"ex-util\"><summary>💡 Exemple détaillé — classer ce qui est vivant</summary><div class=\"exu-body\"><div class=\"exu-enonce\"><b>Énoncé.</b> Parmi : un chien, une graine de blé, une pierre, une voiture, du corail, une flamme : lesquels sont vivants ? Justifier.</div><div class=\"etu\"><b>Étape 1</b> — <b>Évidents</b> : le chien (nourriture, croissance, reproduction ✓) ; le corail = COLONIE d'animaux vivants (on le confond avec une roche !).</div><div class=\"etu\"><b>Étape 2</b> — <b>La graine</b> : en apparence inerte, mais elle GERME (croissance) et donne une plante qui se reproduira : vivante (la vie peut être « en attente »).</div><div class=\"etu\"><b>Étape 3</b> — <b>Les pièges</b> : la pierre (aucun critère) ; la voiture (bouge mais est pilotée, ne grandit pas, ne se reproduit pas) ; la flamme (grandit et « consomme », mais ni respiration ni reproduction) : la vie exige TOUS les critères, pas un seul.</div></div></details>\n<h3>2. La biodiversité : la variété du vivant</h3>\n<div class=\"tip\"><b>Biodiversité =</b> la diversité des <b>espèces</b> (animaux, végétaux, champignons, micro-organismes), la diversité <b>au sein d'une même espèce</b> (pas deux humains identiques, sauf vrais jumeaux) et la diversité des <b>milieux de vie</b> (écosystèmes).<br>On connaît ~2 millions d'espèces décrites, et on estime qu'il en existe 8 à 10 millions : la plupart des insectes et des océans restent à explorer.</div>\n<details class=\"ex-util\"><summary>💡 Exemple détaillé — mesurer la biodiversité d'un square</summary><div class=\"exu-body\"><div class=\"exu-enonce\"><b>Énoncé.</b> Dans un square de ville, on relève : 12 espèces d'oiseaux, 9 de plantes à fleurs, 4 de champignons, 3 de papillons, des lombrics, ~200 espèces de micro-organismes dans le sol. ① Que montre ce relevé ? ② Pourquoi les micro-organismes comptent-ils ?</div><div class=\"etu\"><b>Étape 1</b> — <b>Lecture</b> : même un petit square urbain abrite 200+ espèces : la biodiversité est PARTOUT, pas seulement « en Amazonie » : l'inventaire (recensement) est l'outil du biologiste.</div><div class=\"etu\"><b>Étape 2</b> — <b>Les invisibles</b> : le sol d'une poignée de terre contient plus de micro-organismes qu'il n'y a d'humains sur Terre : bactéries et champignons décomposent, recyclent, nourrissent les racines : la biodiversité cachée fait TOURNER l'écosystème.</div><div class=\"etu\"><b>Étape 3</b> — <b>Bilan</b> : biodiversité spécifique (espèces) + génétique (variation interne) + écosystèmes (le square, son sol, ses arbres) : les trois étages de la biodiversité dans un seul carré d'herbe.</div></div></details>\n<h3>3. Classer : la classification du vivant</h3>\n<div class=\"tip\"><b>Classer</b> les êtres vivants = les regrouper selon leurs <b>attributs</b> (caractères) communs : vertébrés / sans vertébres, à fleurs / sans fleurs, plumés, à poils, à écailles...<br><b>Groupes emboîtés :</b> le chat est à la fois un mammifère, un vertébré, un animal : les groupes s'emboîtent comme des poupées russes, pas comme des tiroirs séparés.</div>\n<details class=\"ex-util\"><summary>💡 Exemple détaillé — la baleine est-elle un poisson ?</summary><div class=\"exu-body\"><div class=\"exu-enonce\"><b>Énoncé.</b> La baleine vit dans l'eau, a une forme de poisson et des nageoires. Est-elle un poisson ? Construire le raisonnement.</div><div class=\"etu\"><b>Étape 1</b> — <b>Attributs observés</b> : milieu aquatique, corps fuselé, nageoires : ressemblances SUPERFICIELLES (adaptation au même milieu).</div><div class=\"etu\"><b>Étape 2</b> — <b>Attribents décisifs</b> : la baleine respire avec des POUMONS (pas des branchies), a des poils (quelques-uns !), allaite ses petits : <b>mammifère</b> (elle descend de mammifères terrestres revenus à l'eau).</div><div class=\"etu\"><b>Étape 3</b> — <b>Moralité</b> : on classe sur les attributs HÉRITÉS (poumons, poils, allaitement), pas sur le mode de vie : les ressemblances d'adaptation (nageoires du requin et de la baleine) NE prouvent PAS la parenté : c'est toute la différence entre « se ressembler » et « être apparenté ».</div></div></details>\n<div class=\"tip\"><b>⚠️ Pièges classiques :</b> la biodiversité ne se limite pas au nombre d'espèces (elle inclut la variété interne et les milieux) ; champignons et bactéries ne sont NI des végétaux NI des animaux (règles à part) ; la baleine est un mammifère, la chauve-souris aussi (mammifère volant !) ; classer = regrouper par attributs communs hérités, pas par ressemblance de mode de vie.</div>"},
+];
+var FICHES_DATA = [
+{"id": "biodiversite-6e", "fiche": "<h3>📌 L'essentiel</h3>\n<p><b>Vivant :</b> naître, se nourrir, respirer, grandir, se reproduire, réagir, mourir.</p>\n<p><b>Biodiversité :</b> espèces + variété intra-espèce + milieux (écosystèmes).</p>\n<p><b>Classification :</b> regrouper par attributs hérités : groupes emboîtés.</p>\n<h3>🧭 Méthodes</h3>\n<ul>\n<li><b>Tester le vivant :</b> parcourir les critères un par un (une graine en dormance reste vivante).</li>\n<li><b>Inventaire :</b> lister les espèces d'un milieu, y compris micro-organismes.</li>\n<li><b>Classer :</b> chercher les attributs hérités (poumons, poils, fleurs), pas l'habitat.</li>\n</ul>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>Baleine et chauve-souris = mammifères (attributs, pas milieu ni ailes !).</li>\n<li>Champignons et bactéries : règles à part, ni végétal ni animal.</li>\n<li>Biodiversité ≠ que « grands animaux emblématiques » : surtout des insectes et microbes.</li>\n</ul>"},
+];
+var QUESTIONS = [
+{"t": "La biodiversité et le vivant (6e)", "q": "Un être vivant se reconnaît à :", "c": ["sa couleur", "sa taille", "sa dureté", "sa capacité à naître, se nourrir, grandir, se reproduire"], "a": 3, "e": "Les critères du vivant : naître, se nourrir, respirer, grandir, se reproduire, réagir, mourir.", "d": "<b>Naître, se nourrir, grandir, se reproduire…</b> : la combinaison des critères.<div class='ex-detail'><u>Exemple rédigé</u> : test sur une voiture : elle « se déplace » mais ne grandit pas, ne se reproduit pas, ne se nourrit pas : non vivante. Une graine immobile : elle GERME (croissance) : vivante. Piège : un seul critère ne suffit jamais : le feu « grandit » et « consomme » mais ne respire ni ne se reproduit : c'est L'ENSEMBLE des critères qui définit le vivant.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "La biodiversité inclut :", "c": ["seulement le nombre d'espèces", "les espèces, la variété au sein des espèces et les milieux de vie", "seulement les forêts", "seulement les animaux"], "a": 1, "e": "Trois niveaux : spécifique (espèces), génétique (intra-espèce), écosystèmes (milieux).", "d": "<b>Espèces + variété interne + milieux</b> : les trois étages.<div class='ex-detail'><u>Exemple rédigé</u> : dans un square : 12 oiseaux, 9 plantes (espèces) ; pas deux pissenlits identiques (génétique) ; sol, haie, mare (écosystèmes) : la biodiversité d'un lieu = tout ce vivant à toutes les échelles. Piège : « seulement le nombre d'espèces » : c'est l'erreur fréquente : la diversité GÉNÉTIQUE (chiens d'une même race, variétés de pommes) et la diversité des MILIEUX en font partie : trois niveaux, jamais un seul.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "La baleine est classée parmi :", "c": ["les mammifères", "les crustacés", "les poissons", "les reptiles"], "a": 0, "e": "Poumons, poils, allaitement : attributs de mammifère, malgré le milieu aquatique.", "d": "<b>Les mammifères</b> : les attribents hérités décident.<div class='ex-detail'><u>Exemple rédigé</u> : raisonnement : la baleine vit dans l'eau et a des nageoires (ressemblance avec le requin), MAIS elle respire par des POUMONS (elle remonte respirer), possède des poils (très peu !) et allaute ses petits avec du lait : trois attributs de mammifère : elle descend d'ancêtres terrestres revenus à l'eau il y a 50 millions d'années. Piège : le MILIEU ne classe pas : les NAGEOIRS du requin (n'ont pas d'os) et de la baleine (os de membres !) se ressemblent sans prouver une parenté : se ressembler n'est pas être apparenté.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Les champignons sont :", "c": ["des végétaux", "des minéraux", "ni des végétaux ni des animaux (règne à part)", "des animaux"], "a": 2, "e": "Règne distinct : ils ne photosynthétisent pas et ne mangent pas comme nous.", "d": "<b>Un règne à part</b> : ni végétal ni animal.<div class='ex-detail'><u>Exemple rédigé</u> : pourquoi : les végétaux fabriquent leur matière par photosynthèse (énergie lumineuse) ; les animaux mangent d'autres êtres ; les champignons ABSORBENT leur nourriture en décomposant la matière organique autour d'eux (c'est pour ça qu'ils poussent sur le bois, le pain, le sol humide) : mode de nutrition unique ⟹ règne fongique à part (plus proche des animaux que des plantes, fait amusant). Piège : « végétaux car ils poussent » : pousser ne définit pas un végétal : le critère est le MODE DE NUTRITION.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Deux organismes sont apparentés si :", "c": ["ils vivent au même endroit", "ils ont la même taille", "ils partagent des attributs hérités d'un ancêtre commun", "ils ont la même couleur"], "a": 2, "e": "La parenté se lit dans les caractères hérités (poumons, poils, vertèbres), pas dans l'habitat.", "d": "<b>Ils partagent des attributs hérités</b> d'un ancêtre commun.<div class='ex-detail'><u>Exemple rédigé</u> : comparaison : dauphin (mer) et chauve-souris (air) : milieux opposés, MAIS poumons, poils, allaitement, squelette de membre à 5 doigts : mammifères apparentés. Le requin (mer, comme le dauphin) : branchies, pas de poils : parenté LOINTAINE malgré le milieu. Piège : « même endroit » : l'évolution COPIE des solutions (nageoires) chez des lignées sans parenté : l'habitat ressemble, l'hérédité apparente.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Combien d'espèces estime-t-on sur Terre ?", "c": ["une infinité connue", "environ 100 000", "environ 10 000", "environ 2 millions décrites, 8-10 millions estimées"], "a": 3, "e": "~2 millions décrites ; les estimations montent à 8-10 millions (surtout insectes et océans inexplorés).", "d": "<b>~2 millions décrites, 8-10 millions estimées</b>.<div class='ex-detail'><u>Exemple rédigé</u> : le fossé : les insectes (≈ 80 % des espèces animales décrites !) et la vie marine profonde restent massivement inexplorés : chaque année, ~15 000 nouvelles espèces sont décrites : la biodiversité est encore largement INCONNUE : c'est l'un des grands chantiers de la biologie (inventaire des océans, ADN environnemental). Piège : « une infinité connue » : la science AVANCE mais reste prudente : un comptage vivant, jamais fini.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Les micro-organismes du sol dans un carré de jardin :", "c": ["disparaissent en hiver", "sont inutiles", "sont tous des maladies", "sont innombrables et indispensables (décomposition, recyclement)"], "a": 3, "e": "Une poignée de terre contient plus de microbes qu'il n'y a d'humains : ils décomposent et recyclent.", "d": "<b>Indispensables et innombrables</b> : les recycleurs de l'écosystème.<div class='ex-detail'><u>Exemple rédigé</u> : le travail caché : bactéries et champignons décomposent les feuilles mortes en humus, rendent les nutriments aux racines, fixent même l'azote de l'air : sans eux, la matière morte S'ACCUMULERAIT et les plantes manqueraient de nourriture : la biodiversité invisible fait vivre la visible. Piège : « tous des maladies » : quelques microbes pathogènes existent, mais l'immense majorité est NECESSAIRE à la vie (sol, digestion, fromage, yaourt !).</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Une graine sèche immobile depuis 2 ans est :", "c": ["morte", "un minéral", "impossible à dire", "vivante (en dormance : elle peut germer)"], "a": 3, "e": "La vie peut être en attente : mis dans l'eau, elle germe : elle était vivante.", "d": "<b>Vivante</b> : la dormance est une vie ralentie.<div class='ex-detail'><u>Exemple rédigé</u> : l'expérience décisive : arroser et chauffer la graine : elle GERME (racine, tige, croissance) : un objet mort ne ressuscite pas : la graine était en vie ralentie (métabolisme quasi arrêté, protection par son enveloppe). Record : des graines de dattier vieux de 2000 ans (Masada) ont germé ! Piège : « immobile ⟹ morte » : l'immobilité n'est pas un critère : c'est la CAPACITÉ à relancer les fonctions (germination) qui prouve la vie.</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Dans la classification emboîtée, le chat appartient à :", "c": ["plusieurs groupes emboîtés : félin, mammifère, vertébré, animal", "le groupe des « terrestres »", "aucun groupe", "un seul groupe"], "a": 0, "e": "Les groupes s'emboîtent : le chat est félin ET mammifère ET vertébré ET animal à la fois.", "d": "<b>Plusieurs groupes emboîtés</b> à la fois.<div class='ex-detail'><u>Exemple rédigé</u> : les poupées russes : « animal » contient « vertébré » qui contient « mammifère » qui contient « félin » qui contient « chat » : chaque niveau ajoute des attributs partagés (vertèbres, poils+allaitement, griffes rétractiles) : plus le groupe est petit, plus les attributs sont précis. Piège : « un seul groupe » : la classification n'est pas une série de tiroirs mais une HIÉRARCHIE : tout Félin est aussi Mammifère : c'est le sens du mot « emboîté ».</div>"},
+{"t": "La biodiversité et le vivant (6e)", "q": "Deux vrais jumeaux illustrent :", "c": ["une très faible diversité génétique entre deux individus d'une même espèce", "la biodiversité des milieux", "l'absence de biodiversité", "la classification"], "a": 0, "e": "Même espèce, patrimoine génétique quasi identique : la biodiversité intra-espèce est variable.", "d": "<b>Une diversité génétique quasi nulle entre eux</b> (cas exceptionnel).<div class='ex-detail'><u>Exemple rédigé</u> : comparaison : deux humains quelconques partagent 99,9 % de leur ADN : vrais jumeaux : 100 % (même ovule, même fécondation) : ils montrent par contraste que la biodiversité GÉNÉTIQUE (le 0,1 % de différence) fait l'unicité de chacun : c'est le 2e étage de la biodiversité : au sein d'une même espèce, chacun (sauf jumeaux vrais) est unique. Piège : « l'absence de biodiversité » : même entre jumeaux, les milieux et l'expérience font deux personnes distinctes : la biodiversité génétique est faible, jamais la diversité des individus.</div>"},
+];
+var currentChap = null;
+var META_BY_ID = {}; var FICHE_BY_ID = {};
+COURS_META.forEach(function(c){ META_BY_ID[c.id] = c; });
+FICHES_DATA.forEach(function(f){ FICHE_BY_ID[f.id] = f.fiche; });
+
+function chapHeadHTML(m){
+  return '<div class="chap-head"><span class="chap-title">⚗️ Physique-chimie — ' + esc(m.titre) + '</span>' +
+    '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a> &nbsp;·&nbsp; <a href="../index.html">↩ Matières</a></span></div>';
+}
+function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function showTab(t){
+  ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
+  ['prog','cours'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
+  if (t === 'fiches') renderFiches();
+  if (t === 'cours') renderCours();
+  if (t === 'quiz') {
+    var bar = document.getElementById('quiz-chapbar');
+    if (currentChap && META_BY_ID[currentChap]) { bar.innerHTML = chapHeadHTML(META_BY_ID[currentChap]); startTraining(META_BY_ID[currentChap].theme); }
+    else { bar.innerHTML = ''; state.mode = 'menu'; render(); }
+  }
+  if (t === 'prog' || t === 'cours') window.scrollTo({top:0});
+}
+function clearChap(){ currentChap = null; }
+
+function goCours(id){
+  currentChap = id;
+  showTab('cours');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function goCoursList(){ currentChap = null; showTab('cours'); }
+
+function ficheHTML(id, num, open){
+  var m = META_BY_ID[id]; var f = FICHE_BY_ID[id];
+  return '<details class="fiche" id="fiche-' + id + '"' + (open ? ' open' : '') + '>' +
+    '<summary><span class="fiche-num">' + num + '</span> Fiche — ' + esc(m.titre) + ' <span class="niv" style="font-size:.7rem;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:999px;padding:2px 10px;font-weight:700;margin-left:6px">' + esc(m.niveau) + '</span></summary>' +
+    '<div class="fiche-body">' +
+    '<div class="fiche-actions"><button class="btn-pdf" onclick="printFiche(\'' + id + '\')">🖨️ Imprimer</button><button class="btn-pdf" onclick="fichePDF(\'' + id + '\')">📄 PDF</button></div>' +
+    '<div class="print-title">Fiche synthétique — ' + esc(m.titre) + ' (' + esc(m.niveau) + ')</div>' +
+    f +
+    '</div></details>';
+}
+
+function renderFiches(){
+  var z = document.getElementById('fiches-zone'); var h = '';
+  if (currentChap && FICHE_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += chapHeadHTML(m);
+    h += ficheHTML(currentChap, 1, true);
+  } else {
+    h += '<section class="card"><h2>🗂️ Fiches synthétiques</h2><p style="font-size:.92rem">Toutes les fiches, une par chapitre. Ouvrez un cours : l\'onglet 🗂️ Fiche affichera uniquement la fiche de ce chapitre.</p></section>';
+    var i = 1;
+    FICHES_DATA.forEach(function(f){ h += ficheHTML(f.id, i); i++; });
+  }
+  z.innerHTML = h;
+}
+
+// ===== Générateur PDF autonome (A4, Helvetica) — aucune dépendance externe =====
+var PDF_CP1252 = { 0x2018:0x91, 0x2019:0x92, 0x201A:0x82, 0x201C:0x93, 0x201D:0x94, 0x201E:0x84, 0x2013:0x96, 0x2014:0x97, 0x2026:0x85, 0x2020:0x86, 0x2021:0x87, 0x20AC:0x80, 0x0152:0x8C, 0x0153:0x9C, 0x0160:0x8A, 0x0161:0x9A, 0x0178:0x9F, 0x017D:0x8E, 0x017E:0x9E, 0x192:0x83, 0x2C6:0x88, 0x2032:0xB4, 0x2039:0x8B, 0x203A:0x9B, 0x201E2:0 };
+function pdfTranslit(s){
+  return s.replace(/\u2212|\u2013|\u2014/g, '-').replace(/[\u2032\u2019]/g, "'")
+    .replace(/\u2192|\u21D2|\u21A6/g, '->').replace(/\u2190/g, '<-')
+    .replace(/\u2265/g, '>=').replace(/\u2264/g, '<=').replace(/\u2260/g, '!=').replace(/\u2248/g, '~')
+    .replace(/\u2208/g, ' in ').replace(/\u2205/g, 'vide').replace(/\u2286/g, 'incl.')
+    .replace(/\u221A/g, 'V').replace(/\u00B7|\u2219|\u22C5/g, '*').replace(/\u2022/g, '-')
+    .replace(/\u2124/g, 'Z').replace(/\u211D/g, 'R').replace(/\u2115/g, 'N').replace(/\u2119/g, 'P')
+    .replace(/\u00A0/g, ' ').replace(/\u202F|\u2009|\u200B|\uFE0F/g, '')
+    .replace(/[\u2460-\u2468]/g, function(c){ return (c.charCodeAt(0) - 0x2460 + 1) + ')'; })
+    .replace(/[\u2600-\u27BF\uD800-\uDFFF\uE000-\uF8FF]/g, '')
+    .replace(/[\uD83C-\uFFFD]/g, function(c){ return c.charCodeAt(0) < 0x10000 && c.charCodeAt(0) > 0xFFF0 ? '' : c; })
+    .replace(/[\u{1F000}-\u{1FAFF}]/gu, '');
+}
+function pdfEnc(s){
+  var out = '';
+  for (var i = 0; i < s.length; i++){
+    var c = s.charCodeAt(i), b = null;
+    if (c < 256) { if (c >= 32 || c === 10) b = c; }
+    else if (PDF_CP1252[c] !== undefined) b = PDF_CP1252[c];
+    if (b !== null && b !== undefined) out += String.fromCharCode(b);
+  }
+  return out;
+}
+function pdfEsc(s){ return s.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)'); }
+var PDF_INLINE = { B:1, STRONG:1, I:1, EM:1, U:1, SPAN:1, SMALL:1, SUB:1, SUP:1, A:1, CODE:1, ABBR:1 };
+function pdfSegs(node, bold, out){
+  for (var c = node.firstChild; c; c = c.nextSibling){
+    if (c.nodeType === 3){
+      var t = c.textContent.replace(/[\r\n\t]+/g, ' ').replace(/ +/g, ' ');
+      if (t.trim() !== '') out.push({ t: t, b: bold });
+      else if (t === ' ' && out.length && out[out.length - 1].t.charAt(out[out.length - 1].t.length - 1) !== ' ') out[out.length - 1].t += ' ';
+    } else if (c.nodeType === 1){
+      var g = c.tagName;
+      if (g === 'BR') { out.push({ t: '\n', b: bold }); }
+      else if (g === 'B' || g === 'STRONG') pdfSegs(c, true, out);
+      else pdfSegs(c, bold, out);
+    }
+  }
+}
+function pdfNodeCollect(root){
+  var blocks = [];
+  function flushPending(){ pend = []; }
+  var pend = [];
+  function emitP(){ if (pend.length) { blocks.push({ type: 'p', segs: pend, indent: indent }); pend = []; } }
+  function emitBlock(type, el, ind, bold){
+    var segs = []; pdfSegs(el, bold || false, segs);
+    if (type === 'li') segs = [{ t: '- ', b: bold || false }].concat(segs);
+    if (type === 'h') segs.forEach(function(s){ s.b = true; });
+    if (segs.length) blocks.push({ type: type, segs: segs, indent: ind });
+  }
+  var indent = 0;
+  function walk(n){
+    for (var c = n.firstChild; c; c = c.nextSibling){
+      if (c.nodeType === 3){
+        var t = c.textContent.replace(/[\r\n\t]+/g, ' ').replace(/ +/g, ' ');
+        if (t.trim() !== '') pend.push({ t: t, b: false });
+      } else if (c.nodeType === 1){
+        var g = c.tagName;
+        var cl = ' ' + (c.className || '') + ' ';
+        if (cl.indexOf('fiche-actions') >= 0 || cl.indexOf('print-title') >= 0) continue;
+        if (g === 'BR') { emitP(); continue; }
+        if (PDF_INLINE[g]) { pdfSegs(c, false, pend); continue; }
+        emitP();
+        if (/^H[1-6]$/.test(g)) emitBlock('h', c, indent);
+        else if (g === 'LI') emitBlock('li', c, indent + 16);
+        else if (g === 'UL' || g === 'OL') {
+          for (var li = c.firstChild; li; li = li.nextSibling){
+            if (li.nodeType === 1 && li.tagName === 'LI') { emitBlock('li', li, indent + 16); walk(li); }
+          }
+        }
+        else if (g === 'TABLE' || g === 'THEAD' || g === 'TBODY'){
+          for (var tr = c.firstChild; tr; tr = tr.nextSibling){
+            if (tr.nodeType !== 1) continue;
+            if (tr.tagName === 'TR'){
+              var cells = [];
+              for (var td = tr.firstChild; td; td = td.nextSibling){
+                if (td.nodeType === 1 && (td.tagName === 'TD' || td.tagName === 'TH')){
+                  var cs = []; pdfSegs(td, td.tagName === 'TH', cs);
+                  cells.push(cs.map(function(x){ return x.t; }).join('').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim());
+                }
+              }
+              var line = cells.join('   |   ');
+              if (line.replace(/\s/g, '') !== '') blocks.push({ type: 'p', segs: [{ t: line, b: false }], indent: indent + 8 });
+            } else if (tr.tagName === 'THEAD' || tr.tagName === 'TBODY') walk(tr);
+          }
+        }
+        else if (g === 'P') { emitBlock('p', c, indent); }
+        else { var keep = indent; walk(c); indent = keep; }
+      }
+    }
+    emitP();
+  }
+  walk(root);
+  return blocks;
+}
+function pdfWrap(blocks){
+  var W = 595.28, M = 50, lines = [];
+  blocks.forEach(function(b, bi){
+    var isTitle = b.type === 'title';
+    var size = isTitle ? 15 : (b.type === 'h' ? 12 : 10.5);
+    var indent = b.indent || 0;
+    var budget = Math.floor((W - 2 * M - indent) / (0.52 * size));
+    var words = [];
+    b.segs.forEach(function(s){
+      var parts = s.t.split('\n');
+      parts.forEach(function(p, pi){
+        if (pi > 0) words.push({ br: true });
+        p.split(' ').forEach(function(w){ if (w !== '') words.push({ w: w, b: s.b }); });
+        if (pi < parts.length - 1) {} else { words.push({ sp: true, b: s.b }); }
+      });
+    });
+    var cur = [], len = 0;
+    function flushLine(){ if (cur.length) { lines.push({ segs: cur, size: size, indent: indent, gap: isTitle ? 0 : (b.type === 'h' ? 7 : 4) }); cur = []; len = 0; } }
+    for (var i = 0; i < words.length; i++){
+      var wd = words[i];
+      if (wd.br) { flushLine(); continue; }
+      if (wd.sp) { continue; }
+      var wlen = wd.w.length + 1;
+      if (len + wlen > budget && cur.length) flushLine();
+      var last = cur.length ? cur[cur.length - 1] : null;
+      var piece = (last ? ' ' : '') + wd.w;
+      if (last && last.b === wd.b) last.t += piece;
+      else cur.push({ t: piece, b: wd.b });
+      len += wlen;
+    }
+    flushLine();
+    if (isTitle) lines.push({ rule: true });
+  });
+  return lines;
+}
+function pdfBuild(lines){
+  var W = 595.28, H = 841.89, M = 50, TOP = H - M;
+  var pages = [], cur = [], y = TOP;
+  lines.forEach(function(ln){
+    if (ln.rule){
+      if (y - 14 < M) { pages.push(cur); cur = []; y = TOP; }
+      y -= 12;
+      cur.push('0.29 0.27 0.9 RG 1.5 w ' + M + ' ' + y.toFixed(2) + ' m ' + (W - M) + ' ' + y.toFixed(2) + ' l S\n0 0 0 RG 1 w');
+      y -= 8;
+      return;
+    }
+    var lh = ln.size * 1.42 + (ln.gap || 0);
+    if (y - lh < M) { pages.push(cur); cur = []; y = TOP; }
+    y -= (ln.gap || 0);
+    y -= ln.size * 1.15;
+    var x = M + (ln.indent || 0);
+    ln.segs.forEach(function(s){
+      if (!s.t) return;
+      var enc = pdfEnc(pdfTranslit(s.t));
+      if (!enc) return;
+      cur.push('BT 1 0 0 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Tm /F' + (s.b ? 2 : 1) + ' ' + ln.size + ' Tf (' + pdfEsc(enc) + ') Tj ET');
+      x += 0.52 * ln.size * enc.length;
+    });
+    y -= ln.size * 0.27;
+  });
+  if (cur.length) pages.push(cur);
+  var objs = [];
+  objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+  var kids = [];
+  for (var i = 0; i < pages.length; i++) kids.push((5 + 2 * i) + ' 0 R');
+  objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages.length + ' >>';
+  objs[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+  objs[4] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+  for (var p = 0; p < pages.length; p++){
+    var po = 5 + 2 * p, co = 6 + 2 * p;
+    objs[po] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ' + co + ' 0 R >>';
+    var stream = pages[p].join('\n');
+    objs[co] = 'STREAM:' + stream;
+  }
+  var out = '%PDF-1.4\n';
+  var offs = [];
+  for (var i = 1; i < objs.length; i++){
+    offs[i] = out.length;
+    if (objs[i].indexOf('STREAM:') === 0){
+      var st = objs[i].slice(7);
+      out += i + ' 0 obj\n<< /Length ' + st.length + ' >>\nstream\n' + st + '\nendstream\nendobj\n';
+    } else out += i + ' 0 obj\n' + objs[i] + '\nendobj\n';
+  }
+  var xr = out.length;
+  out += 'xref\n0 ' + objs.length + '\n0000000000 65535 f \n';
+  for (var i = 1; i < objs.length; i++) out += ('0000000000' + offs[i]).slice(-10) + ' 00000 n \n';
+  out += 'trailer\n<< /Size ' + objs.length + ' /Root 1 0 R >>\nstartxref\n' + xr + '\n%%EOF';
+  return out;
+}
+function pdfDownload(pdfStr, filename){
+  var bytes = new Uint8Array(pdfStr.length);
+  for (var i = 0; i < pdfStr.length; i++) bytes[i] = pdfStr.charCodeAt(i) & 0xFF;
+  var blob = new Blob([bytes], { type: 'application/pdf' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename.replace(/["«»“”*<>|\\/]/g, '').replace(/[:?]/g, ' -').replace(/\s+/g, ' ').trim() + '.pdf';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+}
+function downloadFichePDF(elt, name){
+  var t = elt.querySelector('.print-title');
+  var raw = t ? (t.textContent || '') : ''; if (!raw) raw = (name || ''); raw = raw + ''; var title = raw.replace(/\s+/g, ' ').trim() || 'Fiche';
+  var body = elt.querySelector('.fiche-body') || elt;
+  var blocks = pdfNodeCollect(body);
+  blocks.unshift({ type: 'title', segs: [{ t: title, b: true }], indent: 0 });
+  pdfDownload(pdfBuild(pdfWrap(blocks)), title);
+}
+
+function fichePDF(id){ var el = document.getElementById('fiche-' + id); if (!el) return;
+  downloadFichePDF(el, META_BY_ID[id] ? META_BY_ID[id].titre : id); }
+function printFiche(id){
+  var el = document.getElementById('fiche-' + id);
+  if (!el) return;
+  var details = document.querySelectorAll('details.fiche');
+  details.forEach(function(d){ d.classList.remove('print-target'); d.removeAttribute('open'); });
+  el.classList.add('print-target');
+  el.setAttribute('open','');
+  window.print();
+}
+
+var state = { mode:'menu', theme:null, idx:0, qs:[], answers:[] };
+function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function startTraining(theme){ state.mode='train'; state.theme = theme; state.qs = shuffle(QUESTIONS.filter(function(q){ return q.t === theme; })); state.idx = 0; state.answers = []; render(); }
+function backMenu(){ state.mode='menu'; render(); }
+function select(i){
+  if (state.mode !== 'train' || state.idx >= state.qs.length) return;
+  state.answers[state.idx] = i;
+  var q = state.qs[state.idx]; var btns = document.querySelectorAll('#quiz-app .choice');
+  btns.forEach(function(b, k){ b.classList.remove('sel'); if (k === q.a) b.classList.add('ok'); else if (k === i) b.classList.add('ko'); else b.classList.add('dim'); b.disabled = true; });
+  var ex = document.getElementById('expl');
+  if (ex) {
+    ex.style.display = 'block';
+    if (i === q.a) { ex.innerHTML = '✅ Exact ! 💡 ' + esc(q.e); }
+    else { ex.innerHTML = '❌ Mauvaise réponse. La bonne réponse était : <b class="green">' + esc(q.c[q.a]) + '</b>.<br><b>🧠 Pour comprendre :</b><br>' + (q.d || esc(q.e)); }
+  }
+  var nx = document.getElementById('btn-next'); if (nx) nx.disabled = false;
+}
+function nextQ(){ if (state.idx < state.qs.length - 1){ state.idx++; render(); } else { state.mode='result'; render(); } }
+function prevQ(){ if (state.idx > 0){ state.idx--; render(); } }
+function render(){
+  var app = document.getElementById('quiz-app'); var h = '';
+  if (state.mode === 'menu'){
+    h += '<h2 class="q">Choisissez un chapitre à réviser</h2>';
+    COURS_META.forEach(function(c){
+      var n = QUESTIONS.filter(function(q){ return q.t === c.theme; }).length;
+      h += '<button class="theme-btn" onclick="startTraining(\'' + c.theme.replace(/\'/g, "\\'") + '\')"><span>🧪 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">' + n + ' q.</span></button>';
+    });
+    h += '<p style="margin-top:14px;font-size:.82rem;color:#64748b">Ouvrez un cours (onglet 📖) : l\'onglet 🧪 lancera directement son QCM.</p>';
+  } else if (state.mode === 'train'){
+    var q = state.qs[state.idx];
+    h += '<div class="meta"><span>' + esc(q.t) + '</span><span>' + (state.idx + 1) + ' / ' + state.qs.length + '</span></div>';
+    h += '<h2 class="q">' + esc(q.q) + '</h2>';
+    q.c.forEach(function(c, k){ h += '<button class="choice" onclick="select(' + k + ')">' + String.fromCharCode(65 + k) + '. ' + esc(c) + '</button>'; });
+    h += '<div class="expl" id="expl" style="display:none"></div>';
+    h += '<div class="quiz-foot"><button class="btn-gray btn-small" id="btn-prev" onclick="prevQ()" ' + (state.idx === 0 ? 'disabled' : '') + '>← Précédent</button>' +
+      '<span><button class="btn-gray btn-small" onclick="backMenu()">✖ Quitter</button> <button class="btn btn-primary btn-small" id="btn-next" style="width:auto" onclick="nextQ()" ' + (state.answers[state.idx] === undefined ? '' : '') + (state.answers[state.idx] === undefined ? 'disabled' : '') + '>Suivant →</button></span></div>';
+  } else {
+    var ok = 0; state.qs.forEach(function(q, i){ if (state.answers[i] === q.a) ok++; });
+    var pct = Math.round(100 * ok / state.qs.length);
+    h += '<div class="meta"><span>Résultat — ' + esc(state.theme) + '</span><span>' + ok + ' / ' + state.qs.length + '</span></div>';
+    h += '<div class="res-note ' + (pct >= 70 ? 'green' : 'red') + '">' + pct + ' %</div>';
+    state.qs.forEach(function(q, i){
+      h += '<div class="res-card">' + (state.answers[i] === q.a ? '✅' : '❌') + ' <b>' + esc(q.q) + '</b><br>' +
+        (state.answers[i] === q.a ? '' : 'Réponse correcte : <b class="green">' + esc(q.c[q.a]) + '</b><br>') + '<span style="font-size:.82rem;color:#64748b">' + (state.answers[i] === q.a ? '💡 ' + esc(q.e) : '<b>🧠 Pour comprendre :</b><br>' + (q.d || esc(q.e))) + '</span></div>';
+    });
+    h += '<div style="margin-top:20px"><button class="btn btn-primary" onclick="startTraining(state.theme)">🔄 Recommencer</button></div>';
+    h += '<div style="margin-top:10px"><button class="btn-gray btn-small" onclick="backMenu()">← Autre chapitre</button></div>';
+  }
+  app.innerHTML = h;
+}
+
+// Programme : liste cliquable des niveaux/chapitres
+(function(){
+  var v = document.getElementById('view-prog'); var h = '';
+  PROGRAMME.forEach(function(niv){
+    h += '<h2 class="niveau">' + esc(niv.n) + '</h2>';
+    niv.ch.forEach(function(ch){
+      if (ch.id) {
+        h += '<button class="chap-btn" onclick="goCours(\'' + ch.id + '\')"><span>📖 ' + esc(ch.t) + '</span></button>';
+      } else {
+        h += '<div class="chap-btn soon"><span>📖 ' + esc(ch.t) + '</span><span class="soon-badge">à venir</span></div>';
+      }
+    });
+  });
+  v.innerHTML = '<section class="card"><h2>📋 Programme de physique-chimie</h2><p style="font-size:.9rem;margin-bottom:8px">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + h + '</section>';
+})();
+
+// Cours : rendu contextuel
+function renderCours(){
+  var v = document.getElementById('view-cours'); var h = '';
+  if (currentChap && META_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += chapHeadHTML(m);
+    h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
+  } else {
+    var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
+    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + list + '</section>';
+    COURS_META.forEach(function(c){
+      h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
+    });
+  }
+  v.innerHTML = h;
+}
+renderCours();
+
+var backTop = document.getElementById('back-top');
+backTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+window.addEventListener('scroll', function(){ if (window.scrollY > 300) backTop.classList.add('visible'); else backTop.classList.remove('visible'); }, { passive: true });
+showTab('prog');
+</script>
+</body>
+</html>
