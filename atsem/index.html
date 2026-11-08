@@ -681,8 +681,7 @@ function tooltipAcronymes(root) {
 }
 try { renderFiches(); } catch(e) { document.getElementById('fiches-list').innerHTML = '<section class="card"><b>Erreur fiches :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 try { tooltipAcronymes(document.body); } catch(e2) {}
-var _render0 = render;
-render = function() { _render0(); try { tooltipAcronymes(document.getElementById('quiz-app')); } catch(e3) {} };
+try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 
 try {
