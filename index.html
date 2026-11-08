@@ -58,6 +58,7 @@
   .card .txt span { font-size: .88rem; color: #64748b; display: block; margin-top: 3px; }
   #home-annee { display: inline; }
   #dgfipc-annee { display: inline; }
+  #dgfipb-annee { display: inline; }
   .card .arrow { color: #94a3b8; font-size: 1.3rem; transition: transform .18s ease; }
   a.card:hover .arrow { transform: translateX(4px); color: #2563eb; }
   .card.pink:hover .arrow { color: #db2777; }
@@ -91,6 +92,14 @@
         <div class="txt">
           <b>Concours DGFiP catégorie C — Agent des finances publiques</b>
           <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="dgfipc-annee">2027</span></span>
+        </div>
+        <div class="arrow">→</div>
+      </a>
+      <a class="card" href="dgfip-b/">
+        <div class="icon">🎖️</div>
+        <div class="txt">
+          <b>Concours DGFiP catégorie B — Contrôleur des finances publiques</b>
+          <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="dgfipb-annee">2027</span></span>
         </div>
         <div class="arrow">→</div>
       </a>
@@ -190,6 +199,7 @@ function tooltipAcronymes(root) {
 <script>
 fetch('atsem/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
 fetch('dgfip-c/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('dgfipc-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
+fetch('dgfip-b/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('dgfipb-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
 </script>
 <script>
 (function(){

@@ -1,0 +1,16 @@
+{
+  "session": "2027",
+  "inscriptions_debut": "2026-10-16",
+  "inscriptions_fin": "2026-11-17",
+  "ecrit": "2027-01-11",
+  "ecrit_confirme": true,
+  "notification": "2027-02-05",
+  "oral_debut": "2027-03-15",
+  "oral_fin": "2027-03-19",
+  "admission": "2027-03-26",
+  "verifie_le": "2026-11-08",
+  "source_utilisee": "economie.gouv.fr (DGFiP)",
+  "sources": [
+    "https://www.economie.gouv.fr/rejoignez-nous/controleur-des-finances-publiques-de-2eme-classe-externe-dgfip"
+  ]
+}

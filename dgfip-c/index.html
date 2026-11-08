@@ -423,7 +423,7 @@ function render() {
 }
 
 function renderMenu() {
-  var h = '<section class="card"><h2>🧪 Mode examen (simulation)</h2><p style="font-size:.9rem;margin-bottom:16px">' + EXAM_SIZE + ' questions réparties sur les 10 thèmes comme à l\'épreuve officielle · 45 minutes · barème officiel : bonne réponse +1, mauvaise réponse −0,5, absence de réponse 0. Note éliminatoire ≤ 5/20.</p><button class="btn btn-primary" onclick="startExam()">Démarrer l\'examen blanc</button></section>';
+  var h = '<section class="card"><h2>🧪 Mode examen (simulation)</h2><p style="font-size:.9rem;margin-bottom:16px">' + EXAM_SIZE + ' questions sur les thèmes officiels du QCM (maths-logique et culture générale) · 90 minutes · barème indicatif : bonne réponse +1, mauvaise réponse −0,5, absence de réponse 0. Note éliminatoire < 5/20 (à confirmer dans l\'avis de concours).</p><button class="btn btn-primary" onclick="startExam()">Démarrer l\'examen blanc</button></section>';
   h += '<section class="card"><h2>📚 Mode entraînement par thème</h2><p style="font-size:.9rem;margin-bottom:14px">Réponse immédiate avec explication.</p>';
   THEMES.forEach(function(t) {
     var n = QUESTIONS.filter(function(q){ return q.t === t; }).length;
