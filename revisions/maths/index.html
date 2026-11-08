@@ -90,6 +90,10 @@
     h3 { page-break-after: avoid; }
   }
   .print-title { display: none; }
+  .chap-head { position: sticky; top: 64px; z-index: 90; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-radius: 12px; padding: 12px 18px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(79,70,229,.35); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .chap-head .chap-title { font-weight: 700; font-size: 1rem; }
+  .chap-head .chap-links a { color: #e0e7ff; text-decoration: none; font-size: .82rem; cursor: pointer; white-space: nowrap; }
+  .chap-head .chap-links a:hover { text-decoration: underline; }
   .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
   .back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
@@ -263,9 +267,8 @@ function renderCours(){
   var v = document.getElementById('view-cours'); var h = '';
   if (currentChap && META_BY_ID[currentChap]) {
     var m = META_BY_ID[currentChap];
-    h += '<section class="card"><h2>📖 Cours en cours</h2>' +
-      '<p style="font-size:.92rem;margin-bottom:12px">Chapitre : <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ') — voici son cours complet.</p>' +
-      '<p style="font-size:.85rem"><a href="#" onclick="goCoursList();return false;">📚 Voir tous les cours / tous les chapitres</a></p></section>';
+    h += '<div class="chap-head"><span class="chap-title">📖 Mathématiques — ' + esc(m.titre) + '</span>' +
+      '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a></span></div>';
     h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
   } else {
     var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
