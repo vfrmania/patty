@@ -754,7 +754,7 @@ function applyDates(d) {
     el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
     el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
     el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
-    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="../update-dates.php" id="verif-dates">🔄 Vérifier les dates maintenant</a>';
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a> · <a href="../update-dates.php" id="verif-dates">🔄 Vérifier les dates maintenant</a>';
     var _vl = document.getElementById('verif-dates'); if (_vl) _vl.addEventListener('click', verifierDates);
     var _vj = _d(d.verifie_le);
     var _age = Math.floor((new Date() - _vj) / 86400000);
@@ -762,7 +762,7 @@ function applyDates(d) {
     if (_st && _age > 14) {
       _st.style.display = '';
       _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant : le script PHP sera exécuté si l'hébergement le permet, sinon une vérification en direct sera tentée.";
-    } + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a>';
+    }
   } catch(e) {}
   try {
     var _e = _d(d.ecrit);
