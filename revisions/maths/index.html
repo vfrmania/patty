@@ -143,6 +143,7 @@ function showTab(t){
   ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
   ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
   if (t === 'fiches') renderFiches();
+  if (t === 'cours') renderCours();
   if (t === 'quiz') {
     if (currentChap && META_BY_ID[currentChap]) { startTraining(META_BY_ID[currentChap].theme); }
     else { state.mode = 'menu'; render(); }
@@ -257,15 +258,25 @@ function render(){
   v.innerHTML = '<section class="card"><h2>📋 Programme de mathématiques</h2><p style="font-size:.9rem;margin-bottom:8px">Cliquez sur un chapitre rédigé pour ouvrir son cours. Les onglets « 🗂️ Fiche » et « 🧪 QCM » suivront alors ce chapitre.</p>' + h + '</section>';
 })();
 
-// Cours : rendu
-(function(){
+// Cours : rendu contextuel
+function renderCours(){
   var v = document.getElementById('view-cours'); var h = '';
-  COURS_META.forEach(function(c){
-    h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
-  });
-  var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
-  v.innerHTML = '<section class="card"><h2>📖 Les cours</h2>' + list + '</section>' + h;
-})();
+  if (currentChap && META_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += '<section class="card"><h2>📖 Cours en cours</h2>' +
+      '<p style="font-size:.92rem;margin-bottom:12px">Chapitre : <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ') — voici son cours complet.</p>' +
+      '<p style="font-size:.85rem"><a href="#" onclick="goCoursList();return false;">📚 Voir tous les cours / tous les chapitres</a></p></section>';
+    h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
+  } else {
+    var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
+    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">Cliquez sur un chapitre : l\'onglet affichera ensuite uniquement ce cours, sa fiche et son QCM.</p>' + list + '</section>';
+    COURS_META.forEach(function(c){
+      h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
+    });
+  }
+  v.innerHTML = h;
+}
+renderCours();
 
 var backTop = document.getElementById('back-top');
 window.addEventListener('scroll', function(){ if (window.scrollY > 300) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
