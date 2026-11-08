@@ -692,7 +692,61 @@ var MOIS_COURT = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','s
 function _d(iso){ var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
 function _flong(iso){ var d = _d(iso); return d.getDate() + ' ' + MOIS_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
 function _fcourt(iso){ var d = _d(iso); return d.getDate() + ' ' + MOIS_COURT[d.getMonth()] + ' ' + d.getFullYear(); }
+function _moisNum(nom) {
+  var M = { 'janvier':1, 'février':2, 'mars':3, 'avril':4, 'mai':5, 'juin':6, 'juillet':7, 'août':8, 'aout':8, 'septembre':9, 'octobre':10, 'novembre':11, 'décembre':12, 'decembre':12 };
+  return M[nom] || 0;
+}
+function _isoDate(j, m, a) { return a + '-' + (m < 10 ? '0' : '') + m + '-' + (j < 10 ? '0' : '') + j; }
+function _staleSet(html) { var s = document.getElementById('dates-stale'); if (s) { s.innerHTML = html; s.style.display = ''; } }
+var _RELAIS = [
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
+  function(u){ return 'https://r.jina.ai/' + u; }
+];
+function verifierDates(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  _staleSet('⏳ Vérification des dates en cours…');
+  var d = window.DATES || FALLBACK_DATES;
+  fetch('../update-dates.php').then(function(r){
+    return r.text().then(function(t){ return { ct: (r.headers.get('content-type') || ''), t: t }; });
+  }).then(function(p){
+    if (p.ct.indexOf('html') > -1 && p.t.indexOf('<?php') !== 0) {
+      window.location.href = '../update-dates.php';
+      return null;
+    }
+    var src = 'https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html';
+    var essai = function(i) {
+      if (i >= _RELAIS.length) throw new Error('relais indisponible');
+      return fetch(_RELAIS[i](src)).then(function(r2){ if (!r2.ok) throw new Error('relais ' + r2.status); return r2.text(); });
+    };
+    return essai(0).catch(function(){ return essai(1); }).catch(function(){ return essai(2); }).then(function(txt){
+      txt = txt.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+      var m = txt.match(/court du \S+ (\d{1,2}) (\S+) au \S+ (\d{1,2}) (\S+) (\d{4})/);
+      if (!m || !_moisNum(m[2]) || !_moisNum(m[4])) throw new Error('format source inconnu');
+      var trouve = {
+        inscriptions_debut: _isoDate(+m[1], _moisNum(m[2]), +m[5]),
+        inscriptions_fin: _isoDate(+m[3], _moisNum(m[4]), +m[5])
+      };
+      m = txt.match(/cl\u00f4ture des inscriptions[^\n]{0,120}?\S+ (\d{1,2}) (\S+) (\d{4})/i);
+      if (m && _moisNum(m[2])) trouve.dossier_fin = _isoDate(+m[1], _moisNum(m[2]), +m[3]);
+      m = txt.match(/premi\u00e8res \u00e9preuves[^\n]{0,120}?\S+ (\d{1,2}) (\S+) (\d{4})/i);
+      if (m && _moisNum(m[2])) trouve.ecrit = _isoDate(+m[1], _moisNum(m[2]), +m[3]);
+      var diffs = [];
+      var cles = ['inscriptions_debut', 'inscriptions_fin', 'dossier_fin', 'ecrit'];
+      cles.forEach(function(k){ if (trouve[k] && trouve[k] !== d[k]) diffs.push(k + ' : ' + d[k] + ' → ' + trouve[k]); });
+      if (!diffs.length) {
+        _staleSet('✅ Vérification en direct réussie (hébergement sans PHP) : les dates affichées sont à jour selon la source FNCDG. La date de vérification du fichier sera actualisée à la prochaine exécution du script.');
+      } else {
+        _staleSet('🔄 Changements détectés : ' + diffs.join(' ; ') + ". Demandez à Vibe d'exécuter update-dates.mjs pour mettre à jour dates.json.");
+      }
+    });
+  }).catch(function(e){
+    _staleSet("⚠️ Vérification impossible depuis le navigateur (" + (e && e.message ? e.message : e) + "). Demandez à Vibe d'exécuter update-dates.mjs.");
+  });
+  return false;
+}
 function applyDates(d) {
+  window.DATES = d;
   try {
     var el = document.getElementById('h-calendrier'); if (el) el.textContent = '📅 Le calendrier ' + d.session;
     el = document.getElementById('d-inscriptions'); if (el) el.innerHTML = '<b>' + _flong(d.inscriptions_debut) + ' → ' + _flong(d.inscriptions_fin) + '</b>';
@@ -700,13 +754,14 @@ function applyDates(d) {
     el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
     el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
     el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
-    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="../update-dates.php">🔄 Vérifier les dates maintenant</a>';
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="../update-dates.php" id="verif-dates">🔄 Vérifier les dates maintenant</a>';
+    var _vl = document.getElementById('verif-dates'); if (_vl) _vl.addEventListener('click', verifierDates);
     var _vj = _d(d.verifie_le);
     var _age = Math.floor((new Date() - _vj) / 86400000);
     var _st = document.getElementById('dates-stale');
     if (_st && _age > 14) {
       _st.style.display = '';
-      _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant (hébergement PHP), ou demandez à Vibe d'exécuter update-dates.mjs.";
+      _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant : le script PHP sera exécuté si l'hébergement le permet, sinon une vérification en direct sera tentée.";
     } + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a>';
   } catch(e) {}
   try {
