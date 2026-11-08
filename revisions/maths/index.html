@@ -165,8 +165,7 @@ function clearChap(){ currentChap = null; }
 function goCours(id){
   currentChap = id;
   showTab('cours');
-  var el = document.getElementById('cours-' + id);
-  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 function goCoursList(){ currentChap = null; showTab('cours'); }
 
