@@ -126,6 +126,7 @@
 </section>
 
 <section id="view-quiz" style="display:none">
+<div id="quiz-chapbar"></div>
 <div id="quiz-app"></div>
 </section>
 
@@ -142,6 +143,10 @@ var META_BY_ID = {}; var FICHE_BY_ID = {};
 COURS_META.forEach(function(c){ META_BY_ID[c.id] = c; });
 FICHES_DATA.forEach(function(f){ FICHE_BY_ID[f.id] = f.fiche; });
 
+function chapHeadHTML(m){
+  return '<div class="chap-head"><span class="chap-title">📖 Mathématiques — ' + esc(m.titre) + '</span>' +
+    '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a></span></div>';
+}
 function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 function showTab(t){
   ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
@@ -149,8 +154,9 @@ function showTab(t){
   if (t === 'fiches') renderFiches();
   if (t === 'cours') renderCours();
   if (t === 'quiz') {
-    if (currentChap && META_BY_ID[currentChap]) { startTraining(META_BY_ID[currentChap].theme); }
-    else { state.mode = 'menu'; render(); }
+    var bar = document.getElementById('quiz-chapbar');
+    if (currentChap && META_BY_ID[currentChap]) { bar.innerHTML = chapHeadHTML(META_BY_ID[currentChap]); startTraining(META_BY_ID[currentChap].theme); }
+    else { bar.innerHTML = ''; state.mode = 'menu'; render(); }
   }
   if (t === 'prog' || t === 'cours') window.scrollTo({top:0});
 }
@@ -179,9 +185,8 @@ function renderFiches(){
   var z = document.getElementById('fiches-zone'); var h = '';
   if (currentChap && FICHE_BY_ID[currentChap]) {
     var m = META_BY_ID[currentChap];
-    h += '<section class="card"><h2>🗂️ Fiche du chapitre en cours</h2>' +
-      '<p style="font-size:.92rem;margin-bottom:12px">Chapitre en cours : <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ') — voici sa fiche synthétique.</p>' +
-      '<p style="font-size:.85rem"><a href="#" onclick="clearChap();showTab(\'prog\');return false;">📚 Voir toutes les fiches / tous les chapitres</a></p></section>';
+    h += chapHeadHTML(m);
+    h += '<section class="card"><p style="font-size:.92rem;margin-bottom:0">Fiche synthétique du chapitre <b>« ' + esc(m.titre) + ' »</b> (' + esc(m.niveau) + ').</p></section>';
     h += ficheHTML(currentChap, 1);
   } else {
     h += '<section class="card"><h2>🗂️ Fiches synthétiques</h2><p style="font-size:.92rem">Toutes les fiches, une par chapitre. Ouvrez un cours : l\'onglet 🗂️ Fiche affichera uniquement la fiche de ce chapitre.</p></section>';
@@ -267,8 +272,7 @@ function renderCours(){
   var v = document.getElementById('view-cours'); var h = '';
   if (currentChap && META_BY_ID[currentChap]) {
     var m = META_BY_ID[currentChap];
-    h += '<div class="chap-head"><span class="chap-title">📖 Mathématiques — ' + esc(m.titre) + '</span>' +
-      '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a></span></div>';
+    h += chapHeadHTML(m);
     h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
   } else {
     var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
