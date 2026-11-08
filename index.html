@@ -67,6 +67,16 @@
   footer b { color: #64748b; }
   .ico { display: inline-block; text-decoration: none; }
   abbr.acr { text-decoration: underline dotted #2563eb; text-underline-offset: 3px; cursor: help; color: #2563eb; font-weight: 600; }
+  .etape {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px; padding: 3px 10px; border-radius: 999px;
+    font-size: .78rem; font-weight: 600; line-height: 1.4;
+    width: fit-content;
+  }
+  .etape.encours { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+  .etape.avenir { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .etape.avant { background: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+  .etape b { font-weight: 800; }
 </style>
 </head>
 <body>
@@ -84,6 +94,7 @@
         <div class="txt">
           <b>Concours ATSEM — Somme</b>
           <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="home-annee">2027</span></span>
+          <span class="etape avenir" id="home-etape">…</span>
         </div>
         <div class="arrow">→</div>
       </a>
@@ -92,6 +103,7 @@
         <div class="txt">
           <b>Concours DGFiP catégorie C — Agent des finances publiques</b>
           <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="dgfipc-annee">2027</span></span>
+          <span class="etape avenir" id="dgfipc-etape">…</span>
         </div>
         <div class="arrow">→</div>
       </a>
@@ -100,6 +112,7 @@
         <div class="txt">
           <b>Concours DGFiP catégorie B — Contrôleur des finances publiques</b>
           <span>Guide, fiches de révision et QCM interactif — voie externe, concours <span id="dgfipb-annee">2027</span></span>
+          <span class="etape avenir" id="dgfipb-etape">…</span>
         </div>
         <div class="arrow">→</div>
       </a>
@@ -197,9 +210,64 @@ function tooltipAcronymes(root) {
 </style>
 <button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑<span class="lbl">Haut</span></button>
 <script>
-fetch('atsem/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
-fetch('dgfip-c/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('dgfipc-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
-fetch('dgfip-b/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('dgfipb-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
+function fmtD(iso) { var p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+function jours(iso) { return Math.ceil((new Date(iso + 'T00:00:00') - new Date(new Date().toDateString())) / 86400000); }
+function pluriel(n) { return n > 1 ? 's' : ''; }
+function afficheEtape(el, d, etapes) {
+  if (!el || !d) return;
+  var now = new Date(new Date().toDateString());
+  for (var i = 0; i < etapes.length; i++) {
+    var st = etapes[i];
+    var deb = st.debut || st.date, fin = st.fin || st.date;
+    if (now >= new Date(deb) && now <= new Date(fin)) {
+      el.className = 'etape encours';
+      el.innerHTML = '📍 <b>Étape en cours :</b> ' + st.label + (st.fin ? ' — jusqu\'au ' + fmtD(st.fin) : ' — le ' + fmtD(st.date)) + ' · J-' + jours(fin);
+      return;
+    }
+  }
+  for (var j = 0; j < etapes.length; j++) {
+    var st2 = etapes[j];
+    var dt = st2.ouverture || st2.debut || st2.date;
+    if (now < new Date(dt)) {
+      el.className = 'etape avenir';
+      var n = jours(dt);
+      el.innerHTML = '⏭️ <b>Prochaine étape :</b> ' + st2.label + ' — ' + (st2.ouverture ? 'ouverture le ' + fmtD(st2.ouverture) : 'le ' + fmtD(dt)) + ' · dans ' + n + ' jour' + pluriel(n);
+      return;
+    }
+  }
+  el.className = 'etape encours';
+  el.innerHTML = '🏁 <b>Concours terminé</b> — résultats disponibles';
+}
+fetch('atsem/dates.json').then(function(r){ return r.json(); }).then(function(d){
+  var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session;
+  afficheEtape(document.getElementById('home-etape'), d, [
+    { label: 'Inscriptions', ouverture: d.inscriptions_debut, debut: d.inscriptions_debut, fin: d.inscriptions_fin },
+    { label: 'Dépôt des dossiers', debut: d.inscriptions_fin, fin: d.dossier_fin },
+    { label: 'Épreuve écrite' + (d.ecrit_confirme ? '' : ' (date à confirmer)'), date: d.ecrit },
+    { label: 'Épreuve orale' + (d.oral_estime ? ' (date estimée)' : ''), date: d.oral }
+  ]);
+}).catch(function(){});
+fetch('dgfip-c/dates.json').then(function(r){ return r.json(); }).then(function(d){
+  var e = document.getElementById('dgfipc-annee'); if (e && d.session) e.textContent = d.session;
+  afficheEtape(document.getElementById('dgfipc-etape'), d, [
+    { label: 'Inscriptions', ouverture: d.inscriptions_debut, debut: d.inscriptions_debut, fin: d.inscriptions_fin },
+    { label: 'Épreuve écrite', date: d.ecrit },
+    { label: 'Préadmissibilité', date: d.preadmissibilite },
+    { label: 'Admissibilité', date: d.admissibilite },
+    { label: 'Épreuve orale', debut: d.oral_debut, fin: d.oral_fin },
+    { label: 'Résultats d\'admission', date: d.admission }
+  ]);
+}).catch(function(){});
+fetch('dgfip-b/dates.json').then(function(r){ return r.json(); }).then(function(d){
+  var e = document.getElementById('dgfipb-annee'); if (e && d.session) e.textContent = d.session;
+  afficheEtape(document.getElementById('dgfipb-etape'), d, [
+    { label: 'Inscriptions', ouverture: d.inscriptions_debut, debut: d.inscriptions_debut, fin: d.inscriptions_fin },
+    { label: 'Épreuve écrite', date: d.ecrit },
+    { label: 'Notification des résultats', date: d.notification },
+    { label: 'Épreuve orale', debut: d.oral_debut, fin: d.oral_fin },
+    { label: 'Résultats d\'admission', date: d.admission }
+  ]);
+}).catch(function(){});
 </script>
 <script>
 (function(){
