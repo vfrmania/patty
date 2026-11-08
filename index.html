@@ -68,7 +68,7 @@
   .ico { display: inline-block; text-decoration: none; }
   abbr.acr { text-decoration: underline dotted #2563eb; text-underline-offset: 3px; cursor: help; color: #2563eb; font-weight: 600; }
   .etape {
-    display: inline-flex; align-items: center; gap: 6px;
+    display: inline-flex; align-items: baseline;
     margin-top: 8px; padding: 3px 10px; border-radius: 999px;
     font-size: .78rem; font-weight: 600; line-height: 1.4;
     width: fit-content;
@@ -221,7 +221,7 @@ function afficheEtape(el, d, etapes) {
     var deb = st.debut || st.date, fin = st.fin || st.date;
     if (now >= new Date(deb) && now <= new Date(fin)) {
       el.className = 'etape encours';
-      el.innerHTML = '📍 <b>Étape en cours :</b> ' + st.label + (st.fin ? ' — jusqu\'au ' + fmtD(st.fin) : ' — le ' + fmtD(st.date)) + ' · J-' + jours(fin);
+      el.innerHTML = '<span>📍 <b>Étape en cours :</b> ' + st.label + (st.fin ? ' — jusqu\'au ' + fmtD(st.fin) : ' — le ' + fmtD(st.date)) + ' · J-' + jours(fin) + '</span>';
       return;
     }
   }
@@ -231,12 +231,12 @@ function afficheEtape(el, d, etapes) {
     if (now < new Date(dt)) {
       el.className = 'etape avenir';
       var n = jours(dt);
-      el.innerHTML = '⏭️ <b>Prochaine étape :</b> ' + st2.label + ' — ' + (st2.ouverture ? 'ouverture le ' + fmtD(st2.ouverture) : 'le ' + fmtD(dt)) + ' · dans ' + n + ' jour' + pluriel(n);
+      el.innerHTML = '<span>⏭️ <b>Prochaine étape :</b> ' + st2.label + ' — ' + (st2.ouverture ? 'ouverture le ' + fmtD(st2.ouverture) : 'le ' + fmtD(dt)) + ' · dans ' + n + ' jour' + pluriel(n) + '</span>';
       return;
     }
   }
   el.className = 'etape encours';
-  el.innerHTML = '🏁 <b>Concours terminé</b> — résultats disponibles';
+  el.innerHTML = '<span>🏁 <b>Concours terminé</b> — résultats disponibles</span>';
 }
 fetch('atsem/dates.json').then(function(r){ return r.json(); }).then(function(d){
   var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session;
