@@ -114,6 +114,7 @@
   <div id="view-guide">
     <section class="card">
       <h2 id="h-calendrier">📅 Le calendrier 2027</h2>
+      <div id="dates-stale" class="warn" style="display:none"></div>
       <table>
         <tr><th>Étape</th><th>Date</th></tr>
         <tr><td>Inscriptions en ligne</td><td id="d-inscriptions"></td></tr>
@@ -699,7 +700,14 @@ function applyDates(d) {
     el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
     el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
     el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
-    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a>';
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="../update-dates.php">🔄 Vérifier les dates maintenant</a>';
+    var _vj = _d(d.verifie_le);
+    var _age = Math.floor((new Date() - _vj) / 86400000);
+    var _st = document.getElementById('dates-stale');
+    if (_st && _age > 14) {
+      _st.style.display = '';
+      _st.innerHTML = "⚠️ Les dates n'ont pas été revérifiées depuis " + _age + " jours. Cliquez sur 🔄 Vérifier les dates maintenant (hébergement PHP), ou demandez à Vibe d'exécuter update-dates.mjs.";
+    } + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a>';
   } catch(e) {}
   try {
     var _e = _d(d.ecrit);
@@ -732,7 +740,7 @@ function applyDates(d) {
     }
   } catch(e) {}
 }
-fetch('dates.json').then(function(r){ return r.json(); }).then(applyDates).catch(function(){ applyDates(FALLBACK_DATES); });
+fetch('../dates.json').then(function(r){ return r.json(); }).then(applyDates).catch(function(){ applyDates(FALLBACK_DATES); });
 </script>
 <style>
 .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
