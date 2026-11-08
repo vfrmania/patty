@@ -10,7 +10,7 @@
 
 header('Content-Type: text/html; charset=utf-8');
 
-$FILE = __DIR__ . '/dates.json';
+$FILE = __DIR__ . '/atsem/dates.json';
 
 function page($titre, $corps, $ok) {
   $couleur = $ok ? '#059669' : '#dc2626';

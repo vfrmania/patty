@@ -188,7 +188,7 @@ function tooltipAcronymes(root) {
 </style>
 <button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑<span class="lbl">Haut</span></button>
 <script>
-fetch('dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
+fetch('atsem/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('home-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
 fetch('dgfip-c/dates.json').then(function(r){ return r.json(); }).then(function(d){ var e = document.getElementById('dgfipc-annee'); if (e && d.session) e.textContent = d.session; }).catch(function(){});
 </script>
 <script>

@@ -1,0 +1,22 @@
+{
+  "session": "2027",
+  "inscriptions_debut": "2027-03-16",
+  "inscriptions_fin": "2027-04-21",
+  "dossier_fin": "2027-04-29",
+  "ecrit": "2027-09-29",
+  "ecrit_confirme": false,
+  "oral": "2027-11-15",
+  "oral_estime": true,
+  "verifie_le": "2026-10-08",
+  "source_utilisee": "FNCDG (concours-territorial.fr)",
+  "sources": [
+    {
+      "nom": "FNCDG - calendrier officiel des concours",
+      "url": "https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=2027"
+    },
+    {
+      "nom": "CDG de la Somme - concours",
+      "url": "https://www.cdg80.fr/concours/"
+    }
+  ]
+}

@@ -18,7 +18,7 @@
 //                                     mise a jour manuelle de cles precises
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const FILE = new URL('./dates.json', import.meta.url);
+const FILE = new URL('./atsem/dates.json', import.meta.url);
 const MOIS = { 'janvier': 1, 'février': 2, 'mars': 3, 'avril': 4, 'mai': 5, 'juin': 6, 'juillet': 7, 'août': 8, 'aout': 8, 'septembre': 9, 'octobre': 10, 'novembre': 11, 'décembre': 12, 'decembre': 12 };
 const CLES = ['inscriptions_debut', 'inscriptions_fin', 'ecrit', 'dossier_fin'];
 
