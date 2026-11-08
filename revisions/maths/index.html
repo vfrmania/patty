@@ -507,7 +507,7 @@ function renderCours(){
     h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
   } else {
     var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
-    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">Cliquez sur un chapitre : le cours s\'affiche seul, avec ses boutons Fiche et QCM en tête.</p>' + list + '</section>';
+    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + list + '</section>';
     COURS_META.forEach(function(c){
       h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
     });
