@@ -714,6 +714,25 @@ function applyDates(d) {
       _td.innerHTML = _td.innerHTML + ' <span style="background:#d97706;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
     }
   } catch(e) {}
+  try {
+    var _ms = [['d-ecrit', d.ecrit], ['d-notification', d.notification], ['d-oral', d.oral_debut || d.oral], ['d-admission', d.admission]];
+    var _nowc = new Date();
+    var _tdid = null, _lbl = '';
+    if (_nowc >= _d(d.inscriptions_debut) && _nowc <= _d(d.inscriptions_fin)) { _tdid = 'd-inscriptions'; _lbl = 'En cours'; }
+    else if (_nowc < _d(d.inscriptions_debut)) { _tdid = 'd-inscriptions'; _lbl = 'Prochaine étape'; }
+    else {
+      for (var _mi = 0; _mi < _ms.length; _mi++) {
+        var _md = _d(_ms[_mi][1]);
+        if (!isNaN(_md) && _nowc <= _md) { _tdid = _ms[_mi][0]; _lbl = 'Prochaine étape'; break; }
+      }
+    }
+    var _ctd = _tdid ? document.getElementById(_tdid) : null;
+    if (_ctd && _ctd.parentElement && _ctd.parentElement.tagName === 'TR') {
+      var _ctr = _ctd.parentElement;
+      _ctr.className = 'tr-now';
+      _ctr.cells[0].innerHTML = _ctr.cells[0].innerHTML + ' <span style="background:#d97706;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 ' + _lbl + '</span>';
+    }
+  } catch(e) {}
 }
 fetch('dates.json').then(function(r){ return r.json(); }).then(applyDates).catch(function(){ applyDates(FALLBACK_DATES); });
 </script>
