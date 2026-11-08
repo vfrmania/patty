@@ -1,0 +1,18 @@
+{
+  "session": "2027",
+  "inscriptions_debut": "2027-04-26",
+  "inscriptions_fin": "2027-06-08",
+  "ecrit": "2027-09-28",
+  "ecrit_confirme": true,
+  "preadmissibilite": "2027-10-15",
+  "admissibilite": "2027-11-09",
+  "oral_debut": "2028-01-03",
+  "oral_fin": "2028-01-07",
+  "admission": "2028-01-21",
+  "verifie_le": "2026-11-08",
+  "source_utilisee": "economie.gouv.fr (DGFiP)",
+  "sources": [
+    "https://www.economie.gouv.fr/rejoignez-nous/agent-administratif-principal-des-finances-publiques-de-2eme-classe-externe-dgfip",
+    "https://www.economie.gouv.fr/files/files/directions_services/rejoignez-nous/DGFiP/recrutement-par-concours/calendrier_concours.pdf"
+  ]
+}

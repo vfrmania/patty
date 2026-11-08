@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concours DGFiP catégorie C — Agent des finances publiques | Préparation, fiches et QCM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  header.hero { background: linear-gradient(135deg, #059669, #0d9488); color: #fff; border-radius: 20px; padding: 36px 28px; margin-bottom: 20px; }
+  header.hero h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header.hero p { color: #d1fae5; font-size: .95rem; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); padding: 3px 12px; border-radius: 999px; font-size: .78rem; }
+  nav.tabs { display: flex; gap: 8px; margin-bottom: 20px; position: sticky; top: 0; z-index: 100; padding: 10px 0; background: #f1f5f9; border-radius: 0 0 14px 14px; }
+  nav.tabs button { flex: 1; padding: 12px; border: none; border-radius: 14px; background: #fff; color: #475569; font-weight: 600; font-size: .95rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.08); transition: all .15s; }
+  nav.tabs button.active { background: #059669; color: #fff; }
+  section.card { background: #fff; border-radius: 18px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  section.card h2 { font-size: 1.25rem; margin-bottom: 14px; color: #065f46; }
+  section.card h3 { font-size: 1.02rem; margin: 20px 0 8px; color: #334155; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 10px 0; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+  th { background: #f8fafc; color: #475569; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+  .warn { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .tip { background: #ecfdf5; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  blockquote.ex, .ex { border-left: 3px solid #6ee7b7; padding: 8px 14px; margin: 8px 0; background: #f8fafc; font-size: .88rem; border-radius: 0 8px 8px 0; }
+  ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; font-size: .92rem; }
+  .btn { display: inline-block; padding: 12px 22px; border: none; border-radius: 12px; font-weight: 600; font-size: .95rem; cursor: pointer; transition: all .15s; }
+  .btn-primary { background: #059669; color: #fff; width: 100%; }
+  .btn-primary:hover { background: #047857; }
+  .theme-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .9rem; margin: 6px 0; transition: all .15s; }
+  .theme-btn:hover { border-color: #34d399; background: #ecfdf5; }
+  .cnt { font-size: .75rem; background: #e2e8f0; border-radius: 999px; padding: 2px 10px; color: #64748b; }
+  #quiz-app h2.q { font-size: 1.15rem; margin-bottom: 20px; }
+  .choice { width: 100%; text-align: left; padding: 13px 16px; margin: 8px 0; background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: all .15s; }
+  .choice:hover { border-color: #6ee7b7; background: #ecfdf5; }
+  .choice.sel { border-color: #059669; background: #ecfdf5; }
+  .choice.ok { border-color: #10b981; background: #ecfdf5; }
+  .choice.ko { border-color: #ef4444; background: #fef2f2; }
+  .choice.dim { opacity: .55; }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: #059669; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
+  .timer { font-family: monospace; font-size: 1rem; background: #e2e8f0; color: #334155; padding: 4px 12px; border-radius: 8px; }
+  .timer.low { background: #fee2e2; color: #dc2626; }
+  .bar { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+  .bar > div { height: 100%; background: #059669; transition: width 1s linear; }
+  .bar > div.low { background: #ef4444; }
+  .nav-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 18px; }
+  .nav-grid button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; color: #64748b; font-size: .75rem; font-weight: 700; cursor: pointer; }
+  .nav-grid button.answered { background: #d1fae5; border-color: #6ee7b7; color: #047857; }
+  .nav-grid button.cur { background: #059669; border-color: #059669; color: #fff; }
+  .expl { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px 16px; font-size: .86rem; margin-top: 14px; }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+  .btn-small { padding: 9px 18px; font-size: .85rem; }
+  .btn-gray { background: #64748b; color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+  .btn-gray:disabled { opacity: .4; cursor: not-allowed; }
+  .res-note { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+  .res-card { border-radius: 14px; padding: 10px 14px; background: #f8fafc; margin: 6px 0; font-size: .88rem; }
+  .green { color: #059669; } .red { color: #dc2626; }
+  footer { text-align: center; font-size: .78rem; color: #94a3b8; margin-top: 40px; }
+  a { color: #059669; }
+  .ico { display: inline-block; text-decoration: none; }
+  abbr.acr { text-decoration: underline dotted #059669; text-underline-offset: 3px; cursor: help; color: #047857; font-weight: 600; }
+  details.fiche { background: #fff; border-radius: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); overflow: hidden; }
+  details.fiche summary { cursor: pointer; padding: 18px 22px; font-weight: 700; color: #065f46; background: #f8fafc; list-style: none; display: flex; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.fiche summary::-webkit-details-marker { display: none; }
+  details.fiche summary::after { content: "▾"; margin-left: auto; color: #64748b; font-size: 1.1rem; }
+  details.fiche[open] summary::after { content: "▴"; }
+  .fiche-num { background: #059669; color: #fff; min-width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+  .fiche-body { padding: 4px 26px 24px; }
+  .fiche-body h3 { font-size: .98rem; margin: 18px 0 6px; color: #334155; }
+  .fiche-actions { display: flex; justify-content: flex-end; margin: 6px 0 10px; }
+  .btn-pdf { background: #fff; color: #059669; border: 1.5px solid #059669; border-radius: 10px; padding: 8px 14px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .btn-pdf:hover { background: #ecfdf5; }
+  tr.tr-now td { background: #fef9c3; font-weight: 700; }
+  tr.tr-now td:first-child { border-left: 4px solid #059669; }
+  .piege { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 8px; font-size: .87rem; margin: 12px 0; }
+  @media print {
+    header.hero, nav.tabs, footer, .no-print { display: none !important; }
+    body { background: #fff; }
+    .wrap { max-width: 100%; padding: 0; }
+    #view-guide, #view-quiz, #view-oral { display: none !important; }
+    details.fiche { display: none !important; box-shadow: none; page-break-inside: avoid; }
+    details.fiche.print-target { display: block !important; }
+    details.fiche.print-target summary { display: none; }
+    details.fiche.print-target .fiche-body { padding: 0 6px; }
+    .fiche-actions { display: none !important; }
+    .print-title { display: block !important; border-bottom: 3px solid #059669; padding-bottom: 8px; margin-bottom: 16px; color: #065f46; font-size: 1.4rem; font-weight: 800; }
+    h3 { page-break-after: avoid; }
+  }
+  .print-title { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>🎯 Préparation au concours DGFiP — Catégorie C (voie externe)</h1>
+    <p>Guide, fiches de révision complètes et QCM interactif au format de l'épreuve officielle.</p>
+    <div class="badges">
+      <span class="badge" id="badge-ecrit">📅 Écrit : …</span>
+      <span class="badge">✍️ QCM 1 h 30 / 20 min d'oral</span>
+      <span class="badge">🏢 DGFiP · Bercy</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button id="tab-guide" class="active" onclick="showTab('guide')">📘 Guide</button>
+    <button id="tab-fiches" onclick="showTab('fiches')">🗂️ Fiches</button>
+    <button id="tab-quiz" onclick="showTab('quiz')">🧪 QCM</button>
+    <button id="tab-oral" onclick="showTab('oral')">🗣️ Oral</button>
+  </nav>
+
+  <div id="view-guide">
+    <section class="card">
+      <h2 id="h-calendrier">📅 Le calendrier</h2>
+      <div id="dates-stale" class="warn" style="display:none"></div>
+      <table>
+        <tr><th>Étape</th><th>Date</th></tr>
+        <tr><td>Inscriptions en ligne</td><td id="d-inscriptions"></td></tr>
+        <tr><td>Épreuves écrites (QCM + admissibilité, même jour)</td><td id="d-ecrit"></td></tr>
+        <tr><td>Notification préadmissibilité</td><td id="d-preadmiss"></td></tr>
+        <tr><td>Notification admissibilité</td><td id="d-admiss"></td></tr>
+        <tr><td>Épreuve orale d'admission</td><td id="d-oral"></td></tr>
+        <tr><td>Résultats d'admission</td><td id="d-admission"></td></tr>
+      </table>
+      <p id="d-verified" style="font-size:.82rem;color:#64748b;margin-top:8px"></p>
+    </section>
+
+    <section class="card">
+      <h2>🏦 Le concours en bref</h2>
+      <ul>
+        <li><b>Concours externe commun DGFiP – DGDDI</b> de catégorie C, <b>branche administrative</b>, pour devenir <b>agent administratif principal des finances publiques de 2e classe</b> (DGFiP)</li>
+        <li>Conditions : être ressortissant de l'UE et titulaire du <b>brevet des collèges</b> (ou diplôme de niveau 3) à la date de la première épreuve</li>
+        <li>Une seule inscription possible parmi les concours communs C simultanés (externe ou interne, national ou à affectation locale) ; pour rejoindre la DGFiP, choisir la <b>branche administrative</b> et classer la DGFiP en premier vœu</li>
+        <li>Inscription en ligne sur <b>recrutements.dgfip.finances.gouv.fr</b></li>
+        <li>Programme : connaissances et aptitudes de fin de premier cycle du secondaire (niveau 3e)</li>
+      </ul>
+      <div class="warn">⚠️ <b>Les épreuves ont changé à partir de la session 2026</b> : QCM plus clair et ciblé, épreuve écrite allégée (analyse, synthèse, création d'outils pratiques), évaluation des compétences comportementales renforcée à l'oral.</div>
+    </section>
+
+    <section class="card">
+      <h2>✍️ Les épreuves</h2>
+      <table>
+        <tr><th>Épreuve</th><th>Nature</th><th>Durée</th><th>Coef.</th></tr>
+        <tr><td><b>1. Pré-admissibilité</b></td><td>QCM : mathématiques et raisonnement logique, connaissances générales (histoire-géographie, enseignement moral et civique, environnement numérique, organisation et missions des ministères économiques et financiers, actualité économique, sociale et internationale). <b>Calculatrice interdite.</b></td><td>1 h 30</td><td>1</td></tr>
+        <tr><td><b>2. Admissibilité</b></td><td>Résolution de cas pratiques sur un dossier (≤ 15 pages) à thématique contemporaine sociale, économique ou financière : présentation des éléments du dossier, rédaction d'une synthèse, éventuelle création d'un support opérationnel (fiche, courriel, support de communication). <b>Calculatrice autorisée.</b></td><td>3 h</td><td>2</td></tr>
+        <tr><td><b>3. Admission (oral)</b></td><td>Entretien avec le jury intégrant des mises en situation, précédé d'une présentation du parcours par le candidat (2 minutes max)</td><td>20 min</td><td>3</td></tr>
+      </table>
+      <ul>
+        <li>Les épreuves 1 et 2 se déroulent <b>le même jour</b> : seules les copies d'admissibilité des candidats <b>pré-admissibles</b> sont corrigées</li>
+        <li><b>Toute note inférieure à 5/20, quelle que soit l'épreuve, est éliminatoire</b></li>
+      </ul>
+      <div class="tip">💡 Statistiques officielles : environ 6 000 candidats présents aux écrits chaque année, ~880 postes, soit un taux de réussite d'environ <b>17 % parmi les présents</b> — la régularité de préparation paie.</div>
+    </section>
+
+    <section class="card">
+      <h2>🗓️ Planning de révision — 4 h/semaine</h2>
+      <table>
+        <tr><th>Période</th><th>Objectif</th><th>Durée</th></tr>
+        <tr id="plan-r1"><td>Phase 1 — Fondamentaux</td><td>Fiches 1 à 10 en lecture active + 1 QCM de thème par semaine (sans chronomètre)</td><td>8-10 semaines</td></tr>
+        <tr id="plan-r2"><td>Phase 2 — Entraînement</td><td>2 examens blancs par mois + relecture des fiches des thèmes faibles</td><td>6-8 semaines</td></tr>
+        <tr id="plan-r3"><td>Phase 3 — Cas pratiques</td><td>1 synthèse et 1 fiche/courriel par semaine sur des dossiers d'actualité + QCM chronométrés</td><td>4-6 semaines</td></tr>
+        <tr id="plan-r4"><td>Phase 4 — Dernière ligne droite</td><td>Annales officielles (QCM et admissibilité), révision ciblée, préparation de l'oral (présentation de 2 min)</td><td>2-4 semaines</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>📚 Les 10 thèmes à maîtriser</h2>
+      <ul>
+        <li>La <b>DGFiP</b> : organisation, missions, métiers (fiche 1)</li>
+        <li>Le <b>métier d'agent des finances publiques</b> : missions, affectations, carrière (fiche 2)</li>
+        <li>La <b>fonction publique d'État</b> : catégories, droits, obligations (fiche 3)</li>
+        <li><b>Mathématiques et logique</b> : calcul mental, pourcentages, conversions, suites (fiche 4)</li>
+        <li><b>Histoire de France</b> : les repères essentiels (fiche 5)</li>
+        <li><b>Géographie</b> : France, Europe, monde (fiche 6)</li>
+        <li><b>Institutions et citoyenneté</b> : la Ve République, l'UE, l'EMC (fiche 7)</li>
+        <li><b>Économie et finances publiques</b> : budget, impôts, dette, prélèvements (fiche 8)</li>
+        <li><b>Environnement numérique</b> : outils, cybersécurité, RGPD, inclusion (fiche 9)</li>
+        <li><b>Sigles et vocabulaire</b> : le glossaire complet (fiche 10)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🎯 Stratégie QCM — marquer des points</h2>
+      <ul>
+        <li>Le QCM (1 h 30) balaie maths/logique ET culture générale : ne négligez aucun des deux blocs — c'est la 1re cause d'échec</li>
+        <li>Entraînez-vous <b>sans calculatrice</b> (interdite le jour J) : réflexes de calcul mental, tables, conversions</li>
+        <li>Pour la logique : traduisez la question en petits schémas ou listes, éliminez les réponses absurdes</li>
+        <li>Pour l'actualité : suivez les grandes thématiques (économie, social, international) — pas le détail, les repères</li>
+        <li>En simulation ici, jouez le jeu du barème : une mauvaise réponse coûte plus cher qu'une absence de réponse</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>📝 Réussir l'épreuve d'admissibilité (cas pratiques)</h2>
+      <ul>
+        <li>L'épreuve (3 h, coef 2) part d'un <b>dossier de 15 pages max</b> sur une thématique contemporaine sociale, économique ou financière</li>
+        <li>Trois compétences attendues : <b>présenter</b> les éléments du dossier (reformuler, hiérarchiser), <b>synthétiser</b> (une page claire, structurée, sans recopiage), <b>créer un support opérationnel</b> (fiche pratique, courriel, support de communication)</li>
+        <li>Méthode : 30 min de lecture active (surligner : chiffres, acteurs, dates), plan au brouillon, puis rédaction directe — pas de brouillon intégral</li>
+        <li>Soignez la forme : orthographe, présentation, titres — la copie d'un agent administratif se juge aussi sur la tenue</li>
+        <li>Entraînez-vous chaque semaine sur un article d'actualité économique : résumé en 15 lignes + fiche pratique</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🗣️ Préparer l'oral (coefficient 3)</h2>
+      <ul>
+        <li>Entretien de <b>20 minutes, coefficient 3</b> — l'épreuve la plus lourde du concours</li>
+        <li>Présentation du parcours en <b>2 minutes maximum</b> : chronométrez-vous, c'est un exercice, pas une biographie</li>
+        <li>Le jury intègre des <b>mises en situation</b> pour apprécier motivations et aptitude : préparez des exemples concrets (expérience, stage, bénévolat)</li>
+        <li>Depuis la réforme, l'évaluation des <b>compétences comportementales</b> est renforcée : écoute, esprit d'équipe, sens du service public</li>
+        <li>Toutes les fiches de l'onglet 🗣️ Oral vous donnent la méthode détaillée</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🔗 Ressources utiles</h2>
+      <ul>
+        <li><a href="https://www.economie.gouv.fr/rejoignez-nous/agent-administratif-principal-des-finances-publiques-de-2eme-classe-externe-dgfip" target="_blank" rel="noopener">Avis de concours officiel — economie.gouv.fr</a> : épreuves, calendrier, programme, annales et rapports de jury</li>
+        <li><a href="https://recrutements.dgfip.finances.gouv.fr/candidat/pub/" target="_blank" rel="noopener">Inscription en ligne — recrutements.dgfip.finances.gouv.fr</a></li>
+        <li><a href="https://www.enfip.fr/" target="_blank" rel="noopener">ENFiP</a> : École nationale des finances publiques (formation des lauréats, lives de préparation)</li>
+        <li><a href="https://rejoindrelesfinancespubliques.economie.gouv.fr/" target="_blank" rel="noopener">Rejoindre les finances publiques</a> : présentation des métiers et des concours</li>
+        <li>Annales officielles (QCM et épreuve d'admissibilité) et rapports de jury : disponibles sur la page officielle ci-dessus — à faire en phase 4</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>✅ Prochaines actions</h2>
+      <ul>
+        <li>Créer votre compte sur la plateforme d'inscription DGFiP <b>avant</b> l'ouverture des inscriptions (vérifiez vos identifiants)</li>
+        <li>Lire les fiches 1 et 2 (DGFiP et métier) : elles nourrissent le QCM ET l'oral</li>
+        <li>Faire le premier examen blanc de l'onglet QCM pour situer votre niveau de départ</li>
+        <li>Préparer l'avis de concours officiel (PDF) : conditions exactes, centres d'examen, modalités</li>
+        <li>Réviser l'actualité économique et sociale au fil de l'eau (10 min/jour suffisent)</li>
+      </ul>
+    </section>
+  </div>
+
+    <div id="view-fiches" style="display:none">
+    <section class="card no-print"><h2>🗂️ Les 10 fiches de révision</h2><p style="font-size:.9rem;margin-bottom:6px">Une fiche par thème à maîtriser : cliquez pour ouvrir, révisez, puis testez-vous dans l'onglet QCM. Le bouton <b>🖨️ PDF</b> de chaque fiche génère une version imprimable (une fiche par page) : dans la fenêtre d'impression, choisissez « Enregistrer au format PDF ».</p><p style="font-size:.85rem;margin-top:6px">La <b>fiche 10</b> est un glossaire alphabétique de tous les acronymes et termes clés du concours et du métier.</p></section>
+    <div id="fiches-list"></div>
+  </div>
+
+  <div id="view-quiz" style="display:none">
+    <div id="quiz-app"></div>
+  </div>
+
+  <div id="view-oral" style="display:none">
+    <section class="card">
+      <h2>🎯 L'épreuve en pratique</h2>
+      <ul>
+        <li><b>Entretien avec le jury : 20 minutes, coefficient 3</b> — l'épreuve la plus déterminante du concours</li>
+        <li>Débute par une <b>présentation de votre parcours pendant 2 minutes maximum</b></li>
+        <li>Le jury intègre des <b>mises en situation</b> pour apprécier vos motivations et votre aptitude à exercer les fonctions au sein des ministères économiques et financiers</li>
+        <li>Depuis la réforme, l'évaluation des <b>compétences comportementales</b> est renforcée : écoute, adaptabilité, esprit d'équipe, sens du service public</li>
+        <li>Toute note inférieure à 5/20 est éliminatoire, y compris à l'oral</li>
+      </ul>
+      <div class="tip">💡 Le jury recrute un <b> futur agent public </b>, pas un candidat parfait : sincérité, motivation concrète et attitude professionnelle comptent plus que les réponses « parfaites » apprises par cœur.</div>
+    </section>
+
+    <section class="card">
+      <h2>📅 Plan d'entraînement oral (compatible avec vos 4 h/semaine)</h2>
+      <table>
+        <tr><th>Quand</th><th>Action</th><th>Temps</th></tr>
+        <tr><td>Chaque semaine dès la phase 2</td><td>10 minutes d'actualité économique et sociale (presse, journaux TV/radio) : notez 2 faits + 1 chiffre</td><td>10 min/jour</td></tr>
+        <tr><td>1 fois par semaine</td><td>Lire à voix haute la présentation de parcours (2 min) — variez les fins selon le temps restant</td><td>15 min</td></tr>
+        <tr><td>1 fois par semaine</td><td>Une mise en situation en conditions : tirez une question, réfléchissez 30 s, répondez 2 min</td><td>20 min</td></tr>
+        <tr><td>Phase 4 (2 fois/semaine)</td><td>Simulacre complet filmé ou en miroir : parcours + 3 questions + 1 mise en situation</td><td>30 min</td></tr>
+        <tr><td>La semaine précédant l'oral</td><td>Relecture fiches 1-2 (DGFiP, métier), annales des rapports de jury, repos</td><td>—</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>🧭 Le déroulé type de l'entretien</h2>
+      <ol>
+        <li><b>Accueil</b> (1 min) : vous entrez, saluez le jury, vous asseyez quand on vous l'indique</li>
+        <li><b>Présentation du parcours</b> (2 min max) : le jury vous coupe ou vous relance ensuite</li>
+        <li><b>Questions de motivation</b> (5-8 min) : pourquoi la fonction publique, pourquoi la DGFiP, ce métier</li>
+        <li><b>Mises en situation</b> (5-8 min) : situations concrètes de service (usager mécontent, collègue, erreur, délai)</li>
+        <li><b>Questions de connaissance</b> ponctuelles : missions de la DGFiP, actualité simple, sens des valeurs du service public</li>
+        <li><b>Conclusion</b> : une dernière question (« une chose à ajouter ? ») puis vos remerciements</li>
+      </ol>
+      <div class="ex">Exemple de situation : « Un usager s'énerve au guichet car son dossier est incomplet depuis deux semaines. Que faites-vous ? » → écouter, reconnaître l'attente, expliquer clairement ce qui manque, proposer un rendez-vous ou un contact, alerter le supérieur si l'usager reste en colère : jamais répondre sur le même ton.</div>
+    </section>
+
+    <section class="card">
+      <h2>🪞 Préparer sa présentation (2 minutes)</h2>
+      <ul>
+        <li>Structure en 4 temps : <b>qui je suis</b> (30 s, fait bref) → <b>ce que je fais</b> (30 s, compétences transférables : rigueur, accueil, travail en équipe, informatique) → <b>pourquoi ce concours</b> (45 s, motivation concrète et positive : sens du service public, intérêt pour les finances publiques, contact avec les usagers) → <b>mon projet</b> (15 s : m'investir, me former, évoluer)</li>
+        <li>Chronomètre : 1 min 50 en s'entraînant = 2 min le jour J avec le trac</li>
+        <li>Aucune phrase apprise par cœur : des <b>mots-clés</b> et un fil rouge — le jury détecte le par-cœur et le pénalise en relance</li>
+        <li>Finissez proprement : « Voilà ce que je souhaitais vous présenter » — ne laissez pas un silence flotter</li>
+        <li>Entraînez 3 versions (2 min, 1 min, 30 s) : le jury peut adapter le temps</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>❓ Les questions les plus fréquentes du jury</h2>
+      <ul>
+        <li>Pourquoi la fonction publique plutôt que le privé ?</li>
+        <li>Pourquoi la DGFiP, et ce métier d'agent des finances publiques précisément ?</li>
+        <li>Que savez-vous des missions de la DGFiP ? (fiche 1 : fiscalité, gestion publique, accueil des usagers)</li>
+        <li>Quelles qualités faut-il pour travailler au contact des usagers ?</li>
+        <li>Une situation où vous avez géré une difficulté / un conflit / une erreur ? (préparez 2-3 exemples vrais)</li>
+        <li>Que feriez-vous si un usager vous demande un renseignement que vous ne connaissez pas ? (réponse : ne pas inventer, orienter vers le bon interlocuteur, transmettre)</li>
+        <li>Comment vous voyez-vous dans 5 ans ? (réponse honnête : apprendre le métier, se former, viser l'avancement)</li>
+        <li>Une actualité économique qui vous a marqué(e) ? (préparez 2 dossiards simples : emploi, pouvoir d'achat, budget de l'État)</li>
+      </ul>
+      <div class="tip">💡 Pour chaque question, préparez <b>un exemple concret</b> tiré de votre vie (travail, stage, bénévolat, vie associative) : c'est ce qui différencie une réponse vivante d'une réponse générique.</div>
+    </section>
+
+    <section class="card">
+      <h2>🎭 Les mises en situation : la méthode en 4 temps</h2>
+      <ol>
+        <li><b>Écouter</b> la situation en entier sans couper, reformuler si besoin (« Si je comprends bien… »)</li>
+        <li><b>Identifier l'enjeu</b> : que doit-on protéger ? (l'usager, le service, la règle, le collègue)</li>
+        <li><b>Proposer une action</b> concrète et proportionnée, en citant les règles ou valeurs de service public (continuité, égalité de traitement, neutralité)</li>
+        <li><b>Prévoir la suite</b> : transmission à la hiérarchie, traçabilité, retour à l'usager</li>
+      </ol>
+      <ul>
+        <li>Toujours : <b>jamais d'improvisation juridique</b> (ne pas inventer une règle), jamais de jugement sur un collègue, jamais de réponse à chaud face à l'agressivité</li>
+        <li>Bonnes postures : savoir dire « je ne sais pas, mais je sais à qui demander » ; proposer ; rendre compte</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🪤 Les questions pièges — et comment les désamorcer</h2>
+      <ul>
+        <li>« Que pensez-vous du nombre de fonctionnaires en France ? » → pas de position politique : répondre par les missions et l'intérêt général, recentrer sur le métier postulé</li>
+        <li>« Votre note du QCM est moyenne, que direz-vous ? » → assumer, montrer la progression depuis (« j'ai travaillé ces points depuis »)</li>
+        <li>« Accepteriez-vous une affectation ailleurs que dans votre département ? » → répondez honnêtement en valorisant la mobilité comme un atout</li>
+        <li>« Que ferez-vous si vous échouez ? » → montrer la détermination ET un plan B digne (« je continuerai à me préparer ; mon expérience me servira »)</li>
+        <li>« Décrivez-vous en 3 mots » → 3 mots + un exemple court chacun : pas de liste sèche</li>
+      </ul>
+      <div class="warn">⚠️ Le jury teste votre <b>connaissance du métier</b> : ne postulez jamais « pour la sécurité de l'emploi » seul — parlez missions, usagers, travail concret.</div>
+    </section>
+
+    <section class="card">
+      <h2>👔 Le jour J : les détails qui comptent</h2>
+      <ul>
+        <li>Tenue soignée et simple (pas de tenue de soirée, pas de négligé) : vous postulez pour un poste d'accueil du public</li>
+        <li>Arriver 20-30 min en avance, éteindre le téléphone, reprendre ses mots-clés tranquillement</li>
+        <li>Frapper, entrer, saluer le jury (2-3 personnes : président + membres, souvent des professionnels du métier), attendre l'invitation à s'asseoir</li>
+        <li>Posture : dos droit, mains visibles, regard qui balaie le jury, sourire naturel</li>
+        <li>Langage : phrases courtes, vocabulaire professionnel, jamais d'argot ni de tics (« euh », « du coup », « genre »)</li>
+        <li>Sortie : remercier, sortir calmement — l'épreuve continue jusqu'à la porte fermée</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>❌ Les 10 erreurs qui coûtent des points</h2>
+      <ol>
+        <li>Répondre « pour la sécurité de l'emploi » comme unique motivation</li>
+        <li>Confondre DGFiP et Douanes (l'inspecteur des finances publiques n'est pas le contrôleur ; vous postulez comme <b>agent</b>)</li>
+        <li>Ne pas connaître les missions de base de la DGFiP (fiche 1)</li>
+        <li>Réciter par cœur et perdre le fil à la première relance</li>
+        <li>Parler de sa vie privée sans lien avec le poste</li>
+        <li>Critiquer un ancien employeur ou un enseignant</li>
+        <li>Improviser une réponse juridique ou fiscale que l'on ne maîtrise pas</li>
+        <li>Répondre agressivement à une question volontairement stressante</li>
+        <li>Ne rien dire sur son projet professionnel (le jury attend un minimum de projection)</li>
+        <li>Négliger la forme : retards, téléphone qui sonne, tenue inadaptée</li>
+      </ol>
+    </section>
+  </div>
+  </div>
+
+
+  <footer>Préparation au concours DGFiP — Catégorie C · Voie externe · Site personnel de révision<br>Vérifiez toujours les informations officielles sur economie.gouv.fr</footer>
+</div>
+
+<script>
+var QUESTIONS = [{"t":"Maths et logique","q":"Un article à 80 € bénéficie d'une remise de 25 %. Quel est son nouveau prix ?","c":["55 €","60 €","62,50 €","65 €"],"a":1,"e":"80 × (1 − 25/100) = 80 × 0,75 = 60 €."},{"t":"Maths et logique","q":"Le prix d'un produit passe de 40 € à 50 €. Quelle est l'augmentation en pourcentage ?","c":["10 %","20 %","25 %","30 %"],"a":2,"e":"(50 − 40)/40 = 10/40 = 0,25 soit +25 %. Attention : on divise par le prix de DÉPART."},{"t":"Maths et logique","q":"Un prix augmente de 20 % puis baisse de 20 %. Il revient à son niveau initial.","c":["Vrai","Faux"],"a":1,"e":"100 → 120 → 120 × 0,8 = 96. Une hausse suivie d'une baisse identique en pourcentage ne compense jamais exactement."},{"t":"Maths et logique","q":"Quel est le plus grand nombre ?","c":["3/4","0,7","5/8","0,72"],"a":0,"e":"3/4 = 0,75 > 0,72 > 0,7 > 5/8 (0,625)."},{"t":"Maths et logique","q":"Combien font 15 % de 200 ?","c":["15","25","30","35"],"a":2,"e":"200 × 15/100 = 30."},{"t":"Maths et logique","q":"Lequel de ces nombres n'est PAS divisible par 3 ?","c":["123","234","344","456"],"a":2,"e":"3 + 4 + 4 = 11, non divisible par 3. Les autres ont une somme de chiffres divisible par 3."},{"t":"Maths et logique","q":"Quelle est la suite logique : 2, 6, 12, 20, 30, … ?","c":["36","40","42","44"],"a":2,"e":"Les écarts augmentent de 2 en 2 : +4, +6, +8, +10 puis +12 → 42. (Suite n(n+1) : 1×2, 2×3, 3×4…)"},{"t":"Maths et logique","q":"Un train parcourt 180 km en 2 h 30. Quelle est sa vitesse moyenne ?","c":["60 km/h","72 km/h","75 km/h","80 km/h"],"a":1,"e":"v = d/t = 180/2,5 = 72 km/h. 2 h 30 = 2,5 h."},{"t":"Maths et logique","q":"Quelle est l'aire d'un triangle de base 12 cm et de hauteur 5 cm ?","c":["30 cm²","60 cm²","17 cm²","34 cm²"],"a":0,"e":"Aire = (base × hauteur)/2 = (12 × 5)/2 = 30 cm²."},{"t":"Maths et logique","q":"Si le rayon d'un cercle double, son aire est :","c":["doublée","tripée","quadruplée","inchangée"],"a":2,"e":"Aire = πr² : si r → 2r, l'aire → 4πr². Elle est multipliée par 4."},{"t":"Maths et logique","q":"Combien de minutes font 2,4 heures ?","c":["124 min","140 min","144 min","148 min"],"a":2,"e":"2,4 × 60 = 144 minutes (2 h et 0,4 h = 24 min)."},{"t":"Maths et logique","q":"Tous les A sont des B. Tous les B sont des C. Alors :","c":["Tous les A sont des C","Tous les C sont des A","Aucun A n'est un C","On ne peut rien conclure"],"a":0,"e":"C'est la transitivité du syllogisme : A ⊂ B ⊂ C, donc tous les A sont des C."},{"t":"Histoire","q":"En quelle année a été prise la Bastille ?","c":["1778","1789","1792","1799"],"a":1,"e":"Le 14 juillet 1789, prise de la Bastille — aujourd'hui fête nationale."},{"t":"Histoire","q":"Qui fut le premier président de la Ve République ?","c":["Vincent Auriol","René Coty","Charles de Gaulle","Georges Pompidou"],"a":2,"e":"Charles de Gaulle, élu en décembre 1958 (il fit voter l'élection du président au suffrage universel direct en 1962)."},{"t":"Histoire","q":"La Déclaration des droits de l'homme et du citoyen a été adoptée en :","c":["1776","1789","1791","1793"],"a":1,"e":"Le 26 août 1789, pendant la Révolution française."},{"t":"Histoire","q":"L'édit de Nantes (1598) a été promulgué par :","c":["François Ier","Henri IV","Louis XIII","Louis XIV"],"a":1,"e":"Henri IV accorda la liberté de culte aux protestants. Révoqué par Louis XIV en 1685."},{"t":"Histoire","q":"Quand l'esclavage a-t-il été définitivement aboli dans les colonies françaises ?","c":["1789","1815","1848","1870"],"a":2,"e":"Le décret du 27 avril 1848 (Victor Schœlcher), sous la IInde République."},{"t":"Histoire","q":"La France a mis en place les congés payés en :","c":["1926","1936","1945","1958"],"a":1,"e":"1936, sous le Front populaire (Léon Blum) : 2 semaines de congés payés et semaine de 40 h."},{"t":"Histoire","q":"Quel traité crée l'Union européenne en 1993 ?","c":["Traité de Rome","Traité de Paris","Traité de Maastricht","Traité de Lisbonne"],"a":2,"e":"Le traité de Maastricht (1992, en vigueur 1993) crée l'UE et prépare l'euro. Le traité de Rome (1957) avait créé la CEE."},{"t":"Histoire","q":"Les femmes obtiennent le droit de vote en France en :","c":["1848","1870","1919","1944"],"a":3,"e":"L'ordonnance du 21 avril 1944 ; elles votent pour la première fois en 1945."},{"t":"Histoire","q":"L'appel du 18 Juin 1940 est lancé depuis Londres par :","c":["Philippe Pétain","Charles de Gaulle","Winston Churchill","Jean Moulin"],"a":1,"e":"Appel à la résistance du général de Gaulle sur la BBC."},{"t":"Histoire","q":"La peine de mort a été abolie en France en :","c":["1974","1981","1986","1990"],"a":1,"e":"Loi du 9 octobre 1981 portée par Robert Badinter."},{"t":"Histoire","q":"Le Code civil est promulgué en 1804 sous :","c":["Napoléon Bonaparte","Louis XVIII","Charles X","Louis-Philippe"],"a":0,"e":"Napoléon Ier (Code civil des Français, 1804)."},{"t":"Histoire","q":"Quel événement symbolise la fin de la guerre d'Algérie en 1962 ?","c":["Les accords d'Évian","Le putsch d'Alger","Les accords de Genève","Le traité de Paris"],"a":0,"e":"Les accords d'Évian (mars 1962) aboutissent à l'indépendance de l'Algérie."},{"t":"Géographie","q":"Combien l'Union européenne compte-t-elle d'États membres ?","c":["25","26","27","28"],"a":2,"e":"27 membres depuis le Brexit du Royaume-Uni (2020)."},{"t":"Géographie","q":"Le point culminant de l'Europe occidentale est :","c":["le Mont Blanc","le Pic d'Aneto","le Grossglockner","la Barre des Écrins"],"a":0,"e":"Le Mont Blanc, 4 808 m (Alpes, frontière franco-italienne)."},{"t":"Géographie","q":"Quel est le plus long fleuve entièrement en France ?","c":["La Seine","La Loire","Le Rhône","La Garonne"],"a":1,"e":"La Loire (~1 000 km). Le Rhône et la Garonne prennent leur source hors de France."},{"t":"Géographie","q":"La France métropolitaine compte :","c":["12 régions","13 régions","14 régions","15 régions"],"a":1,"e":"13 régions métropolitaines depuis la réforme de 2015 (effective 2016)."},{"t":"Géographie","q":"Le siège du Parlement européen est à :","c":["Bruxelles","Francfort","Luxembourg","Strasbourg"],"a":3,"e":"Strasbourg (sessions plénières). La Commission est à Bruxelles, la BCE à Francfort."},{"t":"Géographie","q":"Combien de départements compte la France ?","c":["96","98","101","104"],"a":2,"e":"101 départements (dont 5 d'outre-mer : Guadeloupe, Martinique, Guyane, La Réunion, Mayotte)."},{"t":"Géographie","q":"Le plus vaste océan du monde est :","c":["L'océan Atlantique","L'océan Indien","L'océan Pacifique","L'océan Arctique"],"a":2,"e":"Le Pacifique est le plus vaste et le plus profond."},{"t":"Géographie","q":"La zone euro regroupe les pays :","c":["de l'Union européenne","utilisant l'euro comme monnaie","signataires de Schengen","membres de l'OTAN"],"a":1,"e":"20 États de l'UE utilisent l'euro ; Schengen (libre circulation) est un ensemble différent."},{"t":"Géographie","q":"La Guyane a pour voisins :","c":["Le Brésil et le Suriname","Le Venezuela et la Colombie","Le Pérou et la Bolivie","Le Mexique et le Guatemala"],"a":0,"e":"La Guyane (département français d'outre-mer) est frontalière du Brésil et du Suriname."},{"t":"Géographie","q":"Quel fleuve sépare la France de l'Allemagne sur une partie de sa frontière ?","c":["Le Danube","Le Rhin","L'Elbe","La Meuse"],"a":1,"e":"Le Rhin matérialise la frontière franco-allemande sur environ 180 km."},{"t":"Institutions et citoyenneté","q":"Combien de députés siègent à l'Assemblée nationale ?","c":["348","577","925","500"],"a":1,"e":"577 députés, élus pour 5 ans au suffrage universel direct (le Sénat compte 348 sénateurs)."},{"t":"Institutions et citoyenneté","q":"Le mandat du Président de la République est de :","c":["4 ans","5 ans","6 ans","7 ans"],"a":1,"e":"5 ans (quinquennat depuis la réforme de 2000), renouvelable une seule fois consécutivement."},{"t":"Institutions et citoyenneté","q":"Le Premier ministre est nommé par :","c":["L'Assemblée nationale","Le Sénat","Le Président de la République","Le Conseil constitutionnel"],"a":2,"e":"Le Président nomme le Premier ministre (article 8 de la Constitution) ; l'Assemblée peut toutefois renverser le Gouvernement."},{"t":"Institutions et citoyenneté","q":"Le Conseil constitutionnel est composé de :","c":["7 membres","9 membres","12 membres","15 membres"],"a":1,"e":"9 membres nommés pour 9 ans non renouvelables, plus les anciens présidents de la République de droit."},{"t":"Institutions et citoyenneté","q":"Le représentant de l'État dans le département est :","c":["Le maire","Le préfet","Le président du conseil départemental","Le procureur"],"a":1,"e":"Le préfet de département (et le préfet de région) représente l'État et met en œuvre les politiques nationales."},{"t":"Institutions et citoyenneté","q":"La loi est votée par :","c":["Le Gouvernement","Le Parlement","Le Président de la République","Le Conseil d'État"],"a":1,"e":"Le Parlement (Assemblée nationale + Sénat) vote la loi ; le Président la promulgue."},{"t":"Institutions et citoyenneté","q":"Dans la hiérarchie des normes, le décret se situe :","c":["Au-dessus de la loi","Au-dessous de la loi","Au même niveau que la loi","Dans la Constitution"],"a":1,"e":"Constitution > traités > loi > décret > arrêté. Le décret est un acte du pouvoir exécutif, il ne peut contredire la loi."},{"t":"Institutions et citoyenneté","q":"La devise de la République française est :","c":["« Liberté, Égalité, Solidarité »","« Liberté, Égalité, Fraternité »","« Travail, Famille, Patrie »","« Un pour tous, tous pour un »"],"a":1,"e":"« Liberté, Égalité, Fraternité », inscrite dans la Constitution (art. 2)."},{"t":"Institutions et citoyenneté","q":"Le sénateur est élu :","c":["Au suffrage universel direct","Au suffrage universel indirect","Par le Président","Par les députés"],"a":1,"e":"Les sénateurs sont élus par environ 162 000 grands électeurs (élus locaux, parlementaires), pour 6 ans."},{"t":"Institutions et citoyenneté","q":"La loi du 9 décembre 1905 concerne :","c":["La laïcité et la séparation des Églises et de l'État","La liberté de la presse","L'école obligatoire","Le droit de vote des femmes"],"a":0,"e":"Loi de séparation des Églises et de l'État — pilier de la laïcité française."},{"t":"Institutions et citoyenneté","q":"Le Parlement français est composé de :","c":["L'Assemblée nationale et le Sénat","L'Assemblée nationale et le Conseil d'État","Le Sénat et le Conseil constitutionnel","Le Congrès et le Sénat"],"a":0,"e":"Deux chambres : Assemblée nationale (577) et Sénat (348)."},{"t":"Institutions et citoyenneté","q":"L'« article 49 alinéa 3 » de la Constitution permet :","c":["De dissoudre l'Assemblée","De faire adopter un texte sans vote, sauf censure","De nommer un ministre","De prononcer l'urgence"],"a":1,"e":"Le Gouvernement engage sa responsabilité : le texte est adopté sauf si une motion de censure est votée."},{"t":"Finances publiques et économie","q":"Quelle administration calcule, recouvre et contrôle l'impôt en France ?","c":["La DGDDI","La DGFiP","La Banque de France","L'INSEE"],"a":1,"e":"La Direction générale des Finances publiques (DGFiP), administration du ministère de l'Économie et des Finances."},{"t":"Finances publiques et économie","q":"La loi de finances de l'année est votée par :","c":["Le Parlement","Le Gouvernement seul","La Cour des comptes","La Banque de France"],"a":0,"e":"Le Parlement vote la loi de finances, qui autorise les recettes et les dépenses de l'État."},{"t":"Finances publiques et économie","q":"Quel est le taux normal de TVA en France ?","c":["5,5 %","10 %","20 %","25 %"],"a":2,"e":"Taux normal 20 % ; taux intermédiaire 10 % ; taux réduit 5,5 %. La TVA est un impôt indirect sur la consommation."},{"t":"Finances publiques et économie","q":"Le PIB mesure :","c":["La richesse des ménages","La production de richesses sur un territoire en un an","Le total des impôts","Le montant de la dette"],"a":1,"e":"Le produit intérieur brut est la somme des valeurs ajoutées produites sur le territoire pendant un an."},{"t":"Finances publiques et économie","q":"L'impôt sur le revenu est prélevé à la source depuis :","c":["2018","2019","2020","2021"],"a":1,"e":"Depuis janvier 2019 : l'impôt est retenu directement sur le salaire par l'employeur (système géré par la DGFiP)."},{"t":"Finances publiques et économie","q":"La Banque centrale européenne (BCE) a pour mission principale :","c":["De voter le budget de l'État","De mener la politique monétaire de la zone euro","De recouvrer les impôts","De contrôler les comptes publics"],"a":1,"e":"La BCE fixe les taux directeurs et veille à la stabilité des prix dans la zone euro (siège à Francfort)."},{"t":"Finances publiques et économie","q":"L'inflation est mesurée par :","c":["Le PIB","L'IPC publié par l'INSEE","Le SMIC","Le taux de chômage"],"a":1,"e":"L'indice des prix à la consommation (IPC), calculé par l'INSEE."},{"t":"Finances publiques et économie","q":"Un déficit public correspond à :","c":["Des recettes supérieures aux dépenses sur un an","Des dépenses supérieures aux recettes sur un an","Le stock de dettes accumulées","La dette des ménages"],"a":1,"e":"C'est le solde négatif de l'année. La dette est l'accumulation des déficits passés."},{"t":"Finances publiques et économie","q":"Quel est le taux normal de l'impôt sur les sociétés en France ?","c":["15 %","20 %","25 %","33,3 %"],"a":2,"e":"25 % (taux réduit de 15 % pour les PME jusqu'à un certain plafond de bénéfice)."},{"t":"Finances publiques et économie","q":"La Cour des comptes a pour rôle de :","c":["Voter les impôts","Contrôler l'emploi des fonds publics","Fixer les taux directeurs","Gérer les comptes bancaires de l'État"],"a":1,"e":"Elle contrôle la régularité et l'efficacité des dépenses publiques et aide le Parlement et le Gouvernement."},{"t":"Finances publiques et économie","q":"Le pacte de stabilité européen fixe une limite de déficit public de :","c":["2 % du PIB","3 % du PIB","5 % du PIB","6 % du PIB"],"a":1,"e":"Déficit ≤ 3 % du PIB et dette ≤ 60 % du PIB (critères de Maastricht/pacte de stabilité)."},{"t":"Finances publiques et économie","q":"Les cotisations sociales servent principalement à financer :","c":["L'armée","La protection sociale (Sécurité sociale)","Les collectivités locales","L'éducation nationale"],"a":1,"e":"Santé, retraites, famille, chômage : c'est la Sécurité sociale, financée par les cotisations et la CSG."},{"t":"Finances publiques et économie","q":"Un impôt direct est :","c":["La TVA","L'impôt sur le revenu","La taxe sur les carburants","Le droit de douane"],"a":1,"e":"Il frappe directement le contribuable (IR, IS, taxe foncière). La TVA et les taxes sur la consommation sont indirectes."},{"t":"Finances publiques et économie","q":"La taxe foncière est recouvrée par :","c":["La commune","La DGFiP","La Banque de France","Le notaire"],"a":1,"e":"C'est un impôt local voté par la collectivité, mais calculé et recouvré par la DGFiP pour son compte."},{"t":"Numérique","q":"Que signifie « phishing » (hameçonnage) ?","c":["Un virus qui efface les disques","Une tentative de vol d'identifiants par un faux message","Un logiciel de comptabilité","Un réseau social professionnel"],"a":1,"e":"Courriel ou SMS usurpant un organisme de confiance pour obtenir mots de passe ou données bancaires."},{"t":"Numérique","q":"Le RGPD est un texte :","c":["Français sur la laïcité","Européen sur la protection des données","Mondial sur le commerce","National sur le télétravail"],"a":1,"e":"Règlement général sur la protection des données, applicable depuis 2018 dans toute l'UE."},{"t":"Numérique","q":"La CNIL est :","c":["Une banque","L'autorité française de protection des données personnelles","Un service de la DGFiP","Un moteur de recherche"],"a":1,"e":"La Commission nationale de l'informatique et des libertés contrôle l'application de la loi Informatique et libertés et du RGPD."},{"t":"Numérique","q":"La double authentification (2FA) consiste à :","c":["Changer son mot de passe chaque jour","Combiner mot de passe et second facteur (code, application)","Utiliser deux antivirus","Créer deux adresses e-mail"],"a":1,"e":"Même si le mot de passe est volé, le second facteur bloque l'accès."},{"t":"Numérique","q":"Un rançongiciel (ransomware) :","c":["Affiche des publicités","Chiffre les données et exige une rançon","Vole des mots de passe wifi","Ralentit l'ordinateur uniquement"],"a":1,"e":"D'où l'importance des sauvegardes régulières et des mises à jour."},{"t":"Numérique","q":"Dans un tableur, quelle formule additionne les cellules A1 à A10 ?","c":["=ADDITION(A1:A10)","=SOMME(A1:A10)","=TOTAL(A1:A10)","=A1+A10"],"a":1,"e":"=SOMME(A1:A10) additionne toute la plage."},{"t":"Numérique","q":"Un navigateur web sert à :","c":["Rechercher un emploi","Afficher des pages web","Trier des fichiers","Compresser des données"],"a":1,"e":"Chrome, Firefox, Edge, Safari affichent les sites web ; le moteur de recherche sert à les trouver."},{"t":"Numérique","q":"Le champ « Cci » d'un courriel :","c":["Affiche tous les destinataires","Masque les destinataires entre eux","Envoie une copie à soi-même","Bloque les pièces jointes"],"a":1,"e":"« Copie carbone invisible » : les destinataires en Cci ne sont pas visibles des autres."},{"t":"Numérique","q":"Le « cloud » désigne :","c":["Un logiciel antivirus","Des services et du stockage accessibles en ligne","Un câble sous-marin","Une messagerie interne"],"a":1,"e":"On accède à ses fichiers ou applications via Internet, sans les stocker localement."},{"t":"Numérique","q":"La « fracture numérique » désigne :","c":["Une panne de réseau","Des inégalités d'accès et d'usage du numérique","Un logiciel piraté","La fin des réseaux sociaux"],"a":1,"e":"Inégalités d'équipement, de compétences, de territoire ou liées à l'âge ; l'accompagnement des usagers fait partie du métier."},{"t":"Numérique","q":"Un mot de passe robuste doit être :","c":["Court et mémorisable","Le même partout","Long, unique par service, sans information personnelle","Écrit sur un post-it près de l'écran"],"a":2,"e":"Longueur + unicité + diversité de caractères ; idéalement via un gestionnaire de mots de passe."},{"t":"Numérique","q":"Le secret des données fiscales d'un contribuable :","c":["Peut être partagé avec son employeur","Est protégé par le secret professionnel/fiscal","Peut être consulté par tout agent public","N'existe plus depuis 2019"],"a":1,"e":"Le secret fiscal est l'une des obligations les plus strictes du personnel de la DGFiP ; sa violation est pénalement sanctionnée."},{"t":"DGFiP et métier","q":"La DGFiP a été créée en :","c":["1981","2000","2008","2015"],"a":2,"e":"2008, par fusion de la Direction générale des impôts (DGI) et de la Direction générale de la comptabilité publique (DGCP)."},{"t":"DGFiP et métier","q":"Le concours DGFiP catégorie C (branche administrative) donne accès au corps d' :","c":["Inspecteur des finances publiques","Contrôleur des finances publiques","Agent administratif principal des finances publiques de 2e classe","Attaché des finances publiques"],"a":2,"e":"Catégorie C = agent administratif principal ; contrôleur = B ; inspecteur = A."},{"t":"DGFiP et métier","q":"La DGFiP est une administration :","c":["Territoriale","Hospitalière","De l'État","Européenne"],"a":2,"e":"La DGFiP relève de la fonction publique d'État, ministère de l'Économie et des Finances."},{"t":"DGFiP et métier","q":"Le concours de catégorie C est dit « commun » car il est organisé :","c":["Par la DGFiP seule","Simultanément pour plusieurs ministères économiques et financiers","Avec les collectivités territoriales","Avec la Banque de France"],"a":1,"e":"DGFiP, DGDDI (douanes) et parfois DGCCRF : épreuves communes, une seule inscription."},{"t":"DGFiP et métier","q":"Quel diplôme faut-il pour se présenter au concours externe d'agent des finances publiques ?","c":["Aucun diplôme","Le brevet (niveau 3)","Le baccalauréat","Un licence"],"a":1,"e":"Le brevet des collèges (diplôme de niveau 3) est exigé pour la voie externe (des équivalences existent)."},{"t":"DGFiP et métier","q":"La DGDDI est :","c":["La Direction générale des Douanes et droits indirects","La Direction générale de la Dette","Un service de la Banque de France","Une agence de l'emploi"],"a":0,"e":"Les douanes : fiscalité des flux, lutte contre les trafics, coopèrent avec la DGFiP dans le concours commun."},{"t":"DGFiP et métier","q":"L'ENFiP est :","c":["Un syndicat","L'École nationale des Finances publiques","Un concours interne","Un logiciel de paie"],"a":1,"e":"Elle assure la formation initiale des lauréats et la formation continue des agents de la DGFiP."},{"t":"DGFiP et métier","q":"L'épreuve écrite d'admissibilité du concours DGFiP cat C consiste en :","c":["Une dissertation","Un QCM","Un cas pratiques sur dossier","Une note de synthèse juridique"],"a":2,"e":"3 h, coefficient 2 : cas pratiques sur un dossier (≤ 15 pages) pouvant inclure présentation, synthèse et création d'outils opérationnels ; calculatrice autorisée."},{"t":"DGFiP et métier","q":"L'épreuve orale d'admission dure :","c":["10 minutes","20 minutes","30 minutes","45 minutes"],"a":1,"e":"Entretien de 20 min (coefficient 3) avec mises en situation ; la présentation du parcours ne peut excéder 2 minutes."},{"t":"DGFiP et métier","q":"Le QCM de pré-admissibilité dure :","c":["45 minutes","1 heure","1 h 30","2 heures"],"a":2,"e":"1 h 30, coefficient 1 : questions de mathématiques/logique et de culture générale ; calculatrice interdite."},{"t":"DGFiP et métier","q":"Une note inférieure à 5/20 à une épreuve est :","c":["Éliminatoire","Rattrapable à l'oral","Compensée par les autres épreuves","Sans effet"],"a":0,"e":"Toute note < 5/20 est éliminatoire, même si le total des points est suffisant."},{"t":"DGFiP et métier","q":"Quel site officiel héberge l'avis de concours et le recrutement de la DGFiP ?","c":["service-public.fr","economie.gouv.fr","impots.gouv.fr","legifrance.gouv.fr"],"a":1,"e":"Le ministère de l'Économie et des Finances publie les avis et le calendrier sur economie.gouv.fr ; impots.gouv.fr est le site des usagers."},{"t":"DGFiP et métier","q":"Un agent des finances publiques de catégorie C travaille notamment :","c":["À l'accueil et au traitement administratif des dossiers","Dans les tribunaux","Comme inspecteur du travail","Comme agent de police judiciaire"],"a":0,"e":"Accueil, accompagnement des usagers, gestion des dossiers fiscaux et de gestion publique, appui aux équipes."},{"t":"DGFiP et métier","q":"Le cadre juridique des épreuves des concours cat C des ministères financiers est fixé par :","c":["La loi de finances 2024","L'arrêté du 12 avril 2016","Le décret du 15 janvier 1984","Une circulaire du Premier ministre"],"a":1,"e":"L'arrêté du 12 avril 2016 relatif à l'organisation, la nature et le programme des épreuves des concours de catégorie C."},{"t":"Fonction publique","q":"Les agents de la DGFiP relèvent de la fonction publique :","c":["Territoriale","Hospitalière","d'État","Européenne"],"a":2,"e":"La FPE (ministères). La territoriale (collectivités) et l'hospitalière (hôpitaux) ont leurs propres statuts."},{"t":"Fonction publique","q":"Un fonctionnaire est recruté en qualité de :","c":["Contractuel","Stagiaire (avant titularisation)","Titulaire direct","Vacataire"],"a":1,"e":"Après réussite au concours : stage d'1 an (renouvelable une fois), formation, puis titularisation."},{"t":"Fonction publique","q":"Le stage préalable à la titularisation dure :","c":["3 mois","6 mois","1 an","2 ans"],"a":2,"e":"Un an, avec formation à l'ENFiP pour les lauréats de la DGFiP."},{"t":"Fonction publique","q":"La catégorie C de la fonction publique regroupe les emplois :","c":["De conception et de direction","D'application et d'encadrement intermédiaire","De direction des services","D'exécution"],"a":3,"e":"A = conception/direction, B = application/encadrement, C = exécution. L'agent des finances publiques est en catégorie C."},{"t":"Fonction publique","q":"L'obligation de réserve s'impose au fonctionnaire :","c":["Seulement en service","Seulement en privé","24 h/24 dans et hors du service","Jamais"],"a":2,"e":"Le fonctionnaire doit une réserve dans ses expressions publiques, y compris sur les réseaux sociaux, en lien avec sa qualité professionnelle."},{"t":"Fonction publique","q":"Le droit de grève des fonctionnaires :","c":["N'existe pas","Est absolu","Est reconnu mais encadré par la loi","Est soumis à l'accord du ministre"],"a":2,"e":"Reconnu par la Constitution, exercé dans le cadre fixé par la loi (notamment préavis et continuité du service pour certains services publics)."},{"t":"Fonction publique","q":"La protection fonctionnelle garantit au fonctionnaire :","c":["Une prime mensuelle","La protection de l'État contre les menaces ou atteintes subies dans l'exercice de ses fonctions","Un logement de fonction","Une retraite anticipée"],"a":1,"e":"L'administration protège son agent (et l'assure) en cas de poursuites ou menaces liées à ses fonctions."},{"t":"Fonction publique","q":"Le principe de laïcité impose à l'agent public :","c":["De cacher sa religion en privé","De neutralité dans le service (pas de signe religieux ostensible au travail)","De ne pas voter","De prêter serment religieux"],"a":1,"e":"Neutralité du service et de l'agent envers les usagers ; la liberté de conscience demeure en dehors du service."},{"t":"Fonction publique","q":"Un avancement d'échelon s'obtient principalement :","c":["À l'ancienneté","Par tirage au sort","En payant une cotisation","Par un examen annuel obligatoire"],"a":0,"e":"L'échelon relève en général de l'ancienneté (avec des possibilités au choix) ; le grade, lui, passe par l'avancement ou les concours."},{"t":"Fonction publique","q":"Les droits et obligations communs aux trois fonctions publiques sont fixés par :","c":["La loi du 13 juillet 1983","La loi du 11 janvier 1984","La loi du 26 janvier 1984","La loi du 9 janvier 1986"],"a":0,"e":"La loi n° 83-634 du 13 juillet 1983 (loi Le Pors). Les lois de 1984/1986 fixent les statuts particuliers de chaque fonction publique."},{"t":"Sigles","q":"Que signifie DGFiP ?","c":["Direction générale des Finances publiques","Direction générale de la Fiscalité et des impôts","Délégation générale aux Finances publiques","Direction du guichet fiscal et des impôts"],"a":0,"e":"Direction générale des Finances publiques, créée en 2008 (fusion DGI + DGCP)."},{"t":"Sigles","q":"Que signifie PLF ?","c":["Plan local de formation","Projet de loi de finances","Prélèvement libératoire forfaitaire","Pôle logistique financier"],"a":1,"e":"Le projet de loi de finances : présenté à l'automne, il fixe recettes et dépenses de l'État pour l'année suivante."},{"t":"Sigles","q":"Que signifie INSEE ?","c":["Institut national de la santé","Institut national de la statistique et des études économiques","Inspection du travail","Insee = impôt sur..."],"a":1,"e":"L'INSEE produit les statistiques officielles : PIB, inflation (IPC), population, emploi."},{"t":"Sigles","q":"Que signifie TVA ?","c":["Taxe sur la valeur ajoutée","Tarif variable des achats","Taxe verte annuelle","Taxe sur les véhicules"],"a":0,"e":"Impôt indirect sur la consommation ; taux normal 20 % en France."},{"t":"Sigles","q":"Que signifie CNIL ?","c":["Centre national de l'informatique","Commission nationale de l'informatique et des libertés","Conseil national des impôts et libertés","Caisse nationale des impôts locaux"],"a":1,"e":"L'autorité française de protection des données personnelles (RGPD)."},{"t":"Sigles","q":"Que signifie ENFiP ?","c":["École nationale des Finances publiques","École nationale de la formation professionnelle","Entente nationale des fonctionnaires publics","École du numérique et de la fiscalité"],"a":0,"e":"Elle forme les agents de la DGFiP (formation initiale des lauréats, formation continue)."},{"t":"Sigles","q":"Que signifie BOFiP ?","c":["Bulletin officiel des Finances publiques","Bureau des finances et de l'immobilier public","Base officielle des impôts payés","Banque officielle des finances publiques"],"a":0,"e":"Le BOFiP publie la doctrine officielle de la DGFiP en matière fiscale."},{"t":"Sigles","q":"Que signifie BCE ?","c":["Banque centrale européenne","Bureau du commerce extérieur","Banque de crédit européen","Budget des collectivités européennes"],"a":0,"e":"Elle mène la politique monétaire de la zone euro (siège à Francfort)."},{"t":"Sigles","q":"Que signifie PIB ?","c":["Produit intérieur brut","Plan d'investissement public","Prélèvement obligatoire de base","Programme immobilier budgétaire"],"a":0,"e":"Le PIB mesure la richesse produite sur le territoire en un an ; la croissance est sa variation."},{"t":"Sigles","q":"Que signifie DDFiP ?","c":["Direction départementale des Finances publiques","Délégation départementale de la fiscalité","Direction du développement des finances","Document de suivi des impôts"],"a":0,"e":"L'implantation de la DGFiP dans chaque département, au plus près des usagers."}];
