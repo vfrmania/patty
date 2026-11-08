@@ -8,10 +8,11 @@
   "oral": "2027-11-15",
   "oral_estime": true,
   "verifie_le": "2026-11-08",
+  "source_utilisee": "FNCDG (concours-territorial.fr)",
   "sources": [
     {
-      "nom": "Calendrier national FNCDG (reprise structuree)",
-      "url": "https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-2027.html"
+      "nom": "FNCDG - calendrier officiel des concours",
+      "url": "https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=2027"
     },
     {
       "nom": "CDG de la Somme - concours",

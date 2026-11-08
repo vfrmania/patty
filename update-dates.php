@@ -1,10 +1,12 @@
 <?php
 // Mise a jour des dates officielles du concours ATSEM - version PHP.
-// Ce script est independant des pages du site : il lit la source du calendrier
-// national FNCDG, met a jour dates.json, puis affiche un rapport.
-// Il necessite un hebergement capable d'executer PHP (OVH, Infomaniak, etc.)
-// et que dates.json soit inscriptible (chmod 664 ou 666 selon l'hebergeur).
-// Sur GitHub Pages (statique), utiliser update-dates.mjs a la place.
+// Cascade de sources (perennite) :
+//   1. FNCDG (officiel) : https://www.concours-territorial.fr/calendrier.aspx
+//      -> inscriptions + premieres epreuves. Ne fournit PAS la cloture du dossier.
+//   2. Objectif Petite Enfance (secondaire) : fournit en plus la cloture du dossier.
+// La source effectivement utilisee est enregistree dans dates.json (source_utilisee).
+// Necessite un hebergement PHP (OVH, Infomaniak...) et dates.json inscriptible
+// (chmod 664 ou 666). Sur un hebergement 100% statique, utiliser update-dates.mjs.
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -26,54 +28,95 @@ function page($titre, $corps, $ok) {
   echo '<a class="retour" href="../atsem/index.html">&larr; Retour au site</a></div></body></html>';
 }
 
-function erreur($msg) { page('Erreur de mise a jour', '<div class="msg">' . $msg . '</div>', false); exit; }
+function erreur($msg) { page('Erreur de mise à jour', '<div class="msg">' . $msg . '</div>', false); exit; }
+
+function telecharger($url) {
+  $brut = @file_get_contents($url);
+  if ($brut === false || $brut === '') throw new Exception('source inaccessible');
+  return trim(preg_replace('/\s+/', ' ', strip_tags($brut)));
+}
 
 if (!file_exists($FILE)) erreur('dates.json introuvable sur le serveur.');
 $d = json_decode(file_get_contents($FILE), true);
 if (!is_array($d) || empty($d['session'])) erreur('dates.json illisible.');
 
-$url = 'https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' . rawurlencode($d['session']) . '.html';
-$brut = @file_get_contents($url);
-if ($brut === false) erreur('La source officielle est inaccessible : ' . htmlspecialchars($url));
+function iso($j, $m, $a) { return sprintf('%04d-%02d-%02d', $a, $m, $j); }
 
-$txt = preg_replace('/<[^>]+>/u', ' ', $brut);
-$txt = preg_replace('/\s+/u', ' ', $txt);
+// ---- Source 1 : FNCDG (officiel) ----
+$principal = null; $notes = array();
+try {
+  $txt = telecharger('https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=' . rawurlencode($d['session']));
+  if (!preg_match('/ATSEM principal de 2[^\n]{0,40}classe[\s\S]{0,600}?Inscriptions du (\d{2})\/(\d{2})\/(\d{4}) au (\d{2})\/(\d{2})\/(\d{4})/', $txt, $m, PREG_OFFSET_CAPTURE))
+    throw new Exception('bloc ATSEM introuvable');
+  $principal = array(
+    'inscriptions_debut' => iso($m[1][0], $m[2][0], $m[3][0]),
+    'inscriptions_fin' => iso($m[4][0], $m[5][0], $m[6][0])
+  );
+  if (!preg_match('/premi\S*res \S*preuves[^0-9]{0,40}(\d{2})\/(\d{2})\/(\d{4})/i', substr($txt, $m[0][1]), $e))
+    throw new Exception('premieres epreuves introuvables');
+  $principal['ecrit'] = iso($e[1], $e[2], $e[3]);
+} catch (Exception $ex) {
+  $notes[] = 'FNCDG indisponible (' . $ex->getMessage() . ')';
+}
 
-$MOIS = array('janvier'=>1,'février'=>2,'mars'=>3,'avril'=>4,'mai'=>5,'juin'=>6,'juillet'=>7,'août'=>8,'aout'=>8,'septembre'=>9,'octobre'=>10,'novembre'=>11,'décembre'=>12,'decembre'=>12);
-function iso($j, $m, $a) { return sprintf('%d-%02d-%02d', $a, $m, $j); }
+// ---- Source 2 : Objectif Petite Enfance (secondaire) ----
+$secondaire = null;
+try {
+  $txt = telecharger('https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' . rawurlencode($d['session']) . '.html');
+  $MOIS = array('janvier'=>1,'février'=>2,'mars'=>3,'avril'=>4,'mai'=>5,'juin'=>6,'juillet'=>7,'août'=>8,'aout'=>8,'septembre'=>9,'octobre'=>10,'novembre'=>11,'décembre'=>12,'decembre'=>12);
+  if (!preg_match('/court du \S+ (\d{1,2}) ([a-zA-Zéû]+) au \S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/ui', $txt, $m)
+      || !isset($MOIS[mb_strtolower($m[2])]) || !isset($MOIS[mb_strtolower($m[4])]))
+    throw new Exception('format non reconnu (inscriptions)');
+  $secondaire = array(
+    'inscriptions_debut' => iso($m[1], $MOIS[mb_strtolower($m[2])], $m[5]),
+    'inscriptions_fin' => iso($m[3], $MOIS[mb_strtolower($m[4])], $m[5])
+  );
+  if (preg_match('/clôture des inscriptions[^\n]{0,120}?\S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/ui', $txt, $m)
+      && isset($MOIS[mb_strtolower($m[2])]))
+    $secondaire['dossier_fin'] = iso($m[1], $MOIS[mb_strtolower($m[2])], $m[3]);
+  if (preg_match('/premières épreuves[^\n]{0,120}?\S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/ui', $txt, $m)
+      && isset($MOIS[mb_strtolower($m[2])]))
+    $secondaire['ecrit'] = iso($m[1], $MOIS[mb_strtolower($m[2])], $m[3]);
+} catch (Exception $ex) {
+  $notes[] = 'Source secondaire indisponible (' . $ex->getMessage() . ')';
+}
 
-if (!preg_match('/court du \S+ (\d{1,2}) ([a-zA-Zéû]+) au \S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/u', $txt, $m)
-    || !isset($MOIS[mb_strtolower($m[2])]) || !isset($MOIS[mb_strtolower($m[4])]))
-  erreur('Format de la source non reconnu (inscriptions).');
-$ins_deb = iso($m[1], $MOIS[mb_strtolower($m[2])], $m[5]);
-$ins_fin = iso($m[3], $MOIS[mb_strtolower($m[4])], $m[5]);
+if (!$principal && !$secondaire) erreur('Aucune source accessible : ' . htmlspecialchars(implode(' | ', $notes)) . '. Réessayez plus tard.');
 
-if (!preg_match('/clôture des inscriptions[^\n]{0,120}?\S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/ui', $txt, $m)
-    || !isset($MOIS[mb_strtolower($m[2])]))
-  erreur('Format de la source non reconnu (clôture des inscriptions).');
-$dossier = iso($m[1], $MOIS[mb_strtolower($m[2])], $m[3]);
+// ---- Assemblage ----
+$trouve = $principal ? $principal : $secondaire;
+$source_nom = $principal ? 'FNCDG (concours-territorial.fr)' : 'Objectif Petite Enfance (seule source disponible)';
+if ($principal) {
+  if ($secondaire && isset($secondaire['dossier_fin'])) {
+    $trouve['dossier_fin'] = $secondaire['dossier_fin'];
+  } else {
+    $notes[] = 'Clôture du dossier non revérifiée : valeur précédente conservée.';
+  }
+} else {
+  $notes[] = 'ATTENTION : données issues de la source SECONDAIRE uniquement.';
+}
 
-if (!preg_match('/premières épreuves[^\n]{0,120}?\S+ (\d{1,2}) ([a-zA-Zéû]+) (\d{4})/ui', $txt, $m)
-    || !isset($MOIS[mb_strtolower($m[2])]))
-  erreur('Format de la source non reconnu (premières épreuves).');
-$ecrit = iso($m[1], $MOIS[mb_strtolower($m[2])], $m[3]);
+$nouvelles = array();
+foreach (array('inscriptions_debut', 'inscriptions_fin', 'ecrit') as $cle) if (isset($trouve[$cle])) $nouvelles[$cle] = $trouve[$cle];
+if (isset($trouve['dossier_fin'])) $nouvelles['dossier_fin'] = $trouve['dossier_fin'];
 
-$nouvelles = array('inscriptions_debut' => $ins_deb, 'inscriptions_fin' => $ins_fin, 'dossier_fin' => $dossier, 'ecrit' => $ecrit);
 $changements = array();
 foreach ($nouvelles as $cle => $val) {
   if (!isset($d[$cle]) || $d[$cle] !== $val) { $d[$cle] = $val; $changements[] = $cle . ' : ' . $val; }
 }
+$d['source_utilisee'] = $source_nom;
 $d['verifie_le'] = date('Y-m-d');
 
 $json = json_encode($d, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
 $ecrit_ok = file_put_contents($FILE, $json);
 
-$corps = '<div class="msg">Source officielle lue pour la session ' . htmlspecialchars($d['session']) . '.</div>';
+$corps = '<div class="msg">Source lue pour la session ' . htmlspecialchars($d['session']) . ' : ' . htmlspecialchars($source_nom) . '.</div>';
+foreach ($notes as $n) $corps .= '<div class="msg" style="font-size:.85rem">' . htmlspecialchars($n) . '</div>';
 $corps .= '<table><tr><th>Étape</th><th>Date lue</th></tr>';
-$corps .= '<tr><td>Ouverture des inscriptions</td><td>' . $ins_deb . '</td></tr>';
-$corps .= '<tr><td>Fin des inscriptions</td><td>' . $ins_fin . '</td></tr>';
-$corps .= '<tr><td>Clôture / dépôt du dossier</td><td>' . $dossier . '</td></tr>';
-$corps .= '<tr><td>Premières épreuves (écrit)</td><td>' . $ecrit . '</td></tr></table>';
+$corps .= '<tr><td>Ouverture des inscriptions</td><td>' . $trouve['inscriptions_debut'] . '</td></tr>';
+$corps .= '<tr><td>Fin des inscriptions</td><td>' . $trouve['inscriptions_fin'] . '</td></tr>';
+$corps .= '<tr><td>Clôture / dépôt du dossier</td><td>' . (isset($trouve['dossier_fin']) ? $trouve['dossier_fin'] : 'non revérifiée') . '</td></tr>';
+$corps .= '<tr><td>Premières épreuves (écrit)</td><td>' . (isset($trouve['ecrit']) ? $trouve['ecrit'] : 'non trouvée') . '</td></tr></table>';
 
 if ($ecrit_ok === false) {
   $corps .= '<div class="msg">⚠️ Lecture réussie mais <b>écriture de dates.json impossible</b> : vérifiez les permissions du fichier (chmod 664 ou 666) sur votre hébergement.</div>';
