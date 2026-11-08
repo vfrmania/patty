@@ -1,0 +1,39 @@
+name: Mise a jour des dates du concours ATSEM
+
+# Veille automatique des dates officielles : le script lit la source du
+# calendrier national FNCDG et met a jour dates.json si necessaire.
+# Le site affiche les dates depuis dates.json : aucun changement HTML requis.
+# Ce workflow vit avec le depot : il reste valable quel que soit l'hebergeur
+# du site, tant que le site est deploye depuis ce depot.
+
+on:
+  schedule:
+    - cron: "0 7 2 * *"    # le 2 de chaque mois a 07:00 UTC (08:00 Paris)
+    - cron: "0 7 12 3,4 *" # renforce le 12 mars et le 12 avril (inscriptions)
+    - cron: "0 7 12 9 *"   # renforce le 12 septembre (preparation de l'ecrit)
+  workflow_dispatch:        # declenchement manuel possible depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+jobs:
+  update-dates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Mise a jour des dates
+        run: node update-dates.mjs --auto
+      - name: Commit si changements
+        run: |
+          if git diff --quiet; then
+            echo "Aucun changement."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dates.json
+          git commit -m "chore: mise a jour automatique des dates du concours ATSEM"
+          git push

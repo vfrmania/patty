@@ -97,7 +97,7 @@
     <h1>🎯 Préparation au concours ATSEM — Somme (voie externe)</h1>
     <p>Guide, fiches de révision complètes et QCM interactif au format de l'épreuve officielle.</p>
     <div class="badges">
-      <span class="badge">📅 Écrit : 29 sept. 2027</span>
+      <span class="badge" id="badge-ecrit">📅 Écrit : …</span>
       <span class="badge">✍️ QCM 20 questions / 45 min</span>
       <span class="badge">🗣️ Oral coef. 2</span>
       <span class="badge">🏢 CDG de la Somme</span>
@@ -113,13 +113,14 @@
 
   <div id="view-guide">
     <section class="card">
-      <h2>📅 Le calendrier 2027</h2>
+      <h2 id="h-calendrier">📅 Le calendrier 2027</h2>
       <table>
         <tr><th>Étape</th><th>Date</th></tr>
-        <tr><td>Inscriptions en ligne</td><td><b>16 mars → 21 avril 2027</b></td></tr>
-        <tr><td>Dépôt du dossier complet</td><td><b>29 avril 2027</b></td></tr>
-        <tr><td>Épreuve écrite d'admissibilité</td><td><b>29 septembre 2027</b> (à confirmer)</td></tr>
-        <tr><td>Oraux d'admission</td><td>Automne 2027</td></tr>
+        <tr><td>Inscriptions en ligne</td><td id="d-inscriptions"></td></tr>
+        <tr><td>Dépôt du dossier complet</td><td id="d-dossier"></td></tr>
+        <tr><td>Épreuve écrite d'admissibilité</td><td id="d-ecrit"></td></tr>
+        <tr><td>Oraux d'admission</td><td id="d-oral"></td></tr>
+      <tr><td>Sources &amp; vérification</td><td id="d-verified" style="font-size:.8rem;color:#64748b"></td></tr>
       </table>
       <div class="warn">⚠️ La liste des organisateurs est encore « non définitive » : vérifiez sur concours-territorial.fr et le site du CDG80 dès février 2027. Traitez le <b>21 avril</b> comme votre vraie date limite.</div>
       <p style="font-size:.9rem"><b>Conditions d'inscription (externe)</b> : 18 ans minimum, aucun diplôme exigé, nationalité française (ou UE sous conditions), casier judiciaire compatible avec les fonctions.</p>
@@ -683,40 +684,55 @@ try { renderFiches(); } catch(e) { document.getElementById('fiches-list').innerH
 
 try { render(); } catch(e) { document.getElementById('quiz-app').innerHTML = '<section class="card"><b>Erreur QCM :</b> ' + (e && e.message ? e.message : e) + '</section>'; }
 
-try {
-  // Surlignage de la ligne du planning correspondant à aujourd'hui
-  // (écrit : 29 septembre 2027). Plan de 6 mois calé sur l'épreuve.
-  var _now = new Date();
-  var _ri = _now >= new Date(2027, 6, 29) ? 4        // 2 derniers mois
-          : _now >= new Date(2027, 4, 29) ? 3        // Mois 5-6
-          : _now >= new Date(2027, 2, 29) ? 2        // Mois 3-4
-          : 1;                                       // Mois 1-2 (ou avant le plan : prendre de l'avance)
-  var _tr = document.getElementById('plan-r' + _ri);
-  if (_tr) {
-    _tr.className = 'tr-now';
-    var _td = _tr.cells[0];
-    _td.innerHTML = _td.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
-  }
-} catch(e) {}
-
-try {
-  // Surlignage de la ligne du plan d'entraînement oral correspondant à aujourd'hui.
-  // Oraux d'admission : automne 2027 — estimation : 15 novembre 2027 (à ajuster
-  // dès que la notice du CDG80 publie les dates réelles).
-  var _oral = new Date(2027, 10, 15);
-  var _days = Math.floor((_oral - new Date()) / 86400000);
-  var _oi = _days <= 1 ? 5              // la veille
-          : _days <= 7 ? 4              // 1 semaine avant
-          : _days <= 14 ? 3             // 2 semaines avant
-          : _days <= 21 ? 2             // 3 semaines avant l'oral
-          : 1;                          // dès maintenant
-  var _otr = document.getElementById('oral-r' + _oi);
-  if (_otr) {
-    _otr.className = 'tr-now';
-    var _otd = _otr.cells[0];
-    _otd.innerHTML = _otd.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
-  }
-} catch(e) {}
+// === Dates officielles : chargees depuis dates.json (mis a jour par update-dates.mjs / GitHub Actions) ===
+var FALLBACK_DATES = { session: '2027', inscriptions_debut: '2027-03-16', inscriptions_fin: '2027-04-21', dossier_fin: '2027-04-29', ecrit: '2027-09-29', ecrit_confirme: false, oral: '2027-11-15', oral_estime: true, verifie_le: '2026-11-08' };
+var MOIS_LONG = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+var MOIS_COURT = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+function _d(iso){ var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+function _flong(iso){ var d = _d(iso); return d.getDate() + ' ' + MOIS_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
+function _fcourt(iso){ var d = _d(iso); return d.getDate() + ' ' + MOIS_COURT[d.getMonth()] + ' ' + d.getFullYear(); }
+function applyDates(d) {
+  try {
+    var el = document.getElementById('h-calendrier'); if (el) el.textContent = '📅 Le calendrier ' + d.session;
+    el = document.getElementById('d-inscriptions'); if (el) el.innerHTML = '<b>' + _flong(d.inscriptions_debut) + ' → ' + _flong(d.inscriptions_fin) + '</b>';
+    el = document.getElementById('d-dossier'); if (el) el.innerHTML = '<b>' + _flong(d.dossier_fin) + '</b>';
+    el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
+    el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
+    el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://objectif-petite-enfance.fr/articles/calendrier-concours-atsem-' + d.session + '.html" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a>';
+  } catch(e) {}
+  try {
+    var _e = _d(d.ecrit);
+    var _now = new Date();
+    var _ri = _now >= new Date(_e.getFullYear(), _e.getMonth() - 2, _e.getDate()) ? 4
+            : _now >= new Date(_e.getFullYear(), _e.getMonth() - 4, _e.getDate()) ? 3
+            : _now >= new Date(_e.getFullYear(), _e.getMonth() - 6, _e.getDate()) ? 2
+            : 1;
+    var _tr = document.getElementById('plan-r' + _ri);
+    if (_tr) {
+      _tr.className = 'tr-now';
+      var _td = _tr.cells[0];
+      _td.innerHTML = _td.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
+    }
+  } catch(e) {}
+  try {
+    var _oral = _d(d.oral);
+    var _now2 = new Date();
+    var _days = Math.floor((_oral - _now2) / 86400000);
+    var _oi = _days <= 1 ? 5
+            : _days <= 7 ? 4
+            : _days <= 14 ? 3
+            : _days <= 21 ? 2
+            : 1;
+    var _otr = document.getElementById('oral-r' + _oi);
+    if (_otr) {
+      _otr.className = 'tr-now';
+      var _otd = _otr.cells[0];
+      _otd.innerHTML = _otd.innerHTML + ' <span style="background:#2563eb;color:#fff;border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:700;white-space:nowrap">📍 Vous êtes ici</span>';
+    }
+  } catch(e) {}
+}
+fetch('dates.json').then(function(r){ return r.json(); }).then(applyDates).catch(function(){ applyDates(FALLBACK_DATES); });
 </script>
 <style>
 .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #2563eb, #4f46e5); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
