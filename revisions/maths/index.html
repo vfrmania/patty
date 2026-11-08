@@ -13,6 +13,10 @@
   header.hero p { color: #e0e7ff; font-size: .95rem; }
   .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
   .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); padding: 3px 12px; border-radius: 999px; font-size: .78rem; }
+  nav.tabs .tab-back { background: transparent; border: 1.5px dashed #a5b4fc; color: #4f46e5; border-radius: 12px; padding: 9px 13px; font-weight: 700; cursor: pointer; font-size: .95rem; }
+  nav.tabs .tab-back:hover { background: #e0e7ff; }
+  .hero-back { display: inline-block; margin-top: 14px; color: #e0e7ff; text-decoration: none; font-size: .88rem; font-weight: 600; }
+  .hero-back:hover { text-decoration: underline; }
   nav.tabs { display: flex; gap: 8px; margin-bottom: 20px; position: sticky; top: 0; z-index: 100; padding: 10px 0; background: #eef2ff; border-radius: 0 0 14px 14px; }
   nav.tabs button { flex: 1; padding: 12px; border: none; border-radius: 14px; background: #fff; color: #475569; font-weight: 600; font-size: .95rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.08); transition: all .15s; }
   nav.tabs button.active { background: #4f46e5; color: #fff; }
@@ -108,8 +112,10 @@
 <h1>📐 Mathématiques</h1>
 <p>Révisions collège &amp; lycée — programme, cours complets, fiches synthétiques et QCM.</p>
 <div class="badges"><span class="badge">46 chapitres au programme</span><span class="badge">2 cours rédigés</span><span class="badge">📖 collège + lycée</span></div>
+<a class="hero-back" href="../index.html">↩ Autres matières</a>
 </header>
 <nav class="tabs">
+<button class="tab-back no-print" onclick="location.href='../index.html'" title="Autres matières" aria-label="Retour aux autres matières">↩</button>
 <button id="tab-prog" onclick="showTab('prog')">📋 Programme</button>
 <button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
 <button id="tab-fiches" onclick="showTab('fiches')">🗂️ Fiche</button>
@@ -148,7 +154,7 @@ FICHES_DATA.forEach(function(f){ FICHE_BY_ID[f.id] = f.fiche; });
 
 function chapHeadHTML(m){
   return '<div class="chap-head"><span class="chap-title">📖 Mathématiques — ' + esc(m.titre) + '</span>' +
-    '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a></span></div>';
+    '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a> &nbsp;·&nbsp; <a href="../index.html">↩ Matières</a></span></div>';
 }
 function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 function showTab(t){
