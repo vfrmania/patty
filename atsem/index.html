@@ -708,11 +708,11 @@ function verifierDates(ev) {
   if (ev && ev.preventDefault) ev.preventDefault();
   _staleSet('⏳ Vérification des dates en cours…');
   var d = window.DATES || FALLBACK_DATES;
-  fetch('../update-dates.php').then(function(r){
+  fetch('update-dates.php').then(function(r){
     return r.text().then(function(t){ return { ct: (r.headers.get('content-type') || ''), t: t }; });
   }).then(function(p){
     if (p.ct.indexOf('html') > -1 && p.t.indexOf('<?php') !== 0) {
-      window.location.href = '../update-dates.php';
+      window.location.href = 'update-dates.php';
       return null;
     }
     var fncdgUrl = 'https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=' + d.session;
@@ -775,7 +775,7 @@ function applyDates(d) {
     el = document.getElementById('d-ecrit'); if (el) el.innerHTML = '<b>' + _flong(d.ecrit) + '</b>' + (d.ecrit_confirme ? '' : ' (à confirmer)');
     el = document.getElementById('d-oral'); if (el) el.innerHTML = d.oral_estime ? 'Automne ' + d.session + ' (estimation : ' + _fcourt(d.oral) + ')' : '<b>' + _flong(d.oral) + '</b>';
     el = document.getElementById('badge-ecrit'); if (el) el.textContent = '📅 Écrit : ' + _fcourt(d.ecrit);
-    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=' + d.session + '" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a><br><a href="../update-dates.php" id="verif-dates"><span class="ico">🔄 </span>Vérifier les dates maintenant</a>';
+    el = document.getElementById('d-verified'); if (el) el.innerHTML = 'Vérifiées le ' + _flong(d.verifie_le) + ' · <a href="https://www.concours-territorial.fr/calendrier.aspx?type=concours&annee=' + d.session + '" target="_blank" rel="noopener">calendrier FNCDG</a> · <a href="https://www.cdg80.fr/concours/" target="_blank" rel="noopener">CDG de la Somme</a><br><a href="update-dates.php" id="verif-dates"><span class="ico">🔄 </span>Vérifier les dates maintenant</a>';
     var _vl = document.getElementById('verif-dates'); if (_vl) _vl.addEventListener('click', verifierDates);
     var _vj = _d(d.verifie_le);
     var _age = Math.floor((new Date() - _vj) / 86400000);
