@@ -1054,6 +1054,8 @@ function downloadFichePDF(elt, name){
   pdfDownload(pdfBuild(pdfWrap(blocks)), title);
 }
 
+function fichePDF(id){ var el = document.getElementById('fiche-' + id); if (!el) return;
+  downloadFichePDF(el, META_BY_ID[id] ? META_BY_ID[id].titre : id); }
 function printFiche(id){
   var el = document.getElementById('fiche-' + id);
   if (!el) return;
