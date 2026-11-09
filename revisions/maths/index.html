@@ -1027,14 +1027,16 @@ function render(){
 })();
 
 // Recherche dans les cours
+function progNorm(s){ return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
 function progSearchList(q){
   var box = document.getElementById('prog-search-results'); if (!box) return;
-  q = (q || '').trim().toLowerCase();
+  var raw = (q || '').trim();
+  q = progNorm(raw);
   if (q.length < 2) { box.innerHTML = ''; return; }
   var res = [];
-  COURS_META.forEach(function(c){ if (((c.titre || '') + ' ' + (c.cours || '')).toLowerCase().indexOf(q) !== -1) res.push(c); });
+  COURS_META.forEach(function(c){ if (progNorm((c.titre || '') + ' ' + (c.cours || '')).indexOf(q) !== -1) res.push(c); });
   var html = '';
-  if (!res.length) html = '<p style="font-size:.85rem;color:#64748b;margin:6px 0 0">Aucun résultat pour « ' + esc(q) + ' ».</p>';
+  if (!res.length) html = '<p style="font-size:.85rem;color:#64748b;margin:6px 0 0">Aucun résultat pour « ' + esc(raw) + ' ».</p>';
   else {
     html = '<p style="font-size:.8rem;color:#4338ca;margin:10px 0 4px;font-weight:700">' + res.length + ' cours trouvé' + (res.length > 1 ? 's' : '') + ' :</p>';
     res.forEach(function(c){ html += '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">voir</span></button>'; });
