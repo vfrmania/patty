@@ -891,8 +891,25 @@ function render(){
       }
     });
   });
-  v.innerHTML = '<section class="card"><h2>📋 Programme de physique-chimie</h2><p style="font-size:.9rem;margin-bottom:8px">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + h + '</section>';
+  v.innerHTML = '<section class="card"><h2>📋 Programme de physique-chimie</h2><p style="font-size:.9rem;margin-bottom:8px">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p><div style="margin:12px 0 0"><input type="text" id="prog-search" oninput="progSearchList(this.value)" placeholder="🔎 Rechercher dans les cours..." style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.9rem;font-family:inherit;outline:none"></div><div id="prog-search-results"></div>' + h + '</section>';
 })();
+// Recherche dans les cours
+function progNorm(s){ return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function progSearchList(q){
+  var box = document.getElementById('prog-search-results'); if (!box) return;
+  var raw = (q || '').trim();
+  q = progNorm(raw);
+  if (q.length < 2) { box.innerHTML = ''; return; }
+  var res = [];
+  COURS_META.forEach(function(c){ if (progNorm((c.titre || '') + ' ' + (c.cours || '')).indexOf(q) !== -1) res.push(c); });
+  var html = '';
+  if (!res.length) html = '<p style="font-size:.85rem;color:#64748b;margin:6px 0 0">Aucun résultat pour « ' + esc(raw) + ' ».</p>';
+  else {
+    html = '<p style="font-size:.8rem;color:#4338ca;margin:10px 0 4px;font-weight:700">' + res.length + ' cours trouvé' + (res.length > 1 ? 's' : '') + ' :</p>';
+    res.forEach(function(c){ html += '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">voir</span></button>'; });
+  }
+  box.innerHTML = html;
+}
 
 // Cours : rendu contextuel
 function renderCours(){
