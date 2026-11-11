@@ -124,17 +124,26 @@
 </style>
 </style>
 <style>
-  .pg-resume { margin-top: 14px; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); border-radius: 14px; padding: 8px 14px; color: #e0e7ff; font-size: .85rem; flex-wrap: wrap; }
+  .pg-resume { margin-top: 14px; display: block; align-items: center; gap: 12px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); border-radius: 14px; padding: 8px 14px; color: #e0e7ff; font-size: .85rem; flex-wrap: wrap; }
   .pg-resume svg { flex-shrink: 0; }
   .pg-rz { margin-left: auto; background: none; border: none; color: #e0e7ff; cursor: pointer; font-size: .75rem; text-decoration: underline; padding: 0; font-family: inherit; }
-  .pg-rz:hover { color: #fff; }
+    .pg-rz:hover { color: #fff; }
+  .pg-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .pg-top svg { flex-shrink: 0; }
+  .pg-chaps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .pg-dot { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.5); background: rgba(255,255,255,.92); color: #334155; cursor: pointer; font-family: inherit; }
+  .pg-dot:hover { background: #fff; }
+  .pg-dot.ok { background: #f0fdf4; border-color: #bbf7d0; }
+  .pg-dot.mid { background: #fffbeb; border-color: #fde68a; }
+  .pg-toggle { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); color: #e0e7ff; border-radius: 999px; padding: 4px 12px; font-size: .75rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .pg-toggle:hover { background: rgba(255,255,255,.3); }
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="hero">
 <h1>🏛️ Histoire</h1>
-<p>Du fondamental chronologique aux grandes ruptures : révisions collège &amp; lycée, cours complets, fiches et QCM.</p>
+<p>Du fondamental chronologique aux grandes ruptures : révisions collège &amp; lycée.</p>
 <div class="badges"><span class="badge">13 chapitres au programme</span></div>
 <a class="hero-back" href="../index.html">↩ Autres matières</a>
 <div id="pg-resume" class="pg-resume" style="display:none"></div>
@@ -2142,6 +2151,11 @@ function pgSave(q, ok){
   } catch(e) {}
 }
 function pgReset(){ if (!window.confirm('Réinitialiser la progression de cette matière ?')) return; try { localStorage.removeItem(pgKey()); } catch(e){} pgResume(); }
+function pgChap(theme){
+  for (var i = 0; i < COURS_META.length; i++){ if (COURS_META[i].theme === theme){ currentChap = COURS_META[i].id; break; } }
+  showTab('quiz'); window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function pgToggle(){ var e = document.getElementById('pg-chaps'); if (e) e.style.display = (e.style.display === 'none') ? 'flex' : 'none'; }
 function pgResume(){
   var el = document.getElementById('pg-resume'); if (!el) return;
   var d = pgLoad(); var ans = 0, ok = 0;
@@ -2150,12 +2164,29 @@ function pgResume(){
   var tot = QUESTIONS.length || 1;
   var pctA = Math.round(100 * Math.min(ans, tot) / tot);
   var pctR = Math.round(100 * ok / ans);
-  var c = (2 * Math.PI * 14).toFixed(1);
   var col = pctR >= 70 ? '#4ade80' : (pctR >= 50 ? '#fbbf24' : '#f87171');
-  el.style.display = 'flex';
-  el.innerHTML = '<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" aria-hidden=\"true\"><circle cx=\"17\" cy=\"17\" r=\"14\" fill=\"none\" stroke=\"rgba(255,255,255,.30)\" stroke-width=\"5\"/><circle cx=\"17\" cy=\"17\" r=\"14\" fill=\"none\" stroke=\"' + col + '\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-dasharray=\"' + (c * pctA / 100).toFixed(1) + ' ' + c + '\" transform=\"rotate(-90 17 17)\"/></svg>'
-    + '<span><b>' + ans + ' / ' + tot + '</b> questions répondues (' + pctA + ' %) · réussite <b style=\"color:' + col + '\">' + pctR + ' %</b></span>'
-    + '<button class=\"pg-rz\" onclick=\"pgReset()\" title=\"Réinitialiser la progression de cette matière\">réinitialiser</button>';
+  var c = (2 * Math.PI * 14).toFixed(1);
+  var h = '<div class="pg-top">';
+  h += '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14" fill="none" stroke="rgba(255,255,255,.30)" stroke-width="5"/><circle cx="17" cy="17" r="14" fill="none" stroke="' + col + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="' + (c * pctA / 100).toFixed(1) + ' ' + c + '" transform="rotate(-90 17 17)"/></svg>';
+  h += '<span><b>' + ans + ' / ' + tot + '</b> questions répondues (' + pctA + ' %) · réussite <b style="color:' + col + '">' + pctR + ' %</b></span>';
+  h += '<button class="pg-toggle" onclick="pgToggle()">chapitres ▾</button>';
+  h += '<button class="pg-rz" onclick="pgReset()" title="Réinitialiser la progression de cette matière">réinitialiser</button>';
+  h += '</div>';
+  var byT = {}; QUESTIONS.forEach(function(q){ byT[q.t] = (byT[q.t] || 0) + 1; });
+  h += '<div class="pg-chaps" id="pg-chaps" style="display:none">';
+  COURS_META.forEach(function(cm){
+    var t = cm.theme, n = byT[t] || 0;
+    var dt = d[t]; var qa = 0, qo = 0;
+    if (dt && dt.q) { Object.keys(dt.q).forEach(function(k){ qa++; if (dt.q[k]) qo++; }); }
+    var isOk = n > 0 && qa >= n && (100 * qo / qa) >= 70;
+    var cls = qa === 0 ? '' : (isOk ? ' ok' : ' mid');
+    var sym = qa === 0 ? '⬜' : (isOk ? '✅' : '🟡');
+    var tip = t + ' — ' + qa + '/' + n + ' question' + (n > 1 ? 's' : '') + ' répondues' + (qa ? ' (' + Math.round(100 * qo / qa) + ' % de réussite)' : '');
+    h += '<button class="pg-dot' + cls + '" title="' + tip.replace(/"/g, '&quot;') + '" onclick="pgChap(\'' + t.replace(/'/g, "\\'") + '\')">' + sym + ' ' + cm.titre + '</button>';
+  });
+  h += '</div>';
+  el.style.display = 'block';
+  el.innerHTML = h;
 }
 
 function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
