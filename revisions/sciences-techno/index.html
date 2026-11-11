@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révisions — Sciences et technologie (cycle 3)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #ecfdf5; color: #1e293b; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  header.hero { background: linear-gradient(135deg, #15803d, #0891b2); color: #fff; border-radius: 20px; padding: 36px 28px; margin-bottom: 20px; }
+  header.hero h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header.hero p { color: #e0e7ff; font-size: .95rem; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); padding: 3px 12px; border-radius: 999px; font-size: .78rem; }
+  nav.tabs .tab-back { background: #fff; color: #4f46e5; font-weight: 700; }
+  nav.tabs .tab-back:hover { background: #eef2ff; }
+  .hero-back { display: inline-block; margin-top: 14px; color: #e0e7ff; text-decoration: none; font-size: .88rem; font-weight: 600; }
+  .hero-back:hover { text-decoration: underline; }
+  nav.tabs { display: flex; gap: 8px; margin-bottom: 20px; position: sticky; top: 0; z-index: 100; padding: 10px 0; background: #ecfdf5; border-radius: 0 0 14px 14px; }
+  nav.tabs button { flex: 1; padding: 12px; border: none; border-radius: 14px; background: #fff; color: #475569; font-weight: 600; font-size: .95rem; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.08); transition: all .15s; }
+  nav.tabs button.active { background: #4f46e5; color: #fff; }
+  section.card { background: #fff; border-radius: 18px; padding: 28px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  section.card h2 { font-size: 1.25rem; margin-bottom: 14px; color: #312e81; }
+  section.card h3 { font-size: 1.02rem; margin: 20px 0 8px; color: #334155; }
+  h2.niveau { font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; color: #6366f1; margin: 26px 0 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 10px 0; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+  th { background: #f8fafc; color: #475569; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; }
+  .warn { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .tip { background: #eef2ff; border-left: 4px solid #6366f1; padding: 12px 16px; border-radius: 8px; font-size: .88rem; margin: 12px 0; }
+  .piege { background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 8px; font-size: .87rem; margin: 12px 0; }
+  .ex { border-left: 3px solid #a5b4fc; padding: 8px 14px; margin: 8px 0; background: #f8fafc; font-size: .9rem; border-radius: 0 8px 8px 0; }
+  ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; font-size: .92rem; }
+  .btn { display: inline-block; padding: 12px 22px; border: none; border-radius: 12px; font-weight: 600; font-size: .95rem; cursor: pointer; transition: all .15s; }
+  .btn-primary { background: #4f46e5; color: #fff; width: 100%; }
+  .btn-primary:hover { background: #4338ca; }
+  .theme-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .9rem; margin: 6px 0; transition: all .15s; }
+  .theme-btn:hover { border-color: #818cf8; background: #eef2ff; }
+  .cnt { font-size: .75rem; background: #e2e8f0; border-radius: 999px; padding: 2px 10px; color: #64748b; }
+  .chap-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 16px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-size: .92rem; margin: 6px 0; text-align: left; transition: all .15s; color: #1e293b; font-family: inherit; }
+  .chap-btn:hover { border-color: #818cf8; background: #eef2ff; }
+  .chap-btn .actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+  .chap-btn .mini { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 9px; font-weight: 700; white-space: nowrap; }
+  .chap-btn.soon { opacity: .55; cursor: default; background: #f8fafc; }
+  .chap-btn.soon:hover { border-color: #e2e8f0; background: #f8fafc; }
+  .chap-btn .soon-badge { font-size: .72rem; color: #94a3b8; white-space: nowrap; }
+  #quiz-app h2.q { font-size: 1.15rem; margin-bottom: 20px; }
+  .choice { width: 100%; text-align: left; padding: 13px 16px; margin: 8px 0; background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: all .15s; font-family: inherit; }
+  .choice:hover { border-color: #a5b4fc; background: #eef2ff; }
+  .choice.sel { border-color: #4f46e5; background: #eef2ff; }
+  .choice.ok { border-color: #10b981; background: #ecfdf5; }
+  .choice.ko { border-color: #ef4444; background: #fef2f2; }
+  .choice.dim { opacity: .55; }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: #4f46e5; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
+  .expl .ex-detail { background: #fef2f2; border-left: 3px solid #ef4444; padding: 8px 12px; border-radius: 8px; margin-top: 8px; font-size: .9rem; line-height: 1.45; }
+  .res-card .ex-detail { margin-top: 6px; }
+  details.ex-util { margin: 16px 0; border: 1px solid #c7d2fe; border-radius: 12px; background: #f5f3ff; }
+  details.ex-util summary { cursor: pointer; padding: 11px 16px; font-weight: 700; color: #fff; font-size: .9rem; list-style: none; background: linear-gradient(135deg, #4f46e5, #7c3aed); border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(79,70,229,.25); }
+  details.ex-util summary::-webkit-details-marker { display: none; }
+  details.ex-util summary:hover { filter: brightness(1.08); }
+  details.ex-util[open] summary { border-radius: 12px 12px 0 0; }
+  details.ex-util .exu-body { padding: 14px 18px 16px; font-size: .9rem; line-height: 1.55; }
+  details.ex-util .exu-body .etu { padding: 6px 12px; border-left: 3px solid #7c3aed; background: #ede9fe; border-radius: 0 8px 8px 0; margin: 8px 0; }
+  details.ex-util .exu-body .etu b:first-child { color: #4f46e5; }
+  details.ex-util .exu-body .exu-enonce { background: #e0e7ff; border-radius: 8px; padding: 8px 12px; margin-bottom: 4px; }
+  .expl { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 12px; padding: 14px 16px; font-size: .86rem; margin-top: 14px; }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; }
+  .btn-small { padding: 9px 18px; font-size: .85rem; }
+  .btn-gray { background: #64748b; color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+  .btn-gray:disabled { opacity: .4; cursor: not-allowed; }
+  .res-note { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+  .res-card { border-radius: 14px; padding: 10px 14px; background: #f8fafc; margin: 6px 0; font-size: .88rem; }
+  .green { color: #059669; } .red { color: #dc2626; }
+  footer { text-align: center; font-size: .78rem; color: #94a3b8; margin-top: 40px; }
+  a { color: #4f46e5; }
+  details.fiche { background: #fff; border-radius: 18px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); overflow: hidden; }
+  details.fiche summary { cursor: pointer; padding: 18px 22px; font-weight: 700; color: #312e81; background: #f8fafc; list-style: none; display: flex; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.fiche summary::-webkit-details-marker { display: none; }
+  details.fiche summary::after { content: "▾"; margin-left: auto; color: #64748b; font-size: 1.1rem; }
+  details.fiche[open] summary::after { content: "▴"; }
+  .fiche-num { background: #4f46e5; color: #fff; min-width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+  .fiche-body { padding: 4px 26px 24px; }
+  .fiche-body h3 { font-size: .98rem; margin: 18px 0 6px; color: #334155; }
+  .fiche-actions { display: flex; justify-content: flex-end; margin: 6px 0 10px; gap: 8px; flex-wrap: wrap; }
+  .btn-pdf { background: #fff; color: #4f46e5; border: 1.5px solid #4f46e5; border-radius: 10px; padding: 8px 14px; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .btn-pdf:hover { background: #eef2ff; }
+  .cours-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .cours-head .niv { font-size: .72rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 2px 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .chap-quick { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; }
+  .chap-quick a { font-size: .8rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 999px; padding: 5px 12px; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .chap-quick a:hover { background: #c7d2fe; }
+  @media print {
+    header.hero, nav.tabs, footer, .no-print { display: none !important; }
+    body { background: #fff; }
+    .wrap { max-width: 100%; padding: 0; }
+    #view-prog, #view-cours, #view-quiz { display: none !important; }
+    details.fiche { display: none !important; box-shadow: none; page-break-inside: avoid; }
+    details.fiche.print-target { display: block !important; }
+    details.fiche.print-target summary { display: none; }
+    details.fiche.print-target .fiche-body { padding: 0 6px; }
+    .fiche-actions { display: none !important; }
+    .print-title { display: block !important; border-bottom: 3px solid #4f46e5; padding-bottom: 8px; margin-bottom: 16px; color: #312e81; font-size: 1.4rem; font-weight: 800; }
+    h3 { page-break-after: avoid; }
+  }
+  .print-title { display: none; }
+  .chap-head { position: sticky; top: 64px; z-index: 90; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-radius: 12px; padding: 12px 18px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(79,70,229,.35); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .chap-head .chap-title { font-weight: 700; font-size: 1rem; }
+  .chap-head .chap-links a { color: #e0e7ff; text-decoration: none; font-size: .82rem; cursor: pointer; white-space: nowrap; }
+  .chap-head .chap-links a:hover { text-decoration: underline; }
+  @media (max-width: 899px) { .chap-head .chap-links { display: none !important; } }
+  .back-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem; line-height: 1; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 4px 14px rgba(0,0,0,.28); opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .25s, transform .25s, visibility .25s; z-index: 999; }
+  .back-top:hover { filter: brightness(1.1); }
+  .back-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .back-top .lbl { display: none; }
+  @media (min-width: 900px) { .back-top { width: auto; min-width: 56px; height: 56px; padding: 0 22px 0 18px; font-size: 1.05rem; border-radius: 999px; right: 26px; bottom: 26px; box-shadow: 0 6px 24px rgba(0,0,0,.35); } .back-top .lbl { display: inline; margin-left: 9px; font-weight: 700; } }
+
+  .fig { margin: 14px 0; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .fig .fig-cap { display: block; margin-top: 8px; font-size: .8rem; color: #64748b; font-style: italic; }
+  .formule { margin: 12px 0; padding: 12px 16px; text-align: center; font-size: 1rem; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 10px; }
+  .cours-body ol, ol { padding-left: 24px; margin: 8px 0; }
+  ol li { margin: 4px 0; font-size: .92rem; }
+  .fiche h3, .fiche-body h3 { font-size: .98rem; margin: 14px 0 6px; color: #4f46e5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<h1>🔬 Sciences et technologie</h1>
+<p>Révisions 6e (cycle 3) — la matière, l'air, les mesures et les objets techniques : cours, fiches et QCM.</p>
+<div class="badges"><span class="badge">5 chapitres au programme</span></div>
+<a class="hero-back" href="../index.html">↩ Autres matières</a>
+</header>
+<nav class="tabs">
+<button class="tab-back no-print" onclick="location.href='../index.html'" title="Autres matières" aria-label="Retour aux autres matières">↩ Sciences et techno</button>
+<button id="tab-prog" onclick="showTab('prog')">📋 Programme</button>
+<button id="tab-cours" onclick="showTab('cours')">📖 Cours</button>
+</nav>
+
+<section id="view-prog">
+
+</section>
+
+<section id="view-cours" style="display:none">
+
+</section>
+
+<section id="view-fiches" style="display:none">
+<div id="fiches-zone"></div>
+</section>
+
+<section id="view-quiz" style="display:none">
+<div id="quiz-chapbar"></div>
+<div id="quiz-app"></div>
+</section>
+
+<button class="back-top no-print" id="back-top" title="Retour en haut de page" aria-label="Retour en haut de page">↑<span class="lbl">Haut</span></button>
+<footer>Révisions — Sciences et technologie · <a href="../index.html">← Toutes les matières</a></footer>
+</div>
+<script>
+var PROGRAMME = [{"n":"Collège — 6e (cycle 3)","ch":[{"t":"La matière : états, mélanges et changements d'état","id":"matiere-etats"},{"t":"Séparer les constituants d'un mélange","id":"separation-melanges"},{"t":"L'air et la combustion","id":"air-combustion"},{"t":"Mesurer : masse, volume et température","id":"mesures"},{"t":"Énergies et objets techniques","id":"energie-objets"}]}];
+var COURS_META = [
+  {
+    "id": "matiere-etats",
+    "theme": "La matière : états, mélanges et changements d'état (6e)",
+    "niveau": "6e",
+    "titre": "La matière : états, mélanges et changements d'état",
+    "cours": "<div class=\"cours-head\"><h2>La matière : états, mélanges et changements d'état</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n\n<h3>1. Les trois états de la matière</h3>\n<p>Toute la matière qui nous entoure existe sous trois états usuels :</p>\n<table>\n<tr><th>État</th><th>Forme / volume</th><th>À l'œil nu</th><th>Exemples</th></tr>\n<tr><td><b>solide</b></td><td>forme et volume propres</td><td>on peut le prendre en main</td><td>glace, fer, sucre, caillou</td></tr>\n<tr><td><b>liquide</b></td><td>volume propre, prend la forme du récipient</td><td>coule, se verse</td><td>eau, huile, lait</td></tr>\n<tr><td><b>gaz</b></td><td>occupe tout l'espace disponible</td><td>le plus souvent invisible</td><td>vapeur d'eau, air</td></tr>\n</table>\n<div class=\"tip\"><b>C'est le même corps !</b> L'eau existe solide (glace), liquide et gazeux (vapeur d'eau) : c'est <b>toujours</b> le même corps, la même matière ; seule son organisation change.</div>\n\n<h3>2. Les changements d'état</h3>\n<div class=\"formule\">solide → liquide : <b>fusion</b> &nbsp;·&nbsp; liquide → solide : <b>solidification</b><br>liquide → gaz : <b>vaporisation</b> &nbsp;·&nbsp; gaz → liquide : <b>liquéfaction</b><br>solide → gaz : <b>sublimation</b> &nbsp;·&nbsp; gaz → solide : <b>condensation solide</b></div>\n<ul>\n<li>Un changement d'état se produit quand on chauffe ou qu'on refroidit ;</li>\n<li>La <b>masse ne change pas</b> : 10 g d'eau liquide donnent 10 g de glace (à l'état solide, l'eau occupe un peu <b>plus de place</b> : la glace flotte !) ;</li>\n<li>L'eau bout à <b>100 °C</b> et gèle à <b>0 °C</b> (conditions usuelles).</li>\n</ul>\n\n<h3>3. Mélanges et corps purs</h3>\n<ul>\n<li><b>Corps pur</b> : une seule substance (eau distillée, sucre pur) ;</li>\n<li><b>Mélange homogène</b> : on ne distingue pas les constituants, même à la loupe (eau sucrée, air) ;</li>\n<li><b>Mélange hétérogène</b> : on voit plusieurs <b>phases</b> (eau + huile, eau + sable) ;</li>\n<li>Dissoudre du sucre dans l'eau : le sucre <b>ne disparaît pas</b> — le mélange garde sa masse et son goût sucré.</li>\n</ul>\n\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b>\n<ul>\n<li>« La vapeur d'eau, c'est la buée blanche » : non, la vapeur est <b>invisible</b> ; la buée = gouttelettes <b>liquides</b>.</li>\n<li>« Un mélange homogène est un corps pur » : non, homogène veut juste dire qu'on ne voit pas les constituants.</li>\n<li>« Fondre la glace change sa masse » : la masse est <b>conservée</b>, c'est le volume qui change.</li>\n<li>« Le gaz, ça pèse rien » : 1 L d'air pèse environ <b>1,3 g</b>.</li>\n</ul>\n</div>"
+  },
+  {
+    "id": "separation-melanges",
+    "theme": "Séparer les constituants d'un mélange (6e)",
+    "niveau": "6e",
+    "titre": "Séparer les constituants d'un mélange",
+    "cours": "<div class=\"cours-head\"><h2>Séparer les constituants d'un mélange</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n\n<h3>1. Pourquoi séparer ?</h3>\n<p>Récupérer l'eau potable, traiter les eaux usées, fabriquer du jus sans pulpe… : on choisit la technique <b>selon le type de mélange</b>.</p>\n<table>\n<tr><th>Mélange</th><th>Exemple</th><th>Technique adaptée</th></tr>\n<tr><td>solide non dissous dans un liquide</td><td>sable + eau</td><td><b>filtration</b>, décantation</td></tr>\n<tr><td>deux liquides non miscibles</td><td>huile + eau</td><td><b>décantation</b> (puis ampoule)</td></tr>\n<tr><td>solide dissous dans un liquide</td><td>eau salée</td><td><b>évaporation</b> (ou distillation)</td></tr>\n<tr><td>liquide + liquide miscibles</td><td>alcool + eau</td><td><b>distillation</b></td></tr>\n</table>\n\n<h3>2. La filtration</h3>\n<div class=\"fig\"><svg viewBox=\"0 0 430 210\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Filtration : un entonnoir muni d un papier filtre retient le sable, l eau filtree coule dans un verre\">\n  <defs><marker id=\"fa\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 Z\" fill=\"#2563eb\"/></marker></defs>\n  <line x1=\"120\" y1=\"20\" x2=\"120\" y2=\"70\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#fa)\"/>\n  <text x=\"132\" y=\"34\" font-size=\"10\" fill=\"#64748b\">mélange sable + eau</text>\n  <polygon points=\"130,70 200,70 165,140\" fill=\"none\" stroke=\"#475569\" stroke-width=\"2.5\"/>\n  <line x1=\"130\" y1=\"84\" x2=\"200\" y2=\"84\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n  <path d=\"M133,74 L197,74\" stroke=\"#f8fafc\" stroke-width=\"10\"/>\n  <circle cx=\"150\" cy=\"80\" r=\"3\" fill=\"#a16207\"/><circle cx=\"172\" cy=\"79\" r=\"2.5\" fill=\"#a16207\"/><circle cx=\"182\" cy=\"83\" r=\"3\" fill=\"#a16207\"/>\n  <line x1=\"165\" y1=\"140\" x2=\"165\" y2=\"165\" stroke=\"#2563eb\" stroke-width=\"2.5\" marker-end=\"url(#fa)\"/>\n  <text x=\"180\" y=\"155\" font-size=\"10\" fill=\"#2563eb\">eau filtrée</text>\n  <rect x=\"125\" y=\"165\" width=\"80\" height=\"34\" rx=\"6\" fill=\"none\" stroke=\"#475569\" stroke-width=\"2.5\"/>\n  <path d=\"M127,180 q20,-6 40,0 t40,0 L205,197 L127,197 Z\" fill=\"#bfdbfe\"/>\n  <text x=\"330\" y=\"120\" font-size=\"10\" fill=\"#475569\" text-anchor=\"middle\">le papier filtre retient le sable :</text>\n  <text x=\"330\" y=\"134\" font-size=\"10\" fill=\"#475569\" text-anchor=\"middle\">seule l'eau passe (le filtrat)</text>\n</svg><span class=\"fig-cap\">La filtration sépare un solide non dissous du liquide dans lequel il baigne.</span></div>\n\n<h3>3. La décantation et l'évaporation</h3>\n<ul>\n<li><b>Décantation</b> : on laisse reposer ; le plus lourd (sable, huile selon la densité) se dépose, on verse ensuite le liquide au-dessus ;</li>\n<li><b>Évaporation</b> : chauffée, l'eau salée laisse le sel derrière elle — preuve que le sel était <b>dissous</b>, pas disparu ;</li>\n<li><b>Distillation</b> : on chauffe, la vapeur se liquéfie dans un réfrigérant : on récupère le liquide pur (dessalement de l'eau de mer).</li>\n</ul>\n\n<details class=\"ex-util\"><summary>💡 Focus sur... — choisir la bonne technique</summary><div class=\"exu-body\"><div class=\"exu-enonce\"><b>Énoncé.</b> Après la pluie, l'eau d'une flaque est trouble (boue). Comment obtenir de l'eau limpide ?</div><div class=\"etu\"><b>Étape 1 — Observer</b> : l'eau trouble est <b>hétérogène</b> : la boue est un solide non dissous.</div><div class=\"etu\"><b>Étape 2 — Laisser reposer</b> : la boue, plus lourde, se dépose au fond (<b>décantation</b>).</div><div class=\"etu\"><b>Étape 3 — Filtrer</b> : on verse le tout sur un papier filtre : l'eau limpide recueillie s'appelle le <b>filtrat</b>, la boue reste sur le filtre (le <b>résidu</b>).</div><div class=\"etu\"><b>Étape 4 — Remarque</b> : l'eau limpide n'est pas forcément <b>potable</b> : des substances dissoutes (invisible) peuvent rester.</div></div></details>\n\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b>\n<ul>\n<li>Filtrer une eau salée : <b>inutile</b> — le sel est dissous, il traverse le filtre.</li>\n<li>Confondre <b>filtrat</b> (ce qui passe) et <b>résidu</b> (ce qui est retenu).</li>\n<li>« L'eau filtrée est potable » : la filtration n'enlève pas ce qui est dissous.</li>\n</ul>\n</div>"
+  },
+  {
+    "id": "air-combustion",
+    "theme": "L'air et la combustion (6e)",
+    "niveau": "6e",
+    "titre": "L'air et la combustion",
+    "cours": "<div class=\"cours-head\"><h2>L'air et la combustion</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n\n<h3>1. L'air est un mélange de gaz</h3>\n<p>L'air n'est pas « rien » : c'est un <b>mélange homogène de gaz</b>, il a une masse (≈ 1,3 g pour 1 L) et il occupe tout l'espace disponible.</p>\n<table>\n<tr><th>Constituant</th><th>Proportion dans l'air</th></tr>\n<tr><td><b>diazote</b></td><td>environ 78 %</td></tr>\n<tr><td><b>dioxygène</b></td><td>environ 21 %</td></tr>\n<tr><td>autres gaz (argon, dioxyde de carbone…)</td><td>environ 1 %</td></tr>\n</table>\n\n<h3>2. La combustion a besoin de dioxygène</h3>\n<div class=\"fig\"><svg viewBox=\"0 0 430 190\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Experience de la bougie sous un bocal : la flamme s eteint quand le dioxygene est consomme\">\n  <defs><marker id=\"ba\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 Z\" fill=\"#ef4444\"/></marker></defs>\n  <rect x=\"40\" y=\"140\" width=\"140\" height=\"16\" rx=\"3\" fill=\"#e2e8f0\"/>\n  <rect x=\"100\" y=\"112\" width=\"14\" height=\"28\" rx=\"3\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"1.5\"/>\n  <path d=\"M107,100 C101,92 103,86 107,80 C108,86 112,88 112,80 C112,88 110,94 107,100 Z\" fill=\"#f59e0b\"/>\n  <path d=\"M140,100 L90,26\" stroke=\"#ef4444\" stroke-width=\"2\" marker-end=\"url(#ba)\"/>\n  <text x=\"150\" y=\"50\" font-size=\"10\" fill=\"#ef4444\">l'eau monte dans le bocal :</text>\n  <text x=\"150\" y=\"64\" font-size=\"10\" fill=\"#ef4444\">une partie du gaz a été consommée</text>\n  <path d=\"M60,36 L186,36 L186,156 L60,156 Z\" fill=\"none\" stroke=\"#475569\" stroke-width=\"2.5\"/>\n  <path d=\"M62,60 q10,-6 20,0 t20,0 t20,0 t20,0 t20,0 t20,0 L182,154 L62,154 Z\" fill=\"#bfdbfe\" opacity=\"0.8\"/>\n  <text x=\"123\" y=\"180\" font-size=\"10\" fill=\"#475569\" text-anchor=\"middle\">la flamme s'éteint : le dioxygène est épuisé</text>\n  <text x=\"300\" y=\"120\" font-size=\"10\" fill=\"#475569\" text-anchor=\"middle\">sans dioxygène, pas de combustion :</text>\n  <text x=\"300\" y=\"134\" font-size=\"10\" fill=\"#475569\" text-anchor=\"middle\">les 21 % de l'air sont indispensables</text>\n</svg><span class=\"fig-cap\">Expérience : une bougie enfermée sous un bocal retourné s'éteint au bout d'un moment.</span></div>\n<ul>\n<li>Sans dioxygène, la flamme s'éteint : c'est le <b>comburant</b> de la combustion ;</li>\n<li>Le <b>combustible</b>, c'est ce qui brûle (bois, bougie, gaz, papier…) ;</li>\n<li>Trois conditions pour brûler : <b>combustible + comburant (dioxygène) + chaleur</b>.</li>\n</ul>\n\n<h3>3. Les produits de la combustion</h3>\n<ul>\n<li>Combustion du charbon ou du gaz : produit du <b>dioxyde de carbone</b> (il trouble l'eau de chaux) et de la <b>vapeur d'eau</b> ;</li>\n<li>Combustion incomplète (mauvaise arrivée d'air) : formation de <b>suie</b> (fumées noires) et surtout de <b>monoxyde de carbone</b>, un gaz <b>invisible, inodore et mortel</b> ;</li>\n<li>D'où l'importance de <b>ventiler</b> (cheminée, VMC, aération des chaudières).</li>\n</ul>\n\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b>\n<ul>\n<li>« L'air, c'est surtout du dioxygène » : non, c'est surtout du <b>diazote</b> (78 %).</li>\n<li>« La combustion produit de l'oxygène » : non, elle en <b>consomme</b>.</li>\n<li>« Une flamme s'éteint faute de carburant » : sous le bocal, elle s'éteint faute de <b>dioxygène</b>.</li>\n<li>Oublier que le monoxyde de carbone est <b>inodore</b> : on ne le sent pas arriver.</li>\n</ul>\n</div>"
+  },
+  {
+    "id": "mesures",
+    "theme": "Mesurer : masse, volume et température (6e)",
+    "niveau": "6e",
+    "titre": "Mesurer : masse, volume et température",
+    "cours": "<div class=\"cours-head\"><h2>Mesurer : masse, volume et température</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n\n<h3>1. Grandeurs, unités et instruments</h3>\n<table>\n<tr><th>Grandeur</th><th>Unité usuelle</th><th>Autres unités</th><th>Instrument</th></tr>\n<tr><td><b>masse</b></td><td>kilogramme (kg)</td><td>gramme (g) : 1 kg = 1000 g</td><td>balance (électronique ou à plateaux)</td></tr>\n<tr><td><b>volume</b></td><td>litre (L)</td><td>millilitre (mL) : 1 L = 1000 mL</td><td>éprouvette graduée, bécher gradué</td></tr>\n<tr><td><b>température</b></td><td>degré Celsius (°C)</td><td>—</td><td>thermomètre</td></tr>\n</table>\n<div class=\"tip\"><b>Bon réflexe</b> : avant toute mesure, on <b>estime</b> l'ordre de grandeur, on choisit l'instrument adapté, et on vérifie qu'il est bien <b>réglé</b> (balance au zéro, thermomètre non faussé).</div>\n\n<h3>2. Mesurer une masse</h3>\n<ul>\n<li>Balance électronique : poser le récipient, <b>tarer</b> (remettre à zéro), puis verser ;</li>\n<li>Balance à plateaux : équilibrer avec les masses marquées ;</li>\n<li>La masse se mesure en <b>grammes ou kilogrammes</b> — jamais en litres !</li>\n</ul>\n\n<h3>3. Mesurer un volume de liquide</h3>\n<ul>\n<li>Poser l'éprouvette <b>à plat sur la table</b>, verser, puis lire au niveau de la surface libre ;</li>\n<li>Prendre garde au <b>ménisque</b> : lire à la base de la goutte centrale, l'œil à hauteur de la surface ;</li>\n<li>Choisir une éprouvette adaptée : plus elle est petite et fine, plus la précision est grande.</li>\n</ul>\n\n<details class=\"ex-util\"><summary>💡 Focus sur... — mesurer 50 mL d'eau proprement</summary><div class=\"exu-body\"><div class=\"exu-enonce\"><b>Énoncé.</b> On doit verser exactement 50 mL d'eau dans une éprouvette de 100 mL. Décrire les étapes.</div><div class=\"etu\"><b>Étape 1 — Choisir</b> : une éprouvette de 100 mL (graduations tous les 1 mL) suffit et convient.</div><div class=\"etu\"><b>Étape 2 — Verser</b> : verser d'à peu près 45 mL, puis ajuster goutte à goutte avec une pipette.</div><div class=\"etu\"><b>Étape 3 — Lire</b> : éprouvette posée, œil à hauteur du ménisque : le bas du ménisque affleure la graduation 50.</div><div class=\"etu\"><b>Étape 4 — Piège</b> : si l'œil est trop haut ou trop bas, la graduation paraît décalée (parallaxe) : la lecture est fausse.</div></div></details>\n\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b>\n<ul>\n<li>Confondre <b>masse</b> (kg) et <b>volume</b> (L) : 1 kg de plume et 1 kg de plomb ont la même masse, pas le même volume.</li>\n<li>Lire un volume éprouvette <b>en main</b> : penchée, la lecture est fausse — la poser.</li>\n<li>« Le thermomètre affiche tout de suite la bonne valeur » : il faut <b>attendre la stabilisation</b>.</li>\n</ul>\n</div>"
+  },
+  {
+    "id": "energie-objets",
+    "theme": "Énergies et objets techniques (6e)",
+    "niveau": "6e",
+    "titre": "Énergies et objets techniques",
+    "cours": "<div class=\"cours-head\"><h2>Énergies et objets techniques</h2><span class=\"niv\">6e</span></div>\n<div class=\"chap-quick\"><a onclick=\"showTab('fiches')\">🗂️ Fiche synthétique du cours</a><a onclick=\"showTab('quiz')\">🧪 QCM du cours</a></div>\n\n<h3>1. Les formes d'énergie</h3>\n<ul>\n<li>Énergies <b>cinétique</b> (mouvement), <b>potentielle</b> (position, hauteur), <b>thermique</b> (chaleur), <b>lumineuse</b>, <b>chimique</b> (piles, aliments, carburants), <b>électrique</b> ;</li>\n<li>L'énergie ne disparaît jamais : elle se <b>transforme</b> d'une forme à une autre.</li>\n</ul>\n<div class=\"formule\">Chaîne d'énergie d'une lampe de poche :<br>énergie <b>chimique</b> (pile) → énergie <b>électrique</b> → énergie <b>lumineuse</b> (+ un peu de thermique)</div>\n\n<h3>2. Les objets techniques et leur fonction</h3>\n<ul>\n<li>Un objet technique est créé pour répondre à un <b>besoin</b> : sa <b>fonction d'usage</b> décrit ce qu'il fait (« éclairer », « se déplacer », « conserver ») ;</li>\n<li>Il est fait de <b>matériaux</b> choisis pour leurs propriétés, et il utilise une <b>source d'énergie</b> ;</li>\n<li>Un objet peut être décomposé en <b>éléments</b> qui remplissent chacun une fonction (alimenter, transmettre, actionner…).</li>\n</ul>\n<table>\n<tr><th>Matériau</th><th>Propriétés</th><th>Exemple d'usage</th></tr>\n<tr><td>métal (acier, alu)</td><td>résistant, conducteur</td><td>vélo, carrosserie</td></tr>\n<tr><td>bois</td><td>léger, isolant, facile à travailler</td><td>meuble, manche d'outil</td></tr>\n<tr><td>plastique</td><td>léger, malléable, isolant</td><td>jouet, emballage</td></tr>\n<tr><td>verre</td><td>transparent, rigide, fragile</td><td>fenêtre, bouteille</td></tr>\n</table>\n\n<h3>3. Sources d'énergie et économies</h3>\n<ul>\n<li>Sources <b>renouvelables</b> : soleil, vent, eau, bois, chaleur du sol ;</li>\n<li>Sources <b>non renouvelables</b> : pétrole, charbon, gaz, uranium — en quantité limitée ;</li>\n<li>Économiser l'énergie : isoler, couper les veilles, préférer la lampe LED à l'ampoule à incandescence (qui gaspille en chaleur) ;</li>\n<li>Quelques gestes mesurables : 1 °C de chauffage en moins ≈ 7 % d'énergie économisée.</li>\n</ul>\n\n<div class=\"piege\"><b>⚠️ Pièges classiques :</b>\n<ul>\n<li>« L'énergie disparaît » : non, elle se <b>transforme</b> ; une partie part toujours en chaleur.</li>\n<li>« Le bois est non renouvelable » : si, le bois est <b>renouvelable</b> (on replante), le pétrole non.</li>\n<li>Confondre <b>fonction d'usage</b> (ce que fait l'objet) et <b>fonction d'estime</b> (ce qu'il montre : luxe, mode).</li>\n<li>« La lampe à incandescence produit surtout de la lumière » : elle produit surtout de la <b>chaleur</b> (≈ 95 %).</li>\n</ul>\n</div>"
+  }
+];
+var FICHES_DATA = [
+  {
+    "id": "matiere-etats",
+    "fiche": "\n<h3>📌 L'essentiel</h3>\n<ul>\n<li>Trois états : solide, liquide, gaz — le même corps peut passer de l'un à l'autre.</li>\n<li>Changements d'état : fusion, solidification, vaporisation, liquéfaction (masse conservée).</li>\n<li>Corps pur (une substance) ≠ mélange homogène (invisible) ≠ hétérogène (phases visibles).</li>\n</ul>\n<h3>🧭 Méthodes</h3>\n<ol>\n<li>Observer : une ou plusieurs phases ?</li>\n<li>Chauffer / refroidir : nommer le changement d'état observé.</li>\n<li>Vérifier : la masse totale ne change pas.</li>\n</ol>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>La vapeur d'eau est invisible (la buée est liquide).</li>\n<li>Homogène ne veut pas dire corps pur.</li>\n<li>L'air a une masse (≈ 1,3 g/L).</li>\n</ul>"
+  },
+  {
+    "id": "separation-melanges",
+    "fiche": "\n<h3>📌 L'essentiel</h3>\n<ul>\n<li>Solide non dissous : filtration ou décantation.</li>\n<li>Liquides non miscibles : décantation.</li>\n<li>Solide dissous : évaporation ou distillation.</li>\n</ul>\n<h3>🧭 Méthodes</h3>\n<ol>\n<li>Identifier le type de mélange (dissous ou non ?).</li>\n<li>Choisir la technique adaptée.</li>\n<li>Nommer : filtrat (ce qui passe), résidu (ce qui est retenu).</li>\n</ol>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>Filtrer un mélange homogène ne sert à rien.</li>\n<li>Eau filtrée ≠ eau potable (le dissous passe).</li>\n<li>La décantation demande du temps (repos).</li>\n</ul>"
+  },
+  {
+    "id": "air-combustion",
+    "fiche": "\n<h3>📌 L'essentiel</h3>\n<ul>\n<li>L'air = mélange : ≈ 78 % diazote, 21 % dioxygène, 1 % autres gaz.</li>\n<li>Combustion : combustible + comburant (dioxygène) + chaleur.</li>\n<li>Produits : dioxyde de carbone + vapeur d'eau (+ suie, CO si combustion incomplète).</li>\n</ul>\n<h3>🧭 Méthodes</h3>\n<ol>\n<li>Pour montrer que l'air contient du dioxygène : bougie sous bocal retourné.</li>\n<li>Pour identifier CO₂ : l'eau de chaux se trouble.</li>\n<li>Toujours ventiler les appareils de combustion.</li>\n</ol>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>La flamme s'éteint faute de dioxygène, pas de carburant.</li>\n<li>Le monoxyde de carbone est inodore et mortel.</li>\n<li>La combustion consomme du dioxygène, elle n'en produit pas.</li>\n</ul>"
+  },
+  {
+    "id": "mesures",
+    "fiche": "\n<h3>📌 L'essentiel</h3>\n<ul>\n<li>Masse (kg, g) à la balance ; volume (L, mL) à l'éprouvette ; température (°C) au thermomètre.</li>\n<li>1 kg = 1000 g ; 1 L = 1000 mL.</li>\n<li>Une mesure se fait avec un instrument adapté, bien réglé, lecture correcte.</li>\n</ul>\n<h3>🧭 Méthodes</h3>\n<ol>\n<li>Tarer la balance avant de verser.</li>\n<li>Poser l'éprouvette à plat ; œil à hauteur du bas du ménisque.</li>\n<li>Attendre la stabilisation du thermomètre avant de lire.</li>\n</ol>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>Ne pas confondre masse et volume (kg ≠ L).</li>\n<li>Lecture en main = erreur de parallaxe.</li>\n<li>Estimer d'abord l'ordre de grandeur.</li>\n</ul>"
+  },
+  {
+    "id": "energie-objets",
+    "fiche": "\n<h3>📌 L'essentiel</h3>\n<ul>\n<li>Formes d'énergie : cinétique, potentielle, thermique, lumineuse, chimique, électrique.</li>\n<li>L'énergie se transforme, elle ne disparaît pas (chaîne d'énergie).</li>\n<li>Objet technique : fonction d'usage + matériaux adaptés + source d'énergie.</li>\n</ul>\n<h3>🧭 Méthodes</h3>\n<ol>\n<li>Décrire la chaîne d'énergie : source → transformations → effet utile.</li>\n<li>Choisir un matériau selon ses propriétés (résistance, isolation, légèreté…).</li>\n<li>Classer les sources : renouvelables / non renouvelables.</li>\n</ol>\n<h3>⚠️ Pièges</h3>\n<ul>\n<li>Une partie de l'énergie part toujours en chaleur.</li>\n<li>Le bois est renouvelable ; le pétrole non.</li>\n<li>Ne pas confondre fonction d'usage et fonction d'estime.</li>\n</ul>"
+  }
+];
+var QUESTIONS = [
+  {
+    "t": "La matière : états, mélanges et changements d'état (6e)",
+    "q": "L'eau passe de l'état liquide à l'état solide. Ce changement d'état s'appelle…",
+    "c": [
+      "la fusion",
+      "la solidification",
+      "la vaporisation",
+      "la liquéfaction"
+    ],
+    "a": 1,
+    "e": "Liquide → solide = solidification.",
+    "d": "<b>liquide → solide = solidification</b> (le contraire de la fusion, solide → liquide).<div class='ex-detail'><u>Exemple rédigé</u> : de l'eau placée au congélateur (−18 °C) se solidifie : on obtient de la glace. Si on la ressort, elle <b>fond</b> (fusion). Piège : la liquéfaction, c'est gaz → liquide (la buée sur une vitre froide).</div>"
+  },
+  {
+    "t": "La matière : états, mélanges et changements d'état (6e)",
+    "q": "L'eau sucrée est un mélange…",
+    "c": [
+      "hétérogène, car elle contient deux corps",
+      "homogène, car on ne voit pas le sucre",
+      "un corps pur, car elle est limpide",
+      "hétérogène, car elle est sucrée"
+    ],
+    "a": 1,
+    "e": "On ne distingue pas les constituants : le mélange est homogène.",
+    "d": "<b>Un mélange homogène</b> est un mélange où les constituants ne sont pas discernables, même à la loupe : c'est le cas de l'eau sucrée (le sucre est dissous).<div class='ex-detail'><u>Exemple rédigé</u> : eau + sable = hétérogène (on voit le sable) ; eau + sucre = homogène. Mais attention : homogène n'est pas corps pur — l'eau sucrée contient <b>deux</b> substances.</div>"
+  },
+  {
+    "t": "La matière : états, mélanges et changements d'état (6e)",
+    "q": "Quand la glace fond, sa masse…",
+    "c": [
+      "augmente, car l'eau occupe plus de place",
+      "diminue, car une partie s'évapore",
+      "reste la même",
+      "devient nulle à l'état liquide"
+    ],
+    "a": 2,
+    "e": "La masse est conservée lors d'un changement d'état.",
+    "d": "<b>La masse ne change jamais</b> lors d'un changement d'état : 10 g de glace donnent 10 g d'eau liquide.<div class='ex-detail'><u>Exemple rédigé</u> : pesez un glaçon et son eau après la fonte : la balance affiche la même valeur. Seul le <b>volume</b> change : l'eau liquide occupe un peu <b>moins</b> de place que la glace (la glace flotte d'ailleurs sur l'eau).</div>"
+  },
+  {
+    "t": "La matière : états, mélanges et changements d'état (6e)",
+    "q": "La buée blanche qui sort d'une casserole d'eau chaude est…",
+    "c": [
+      "de la vapeur d'eau, un gaz",
+      "des gouttelettes d'eau liquide",
+      "de l'air chaud",
+      "de la fumée"
+    ],
+    "a": 1,
+    "e": "La buée visible est constituée de gouttelettes liquides ; la vapeur est invisible.",
+    "d": "<b>La vapeur d'eau (gaz) est invisible.</b> Ce qu'on voit, la buée blanche, ce sont des gouttelettes d'<b>eau liquide</b> déjà recondensée au contact de l'air frais.<div class='ex-detail'><u>Exemple rédigé</u> : au-dessus d'une casserole, la zone juste au-dessus de l'eau semble vide : c'est là qu'est la vapeur ; le « nuage » blanc n'apparaît qu'un peu plus haut, là où la vapeur s'est liquéfiée.</div>"
+  },
+  {
+    "t": "Séparer les constituants d'un mélange (6e)",
+    "q": "On filtre de l'eau salée (sel dissous). Le filtrat est…",
+    "c": [
+      "de l'eau pure",
+      "de l'eau salée",
+      "du sel",
+      "un mélange hétérogène"
+    ],
+    "a": 1,
+    "e": "Le sel dissous traverse le filtre : le filtrat est encore salé.",
+    "d": "<b>La filtration ne retient que les solides non dissous.</b> Le sel étant dissous, il passe avec l'eau : le filtrat est de l'eau salée (homogène).<div class='ex-detail'><u>Exemple rédigé</u> : pour récupérer le sel, il faut <b>évaporer</b> l'eau : en chauffant l'eau salée dans une coupelle, l'eau part en vapeur et le sel reste au fond. Goûter le filtrat (salé) prouve que le sel a traversé le filtre.</div>"
+  },
+  {
+    "t": "Séparer les constituants d'un mélange (6e)",
+    "q": "Dans un mélange eau + huile laissé au repos, l'huile…",
+    "c": [
+      "se dépose au fond, car elle est plus lourde",
+      "reste mélangée à l'eau",
+      "flotte au-dessus de l'eau",
+      "se dissout dans l'eau"
+    ],
+    "a": 2,
+    "e": "L'huile flotte sur l'eau : décantation en deux phases.",
+    "d": "<b>L'huile est moins dense que l'eau</b> : elle forme une phase au-dessus.<div class='ex-detail'><u>Exemple rédigé</u> : dans une éprouvette, le mélange eau-huile est hétérogène : au repos il se sépare en deux couches (décantation). Pour séparer, on peut verser doucement la couche supérieure, ou utiliser une ampoule à décanter : le liquide du bas sort par le robinet du bas.</div>"
+  },
+  {
+    "t": "Séparer les constituants d'un mélange (6e)",
+    "q": "Le papier filtre retient le sable. Le sable est appelé…",
+    "c": [
+      "le filtrat",
+      "le résidu",
+      "le distillat",
+      "le solvant"
+    ],
+    "a": 1,
+    "e": "Ce qui est retenu sur le filtre = résidu ; ce qui passe = filtrat.",
+    "d": "<b>Résidu = ce qui reste sur le filtre ; filtrat = le liquide qui a traversé.</b><div class='ex-detail'><u>Exemple rédigé</u> : en filtrant de l'eau boueuse, la boue collectée sur le papier est le <b>résidu</b>, et l'eau limpide recueillée dessous est le <b>filtrat</b>. Astuce : « filtrat » et « passe » riment : le filtrat est passé.</div>"
+  },
+  {
+    "t": "Séparer les constituants d'un mélange (6e)",
+    "q": "Pour dessaler de l'eau de mer (sel dissous), la technique adaptée est…",
+    "c": [
+      "la filtration",
+      "la décantation",
+      "la distillation (ou l'évaporation)",
+      "aucune : c'est impossible"
+    ],
+    "a": 2,
+    "e": "Le sel étant dissous, il faut évaporer l'eau ou la distiller.",
+    "d": "<b>Un solide dissous ne se filtre pas.</b> On chauffe l'eau salée : la vapeur d'eau s'échappe (distillation : on la liquéfie pour récupérer de l'eau douce) et le sel reste.<div class='ex-detail'><u>Exemple rédigé</u> : les usines de dessalement distillent l'eau de mer ; au bord de la mer, les marais salants font l'inverse : ils <b>évaporent</b> l'eau au soleil pour récolter le sel.</div>"
+  },
+  {
+    "t": "L'air et la combustion (6e)",
+    "q": "La proportion de dioxygène dans l'air est d'environ…",
+    "c": [
+      "78 %",
+      "50 %",
+      "21 %",
+      "1 %"
+    ],
+    "a": 2,
+    "e": "L'air contient environ 21 % de dioxygène (et 78 % de diazote).",
+    "d": "<b>Air = 78 % diazote + 21 % dioxygène + 1 % autres gaz.</b><div class='ex-detail'><u>Exemple rédigé</u> : dans une salle de 100 L d'air, il y a environ 21 L de dioxygène. Piège classique : croire que l'air est surtout de l'oxygène — c'est le <b>diazote</b> qui domine.</div>"
+  },
+  {
+    "t": "L'air et la combustion (6e)",
+    "q": "Une bougie enfermée sous un bocal s'éteint parce que…",
+    "c": [
+      "il n'y a plus de carburant",
+      "le dioxygène est épuisé",
+      "il fait trop chaud",
+      "l'air est devenu de l'eau"
+    ],
+    "a": 1,
+    "e": "Sans comburant (dioxygène), la combustion s'arrête.",
+    "d": "<b>La combustion a besoin de dioxygène</b> (le comburant). Sous le bocal, la quantité est limitée : quand elle est consommée, la flamme s'éteint.<div class='ex-detail'><u>Exemple rédigé</u> : on observe même une légère montée d'eau dans le bocal : le gaz consommé fait baisser la pression. C'est aussi pour cela qu'on referme une bougie avec un couvercle pour l'éteindre : on coupe l'arrivée d'air.</div>"
+  },
+  {
+    "t": "L'air et la combustion (6e)",
+    "q": "Le gaz qui se trouble dans l'eau de chaux est…",
+    "c": [
+      "le dioxygène",
+      "le diazote",
+      "le dioxyde de carbone",
+      "la vapeur d'eau"
+    ],
+    "a": 2,
+    "e": "L'eau de chaux se trouble au contact du dioxyde de carbone.",
+    "d": "<b>Test de l'eau de chaux : elle se trouble avec le dioxyde de carbone.</b><div class='ex-detail'><u>Exemple rédigé</u> : on souffle (air expiré riche en CO₂) dans un tube d'eau de chaux à l'aide d'une paille : elle blanchit. Ce test permet de prouver qu'une combustion (bougie, alcool) a produit du dioxyde de carbone.</div>"
+  },
+  {
+    "t": "L'air et la combustion (6e)",
+    "q": "Le monoxyde de carbone, produit d'une combustion incomplète, est dangereux car il est…",
+    "c": [
+      "visible et odorant",
+      "inodore et invisible",
+      "lourd et jaune",
+      "inoffensif si on aère"
+    ],
+    "a": 1,
+    "e": "Le CO est invisible et inodore : on ne le sent pas arriver.",
+    "d": "<b>Le monoxyde de carbone (CO) est invisible, inodore et mortel.</b><div class='ex-detail'><u>Exemple rédigé</u> : une chaudière mal réglée ou un barbecue utilisé en intérieur produit du CO. D'où les règles : faire <b>entretenir chaque année</b> les appareils, ne jamais obstruer les aérations, laisser la VMC fonctionner. Les détecteurs de CO alertent par sonnerie.</div>"
+  },
+  {
+    "t": "Mesurer : masse, volume et température (6e)",
+    "q": "La masse d'un objet se mesure…",
+    "c": [
+      "en litres (L)",
+      "en kilogrammes (kg)",
+      "en degrés Celsius (°C)",
+      "en newtons (N)"
+    ],
+    "a": 1,
+    "e": "La masse s'exprime en kg (ou g) et se mesure avec une balance.",
+    "d": "<b>Masse = kilogramme ; volume = litre ; température = degré Celsius.</b><div class='ex-detail'><u>Exemple rédigé</u> : 1 kg de plumes et 1 kg de plomb ont la <b>même masse</b> (même balance, même affichage) mais des <b>volumes</b> très différents. Piège : « ça pèse 2 litres » n'a pas de sens ; on dit « ça pèse 2 kilos » ou « ça occupe 2 litres ».</div>"
+  },
+  {
+    "t": "Mesurer : masse, volume et température (6e)",
+    "q": "Pour lire un volume dans une éprouvette graduée, il faut…",
+    "c": [
+      "la tenir en hauteur, à hauteur des yeux",
+      "la poser à plat et lire à hauteur du bas du ménisque",
+      "la secoter pour homogénéiser",
+      "la pencher vers la lumière"
+    ],
+    "a": 1,
+    "e": "Éprouvette posée, œil à hauteur de la surface, lecture au bas du ménisque.",
+    "d": "<b>On pose l'éprouvette sur la table et on met l'œil à hauteur du liquide.</b> Si l'œil est trop haut ou trop bas, la graduation paraît décalée (erreur de parallaxe).<div class='ex-detail'><u>Exemple rédigé</u> : dans une éprouvette, la surface de l'eau creuse un petit <b>ménisque</b> : on lit à la base de la courbure. Le volume lu doit aussi respecter la précision : une éprouvette de 100 mL graduée en 1 mL ne permet pas d'annoncer « 50,37 mL ».</div>"
+  },
+  {
+    "t": "Mesurer : masse, volume et température (6e)",
+    "q": "1,5 litre d'eau, c'est…",
+    "c": [
+      "150 mL",
+      "15 mL",
+      "1500 mL",
+      "0,15 mL"
+    ],
+    "a": 2,
+    "e": "1 L = 1000 mL, donc 1,5 L = 1500 mL.",
+    "d": "<b>1 L = 1000 mL</b>, donc on multiplie par 1000 : 1,5 L = 1500 mL.<div class='ex-detail'><u>Exemple rédigé</u> : une brique de lait de 1 L contient 1000 mL ; une canette de 33 cL contient 330 mL (1 cL = 10 mL). Attention aux cL en cuisine : 25 cL = 250 mL = un verre moyen.</div>"
+  },
+  {
+    "t": "Mesurer : masse, volume et température (6e)",
+    "q": "Avant de verser du sucre dans un récipient posé sur une balance électronique, on doit…",
+    "c": [
+      "verser d'abord le sucre pour taring",
+      "tarer la balance (remettre à zéro)",
+      "retirer le récipient",
+      "souffler sur le plateau"
+    ],
+    "a": 1,
+    "e": "Tarer permet d'afficher la masse du seul sucre, sans le récipient.",
+    "d": "<b>Tarer = remettre la balance à zéro</b> avec le récipient vide posé : l'affichage ne comptera ensuite que le contenu.<div class='ex-detail'><u>Exemple rédigé</u> : récipient affichant 120 g → on tare (affichage 0 g) → on verse 250 g de sucre : la balance affiche <b>250 g</b>, la masse du sucre seul. Sans tarage, il faudrait soustraire 120 g à la main.</div>"
+  },
+  {
+    "t": "Énergies et objets techniques (6e)",
+    "q": "Dans une lampe de poche, l'énergie chimique de la pile est transformée en…",
+    "c": [
+      "énergie lumineuse (et un peu de chaleur)",
+      "énergie éolienne",
+      "énergie nucléaire",
+      "masse"
+    ],
+    "a": 0,
+    "e": "Pile (chimique) → électricité → lumière + chaleur.",
+    "d": "<b>Chaîne d'énergie : chimique → électrique → lumineuse (+ thermique).</b><div class='ex-detail'><u>Exemple rédigé</u> : la pile stocke de l'énergie <b>chimique</b> ; le circuit la transfère sous forme <b>électrique</b> ; l'ampoule la convertit en <b>lumière</b> — et toujours un peu en <b>chaleur</b> (l'ampoule chauffe). Aucune énergie ne disparaît : elle change de forme.</div>"
+  },
+  {
+    "t": "Énergies et objets techniques (6e)",
+    "q": "Le pétrole est une source d'énergie…",
+    "c": [
+      "renouvelable",
+      "non renouvelable",
+      "infinie",
+      "musculaire"
+    ],
+    "a": 1,
+    "e": "Le pétrole est limité et ne se reconstitue pas à notre échelle : non renouvelable.",
+    "d": "<b>Non renouvelable</b> : les gisements de pétrole se sont formés en des millions d'années et ne se reconstituent pas.<div class='ex-detail'><u>Exemple rédigé</u> : renouvelables = soleil, vent, eau, bois (on replante), chaleur du sol. Non renouvelables = pétrole, gaz, charbon, uranium. Piège : le bois est renouvelable <b>si</b> la forêt est gérée (on replante).</div>"
+  },
+  {
+    "t": "Énergies et objets techniques (6e)",
+    "q": "La « fonction d'usage » d'un objet technique décrit…",
+    "c": [
+      "sa couleur",
+      "ce pour quoi il est créé (ce qu'il permet de faire)",
+      "son prix",
+      "la marque"
+    ],
+    "a": 1,
+    "e": "La fonction d'usage dit à quel besoin l'objet répond.",
+    "d": "<b>La fonction d'usage décrit le service rendu</b> : « éclairer » pour une lampe, « se déplacer » pour un vélo.<div class='ex-detail'><u>Exemple rédigé</u> : une montre a pour fonction d'usage « donner l'heure » ; sa fonction d'<b>estime</b> est différente (bijou, mode, prestige). Quand on conçoit un objet, on part toujours du <b>besoin</b> exprimé par une fonction d'usage, puis on choisit matériaux et source d'énergie.</div>"
+  },
+  {
+    "t": "Énergies et objets techniques (6e)",
+    "q": "Pour fabriquer la poignée d'une casserole, on choisit plutôt…",
+    "c": [
+      "un métal conducteur de la chaleur, comme l'aluminium",
+      "un matériau isolant, comme le bois ou la bakélite",
+      "du verre transparent",
+      "du papier épais"
+    ],
+    "a": 1,
+    "e": "La poignée doit rester fraîche : on choisit un matériau isolant.",
+    "d": "<b>La poignée doit protéger la main</b> : on choisit un matériau qui conduit <b>mal</b> la chaleur (bois, bakélite, plastique).<div class='ex-detail'><u>Exemple rédigé</u> : la casserole elle-même est en métal (conducteur : la chaleur passe aux aliments), tandis que sa <b>poignée</b> est en bois ou en bakélite (isolant : on ne se brûle pas). Un même objet associe donc plusieurs matériaux, chacun choisi pour ses propriétés. Piège : ne pas confondre la partie qui cuit et la partie qu'on tient.</div>"
+  }
+];
+
+var currentChap = null;
+var META_BY_ID = {}; var FICHE_BY_ID = {};
+COURS_META.forEach(function(c){ META_BY_ID[c.id] = c; });
+FICHES_DATA.forEach(function(f){ FICHE_BY_ID[f.id] = f.fiche; });
+
+function chapHeadHTML(m){
+  return '<div class="chap-head"><span class="chap-title">🔬 Sciences et techno — ' + esc(m.titre) + '</span>' +
+    '<span class="chap-links"><a href="#" onclick="goCoursList();return false;">📚 Tous les cours</a> &nbsp;·&nbsp; <a href="#" onclick="clearChap();showTab(\'prog\');return false;">← Programme</a> &nbsp;·&nbsp; <a href="../index.html">↩ Matières</a></span></div>';
+}
+function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function showTab(t){
+  ['prog','cours','fiches','quiz'].forEach(function(v){ document.getElementById('view-'+v).style.display = (v===t)?'block':'none'; });
+  ['prog','cours'].forEach(function(v){ document.getElementById('tab-'+v).className = (v===t)?'active':''; });
+  if (t === 'fiches') renderFiches();
+  if (t === 'cours') renderCours();
+  if (t === 'quiz') {
+    var bar = document.getElementById('quiz-chapbar');
+    if (currentChap && META_BY_ID[currentChap]) { bar.innerHTML = chapHeadHTML(META_BY_ID[currentChap]); startTraining(META_BY_ID[currentChap].theme); }
+    else { bar.innerHTML = ''; state.mode = 'menu'; render(); }
+  }
+  if (t === 'prog' || t === 'cours') window.scrollTo({top:0});
+}
+function clearChap(){ currentChap = null; }
+
+function goCours(id){
+  currentChap = id;
+  showTab('cours');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function goCoursList(){ currentChap = null; showTab('cours'); }
+
+function ficheHTML(id, num, open){
+  var m = META_BY_ID[id]; var f = FICHE_BY_ID[id];
+  return '<details class="fiche" id="fiche-' + id + '"' + (open ? ' open' : '') + '>' +
+    '<summary><span class="fiche-num">' + num + '</span> Fiche — ' + esc(m.titre) + ' <span class="niv" style="font-size:.7rem;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:999px;padding:2px 10px;font-weight:700;margin-left:6px">' + esc(m.niveau) + '</span></summary>' +
+    '<div class="fiche-body">' +
+    '<div class="fiche-actions"><button class="btn-pdf" onclick="printFiche(\'' + id + '\')">🖨️ Imprimer</button><button class="btn-pdf" onclick="fichePDF(\'' + id + '\')">📄 PDF</button></div>' +
+    '<div class="print-title">Fiche synthétique — ' + esc(m.titre) + ' (' + esc(m.niveau) + ')</div>' +
+    f +
+    '</div></details>';
+}
+
+function renderFiches(){
+  var z = document.getElementById('fiches-zone'); var h = '';
+  if (currentChap && FICHE_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += chapHeadHTML(m);
+    h += ficheHTML(currentChap, 1, true);
+  } else {
+    h += '<section class="card"><h2>🗂️ Fiches synthétiques</h2><p style="font-size:.92rem">Toutes les fiches, une par chapitre. Ouvrez un cours : l\'onglet 🗂️ Fiche affichera uniquement la fiche de ce chapitre.</p></section>';
+    var i = 1;
+    FICHES_DATA.forEach(function(f){ h += ficheHTML(f.id, i); i++; });
+  }
+  z.innerHTML = h;
+}
+
+// ===== Générateur PDF autonome (A4, Helvetica) — aucune dépendance externe =====
+var PDF_MATIERE = 'Sciences et technologie';
+var PDF_CP1252 = { 0x2018:0x91, 0x2019:0x92, 0x201A:0x82, 0x201C:0x93, 0x201D:0x94, 0x201E:0x84, 0x2013:0x96, 0x2014:0x97, 0x2026:0x85, 0x2020:0x86, 0x2021:0x87, 0x20AC:0x80, 0x0152:0x8C, 0x0153:0x9C, 0x0160:0x8A, 0x0161:0x9A, 0x0178:0x9F, 0x017D:0x8E, 0x017E:0x9E, 0x192:0x83, 0x2C6:0x88, 0x2032:0xB4, 0x2039:0x8B, 0x203A:0x9B, 0x2022:0x95, 0x201E2:0 };
+function pdfTranslit(s){
+  return s.replace(/\u2212|\u2013|\u2014/g, '-').replace(/[\u2032\u2019]/g, "'")
+    .replace(/\u2192|\u21D2|\u21A6/g, '->').replace(/\u2190/g, '<-')
+    .replace(/\u2265/g, '>=').replace(/\u2264/g, '<=').replace(/\u2260/g, '!=').replace(/\u2248/g, '~')
+    .replace(/\u2208/g, ' in ').replace(/\u2205/g, 'vide').replace(/\u2286/g, 'incl.')
+    .replace(/\u221A/g, 'V').replace(/\u00B7|\u2219|\u22C5/g, '*')
+    .replace(/\u2124/g, 'Z').replace(/\u211D/g, 'R').replace(/\u2115/g, 'N').replace(/\u2119/g, 'P')
+    .replace(/\u00A0/g, ' ').replace(/\u202F|\u2009|\u200B|\uFE0F/g, '')
+    .replace(/[\u2460-\u2468]/g, function(c){ return (c.charCodeAt(0) - 0x2460 + 1) + ')'; })
+    .replace(/[\u2600-\u27BF\uD800-\uDFFF\uE000-\uF8FF]/g, '')
+    .replace(/[\uD83C-\uFFFD]/g, function(c){ return c.charCodeAt(0) < 0x10000 && c.charCodeAt(0) > 0xFFF0 ? '' : c; })
+    .replace(/[\u{1F000}-\u{1FAFF}]/gu, '');
+}
+function pdfEnc(s){
+  var out = '';
+  for (var i = 0; i < s.length; i++){
+    var c = s.charCodeAt(i), b = null;
+    if (c < 256) { if (c >= 32 || c === 10) b = c; }
+    else if (PDF_CP1252[c] !== undefined) b = PDF_CP1252[c];
+    if (b !== null && b !== undefined) out += String.fromCharCode(b);
+  }
+  return out;
+}
+function pdfEsc(s){ return s.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)'); }
+var PDF_INLINE = { B:1, STRONG:1, I:1, EM:1, U:1, SPAN:1, SMALL:1, SUB:1, SUP:1, A:1, CODE:1, ABBR:1 };
+function pdfSegs(node, bold, out){
+  for (var c = node.firstChild; c; c = c.nextSibling){
+    if (c.nodeType === 3){
+      var t = c.textContent.replace(/[\r\n\t]+/g, ' ').replace(/ +/g, ' ');
+      if (t.trim() !== '') out.push({ t: t, b: bold });
+      else if (t === ' ' && out.length && out[out.length - 1].t.charAt(out[out.length - 1].t.length - 1) !== ' ') out[out.length - 1].t += ' ';
+    } else if (c.nodeType === 1){
+      var g = c.tagName;
+      if (g === 'BR') { out.push({ t: '\n', b: bold }); }
+      else if (g === 'B' || g === 'STRONG') pdfSegs(c, true, out);
+      else pdfSegs(c, bold, out);
+    }
+  }
+}
+function pdfNodeCollect(root){
+  var blocks = [];
+  function flushPending(){ pend = []; }
+  var pend = [];
+  function emitP(){ if (pend.length) { blocks.push({ type: 'p', segs: pend, indent: indent }); pend = []; } }
+  function emitBlock(type, el, ind, bold){
+    var segs = []; pdfSegs(el, bold || false, segs);
+    if (type === 'h') segs.forEach(function(s){ s.b = true; });
+    if (segs.length) blocks.push({ type: type, segs: segs, indent: ind });
+  }
+  var indent = 0;
+  function walk(n){
+    for (var c = n.firstChild; c; c = c.nextSibling){
+      if (c.nodeType === 3){
+        var t = c.textContent.replace(/[\r\n\t]+/g, ' ').replace(/ +/g, ' ');
+        if (t.trim() !== '') pend.push({ t: t, b: false });
+      } else if (c.nodeType === 1){
+        var g = c.tagName;
+        var cl = ' ' + (c.className || '') + ' ';
+        if (cl.indexOf('fiche-actions') >= 0 || cl.indexOf('print-title') >= 0) continue;
+        if (g === 'BR') { emitP(); continue; }
+        if (PDF_INLINE[g]) { pdfSegs(c, false, pend); continue; }
+        emitP();
+        if (/^H[1-6]$/.test(g)) emitBlock('h', c, indent);
+        else if (g === 'LI') emitBlock('li', c, indent + 14);
+        else if (g === 'UL' || g === 'OL') {
+          for (var li = c.firstChild; li; li = li.nextSibling){
+            if (li.nodeType === 1 && li.tagName === 'LI') {
+              emitBlock('li', li, indent + 14);
+              for (var sub = li.firstChild; sub; sub = sub.nextSibling){
+                if (sub.nodeType === 1 && (sub.tagName === 'UL' || sub.tagName === 'OL')){
+                  for (var sli = sub.firstChild; sli; sli = sli.nextSibling){
+                    if (sli.nodeType === 1 && sli.tagName === 'LI') emitBlock('li', sli, indent + 30);
+                  }
+                }
+              }
+            }
+          }
+        }
+        else if (g === 'TABLE'){
+          var rows = [];
+          (function collectTbl(tn){
+            for (var r = tn.firstChild; r; r = r.nextSibling){
+              if (r.nodeType !== 1) continue;
+              if (r.tagName === 'TR'){
+                var cells = [], head = false;
+                for (var td = r.firstChild; td; td = td.nextSibling){
+                  if (td.nodeType !== 1) continue;
+                  if (td.tagName === 'TD' || td.tagName === 'TH'){
+                    if (td.tagName === 'TH') head = true;
+                    var cs = []; pdfSegs(td, td.tagName === 'TH', cs);
+                    cells.push(cs.map(function(x){ return x.t; }).join('').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim());
+                  }
+                }
+                if (cells.length && cells.join('').replace(/\s/g, '') !== '') rows.push({ cells: cells, head: head });
+              } else if (r.tagName === 'THEAD' || r.tagName === 'TBODY') collectTbl(r);
+            }
+          })(c);
+          if (rows.length) blocks.push({ type: 'table', rows: rows, indent: indent });
+        }
+        else if (g === 'P') { emitBlock('p', c, indent); }
+        else { var keep = indent; walk(c); indent = keep; }
+      }
+    }
+    emitP();
+  }
+  walk(root);
+  return blocks;
+}
+function pdfWrap(blocks){
+  var W = 595.28, M = 50, lines = [];
+  blocks.forEach(function(b, bi){
+    if (b.type === 'title'){ lines.push({ banner: 1, title: b.segs.map(function(s){ return s.t; }).join(' ').replace(/\s+/g, ' ').trim() }); return; }
+    if (b.type === 'table'){ lines.push({ table: b }); return; }
+    var isTitle = b.type === 'title';
+    var size = b.type === 'h' ? 12 : 10.5;
+    var indent = b.indent || 0;
+    var budget = Math.floor((W - 2 * M - indent) / (0.52 * size));
+    var words = [], spPend = false;
+    b.segs.forEach(function(s){
+      var parts = s.t.split('\n');
+      parts.forEach(function(p, pi){
+        if (pi > 0) { words.push({ br: true }); spPend = false; }
+        var toks = p.split(/( +)/);
+        for (var ti = 0; ti < toks.length; ti++){
+          var tk = toks[ti];
+          if (tk === '') continue;
+          if (/^ +$/.test(tk)) { spPend = true; continue; }
+          words.push({ w: tk, b: s.b, sp: spPend });
+          spPend = false;
+        }
+      });
+    });
+    var cur = [], len = 0, firstLn = true;
+    function flushLine(){ if (cur.length) { lines.push({ segs: cur, size: size, indent: indent, h: b.type === 'h', li: (b.type === 'li' && firstLn), gap: (b.type === 'h' ? 10 : 5) }); cur = []; len = 0; firstLn = false; } }
+    for (var i = 0; i < words.length; i++){
+      var wd = words[i];
+      if (wd.br) { flushLine(); continue; }
+      var wlen = wd.w.length + 1;
+      if (len + wlen > budget && cur.length) flushLine();
+      var last = cur.length ? cur[cur.length - 1] : null;
+      var piece = (last && wd.sp ? ' ' : '') + wd.w;
+      if (last && last.b === wd.b) last.t += piece;
+      else cur.push({ t: piece, b: wd.b });
+      len += wlen;
+    }
+    flushLine();
+  });
+  return lines;
+}
+function pdfBuild(lines){
+  var W = 595.28, H = 841.89, M = 50, TOP = H - M;
+  var COL = { ind: [0.31, 0.27, 0.90], lav: [0.93, 0.95, 1.00], bord: [0.80, 0.84, 0.88], gry: [0.45, 0.50, 0.60], wht: [1, 1, 1], blk: [0.13, 0.13, 0.15] };
+  function rg(c){ return c[0] + ' ' + c[1] + ' ' + c[2] + ' rg'; }
+  function RG(c){ return c[0] + ' ' + c[1] + ' ' + c[2] + ' RG'; }
+  var pages = [], cur = [], y = TOP, curTitle = 'Fiche';
+  function newPage(){ pages.push(cur); cur = []; y = TOP; }
+  function T(x, yy, size, bold, s, col){
+    var enc = pdfEnc(pdfTranslit(s));
+    if (!enc) return;
+    cur.push(rg(col) + ' BT 1 0 0 1 ' + x.toFixed(2) + ' ' + yy.toFixed(2) + ' Tm /F' + (bold ? 2 : 1) + ' ' + size + ' Tf (' + pdfEsc(enc) + ') Tj ET');
+  }
+  function wrapCell(text, wpt, size){
+    var budget = Math.max(6, Math.floor((wpt - 10) / (0.52 * size)));
+    var outl = [], line = '';
+    text.split(' ').forEach(function(w){
+      if (w === '') return;
+      if (line === '') line = w;
+      else if ((line + ' ' + w).length <= budget) line += ' ' + w;
+      else { outl.push(line); line = w; }
+    });
+    if (line !== '') outl.push(line);
+    return outl.length ? outl : [''];
+  }
+  function renderTable(tbl){
+    var rows = tbl.rows, indent = tbl.indent || 0, ts = 9, lh = ts * 1.35;
+    var tw = W - 2 * M - indent;
+    var ncol = 0; rows.forEach(function(r){ ncol = Math.max(ncol, r.cells.length); });
+    var weights = [];
+    for (var j = 0; j < ncol; j++){ var mx = 5; rows.forEach(function(r){ if (r.cells[j]) mx = Math.max(mx, r.cells[j].length); }); weights.push(mx); }
+    var sum = 0; weights.forEach(function(w){ sum += w; });
+    var widths = [], acc = 0;
+    for (var j2 = 0; j2 < ncol; j2++){ var wpt = Math.max(52, tw * weights[j2] / sum); widths.push(wpt); acc += wpt; }
+    var scale = tw / acc; widths = widths.map(function(w){ return w * scale; });
+    var xs = [M + indent]; for (var j3 = 0; j3 < ncol; j3++) xs.push(xs[j3] + widths[j3]);
+    rows.forEach(function(r){
+      var wc = [], nl = 1;
+      for (var j4 = 0; j4 < ncol; j4++){ var cl = wrapCell(r.cells[j4] || '', widths[j4], ts); wc.push(cl); nl = Math.max(nl, cl.length); }
+      var rowH = nl * lh + 8;
+      if (y - rowH < M + 22) newPage();
+      var top = y, bot = y - rowH;
+      if (r.head) cur.push(rg(COL.lav) + ' ' + (M + indent) + ' ' + bot.toFixed(2) + ' ' + tw.toFixed(2) + ' ' + rowH.toFixed(2) + ' re f');
+      cur.push(RG(COL.bord) + ' 0.8 w');
+      cur.push((M + indent) + ' ' + top.toFixed(2) + ' m ' + (M + indent + tw) + ' ' + top.toFixed(2) + ' l S');
+      cur.push((M + indent) + ' ' + bot.toFixed(2) + ' m ' + (M + indent + tw) + ' ' + bot.toFixed(2) + ' l S');
+      for (var j5 = 0; j5 <= ncol; j5++) cur.push(xs[j5].toFixed(2) + ' ' + top.toFixed(2) + ' m ' + xs[j5].toFixed(2) + ' ' + bot.toFixed(2) + ' l S');
+      cur.push('0 0 0 RG 1 w');
+      for (var j6 = 0; j6 < ncol; j6++){
+        for (var k = 0; k < wc[j6].length; k++) T(xs[j6] + 5, top - ts - 4 - k * lh, ts, r.head, wc[j6][k], COL.blk);
+      }
+      y = bot;
+    });
+    y -= 6;
+  }
+  lines.forEach(function(ln){
+    if (ln.banner){
+      if (y - 46 < M) newPage();
+      var bh = 42;
+      curTitle = ln.title || 'Fiche';
+      cur.push(rg(COL.ind) + ' ' + M + ' ' + (y - bh).toFixed(2) + ' ' + (W - 2 * M) + ' ' + bh + ' re f');
+      T(M + 14, y - 21, 14, true, curTitle, COL.wht);
+      T(M + 14, y - 33, 8.5, false, 'Fiche synth\u00e9tique' + (typeof PDF_MATIERE !== 'undefined' && PDF_MATIERE ? ' \u2014 ' + PDF_MATIERE : ''), COL.wht);
+      y -= bh + 14;
+      return;
+    }
+    if (ln.table){ renderTable(ln.table); return; }
+    var lh2 = ln.size * 1.42 + (ln.gap || 0);
+    if (y - lh2 - (ln.h ? 12 : 0) < M + 22) newPage();
+    y -= (ln.gap || 0);
+    if (ln.h){
+      y -= 2;
+      var bh3 = ln.size + 10;
+      cur.push(rg(COL.lav) + ' ' + M + ' ' + (y - ln.size - 3).toFixed(2) + ' ' + (W - 2 * M) + ' ' + bh3 + ' re f');
+      y -= ln.size * 1.05;
+      var hx = M + 8, prevEnd = true;
+      ln.segs.forEach(function(s){
+        if (!s.t) return;
+        var enc2 = pdfEnc(pdfTranslit(s.t));
+        if (!enc2) return;
+        var gapSp = (hx > M + 8 && !prevEnd && s.t.charAt(0) !== ' ') ? 1 : 0;
+        T(hx + 0.52 * ln.size * gapSp, y, ln.size, true, s.t, COL.ind);
+        hx += 0.52 * ln.size * (enc2.length + gapSp);
+        prevEnd = / $/.test(s.t);
+      });
+      y -= ln.size * 0.37 + 3;
+      return;
+    }
+    y -= ln.size * 1.15;
+    var x = M + (ln.indent || 0);
+    if (ln.li) T(x - 11, y, ln.size, false, '\u2022', COL.ind);
+    ln.segs.forEach(function(s){
+      if (!s.t) return;
+      T(x, y, ln.size, s.b, s.t, COL.blk);
+      x += 0.52 * ln.size * pdfEnc(pdfTranslit(s.t)).length;
+    });
+    y -= ln.size * 0.27;
+  });
+  if (cur.length) pages.push(cur);
+  for (var p = 0; p < pages.length; p++){
+    var pgFoot = 'Fiche synth\u00e9tique' + (typeof PDF_MATIERE !== 'undefined' && PDF_MATIERE ? ' \u2014 ' + PDF_MATIERE : '') + ' \u2014 ' + curTitle;
+    var fx = M, fw = 0.52 * 7.5 * pdfEnc(pdfTranslit(pgFoot)).length;
+    pages[p].push(rg(COL.gry) + ' BT 1 0 0 1 ' + fx + ' 30 Tm /F1 7.5 Tf (' + pdfEsc(pdfEnc(pdfTranslit(pgFoot))) + ') Tj ET');
+    var pn = 'Page ' + (p + 1) + ' / ' + pages.length;
+    var pw = 0.52 * 7.5 * pn.length;
+    pages[p].push('BT 1 0 0 1 ' + (W - M - pw).toFixed(2) + ' 30 Tm /F1 7.5 Tf (' + pdfEsc(pn) + ') Tj ET');
+  }
+  var objs = [];
+  objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+  var kids = [];
+  for (var i = 0; i < pages.length; i++) kids.push((5 + 2 * i) + ' 0 R');
+  objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages.length + ' >>';
+  objs[3] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+  objs[4] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+  for (var p2 = 0; p2 < pages.length; p2++){
+    var po = 5 + 2 * p2, co = 6 + 2 * p2;
+    objs[po] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ' + co + ' 0 R >>';
+    var stream = pages[p2].join('\n');
+    objs[co] = 'STREAM:' + stream;
+  }
+  var out = '%PDF-1.4\n';
+  var offs = [];
+  for (var i2 = 1; i2 < objs.length; i2++){
+    offs[i2] = out.length;
+    if (objs[i2].indexOf('STREAM:') === 0){
+      var st = objs[i2].slice(7);
+      out += i2 + ' 0 obj\n<< /Length ' + st.length + ' >>\nstream\n' + st + '\nendstream\nendobj\n';
+    } else out += i2 + ' 0 obj\n' + objs[i2] + '\nendobj\n';
+  }
+  var xr = out.length;
+  out += 'xref\n0 ' + objs.length + '\n0000000000 65535 f \n';
+  for (var i3 = 1; i3 < objs.length; i3++) out += ('0000000000' + offs[i3]).slice(-10) + ' 00000 n \n';
+  out += 'trailer\n<< /Size ' + objs.length + ' /Root 1 0 R >>\nstartxref\n' + xr + '\n%%EOF';
+  return out;
+}
+function pdfDownload(pdfStr, filename){
+  var bytes = new Uint8Array(pdfStr.length);
+  for (var i = 0; i < pdfStr.length; i++) bytes[i] = pdfStr.charCodeAt(i) & 0xFF;
+  var blob = new Blob([bytes], { type: 'application/pdf' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename.replace(/["«»“”*<>|\\/]/g, '').replace(/[:?]/g, ' -').replace(/\s+/g, ' ').trim() + '.pdf';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+}
+function downloadFichePDF(elt, name){
+  var t = elt.querySelector('.print-title');
+  var raw = t ? (t.textContent || '') : ''; if (!raw) raw = (name || ''); raw = raw + ''; var title = raw.replace(/\s+/g, ' ').trim() || 'Fiche';
+  var body = elt.querySelector('.fiche-body') || elt;
+  var blocks = pdfNodeCollect(body);
+  blocks.unshift({ type: 'title', segs: [{ t: title, b: true }], indent: 0 });
+  pdfDownload(pdfBuild(pdfWrap(blocks)), title);
+}
+
+function fichePDF(id){ var el = document.getElementById('fiche-' + id); if (!el) return;
+  downloadFichePDF(el, META_BY_ID[id] ? META_BY_ID[id].titre : id); }
+function printFiche(id){
+  var el = document.getElementById('fiche-' + id);
+  if (!el) return;
+  var details = document.querySelectorAll('details.fiche');
+  details.forEach(function(d){ d.classList.remove('print-target'); d.removeAttribute('open'); });
+  el.classList.add('print-target');
+  el.setAttribute('open','');
+  window.print();
+}
+
+var state = { mode:'menu', theme:null, idx:0, qs:[], answers:[] };
+function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function startTraining(theme){ state.mode='train'; state.theme = theme; state.qs = shuffle(QUESTIONS.filter(function(q){ return q.t === theme; })); state.idx = 0; state.answers = []; render(); }
+function backMenu(){ state.mode='menu'; render(); }
+function select(i){
+  if (state.mode !== 'train' || state.idx >= state.qs.length) return;
+  state.answers[state.idx] = i;
+  var q = state.qs[state.idx]; var btns = document.querySelectorAll('#quiz-app .choice');
+  btns.forEach(function(b, k){ b.classList.remove('sel'); if (k === q.a) b.classList.add('ok'); else if (k === i) b.classList.add('ko'); else b.classList.add('dim'); b.disabled = true; });
+  var ex = document.getElementById('expl');
+  if (ex) {
+    ex.style.display = 'block';
+    if (i === q.a) { ex.innerHTML = '✅ Exact ! 💡 ' + esc(q.e); }
+    else { ex.innerHTML = '❌ Mauvaise réponse. La bonne réponse était : <b class="green">' + esc(q.c[q.a]) + '</b>.<br><b>🧠 Pour comprendre :</b><br>' + (q.d || esc(q.e)); }
+  }
+  var nx = document.getElementById('btn-next'); if (nx) nx.disabled = false;
+}
+function nextQ(){ if (state.idx < state.qs.length - 1){ state.idx++; render(); } else { state.mode='result'; render(); } }
+function prevQ(){ if (state.idx > 0){ state.idx--; render(); } }
+function render(){
+  var app = document.getElementById('quiz-app'); var h = '';
+  if (state.mode === 'menu'){
+    h += '<h2 class="q">Choisissez un chapitre à réviser</h2>';
+    COURS_META.forEach(function(c){
+      var n = QUESTIONS.filter(function(q){ return q.t === c.theme; }).length;
+      h += '<button class="theme-btn" onclick="startTraining(\'' + c.theme.replace(/\'/g, "\\'") + '\')"><span>🧪 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">' + n + ' q.</span></button>';
+    });
+    h += '<p style="margin-top:14px;font-size:.82rem;color:#64748b">Ouvrez un cours (onglet 📖) : l\'onglet 🧪 lancera directement son QCM.</p>';
+  } else if (state.mode === 'train'){
+    var q = state.qs[state.idx];
+    h += '<div class="meta"><span>' + esc(q.t) + '</span><span>' + (state.idx + 1) + ' / ' + state.qs.length + '</span></div>';
+    h += '<h2 class="q">' + esc(q.q) + '</h2>';
+    q.c.forEach(function(c, k){ h += '<button class="choice" onclick="select(' + k + ')">' + String.fromCharCode(65 + k) + '. ' + esc(c) + '</button>'; });
+    h += '<div class="expl" id="expl" style="display:none"></div>';
+    h += '<div class="quiz-foot"><button class="btn-gray btn-small" id="btn-prev" onclick="prevQ()" ' + (state.idx === 0 ? 'disabled' : '') + '>← Précédent</button>' +
+      '<span><button class="btn-gray btn-small" onclick="backMenu()">✖ Quitter</button> <button class="btn btn-primary btn-small" id="btn-next" style="width:auto" onclick="nextQ()" ' + (state.answers[state.idx] === undefined ? '' : '') + (state.answers[state.idx] === undefined ? 'disabled' : '') + '>Suivant →</button></span></div>';
+  } else {
+    var ok = 0; state.qs.forEach(function(q, i){ if (state.answers[i] === q.a) ok++; });
+    var pct = Math.round(100 * ok / state.qs.length);
+    h += '<div class="meta"><span>Résultat — ' + esc(state.theme) + '</span><span>' + ok + ' / ' + state.qs.length + '</span></div>';
+    h += '<div class="res-note ' + (pct >= 70 ? 'green' : 'red') + '">' + pct + ' %</div>';
+    state.qs.forEach(function(q, i){
+      h += '<div class="res-card">' + (state.answers[i] === q.a ? '✅' : '❌') + ' <b>' + esc(q.q) + '</b><br>' +
+        (state.answers[i] === q.a ? '' : 'Réponse correcte : <b class="green">' + esc(q.c[q.a]) + '</b><br>') + '<span style="font-size:.82rem;color:#64748b">' + (state.answers[i] === q.a ? '💡 ' + esc(q.e) : '<b>🧠 Pour comprendre :</b><br>' + (q.d || esc(q.e))) + '</span></div>';
+    });
+    h += '<div style="margin-top:20px"><button class="btn btn-primary" onclick="startTraining(state.theme)">🔄 Recommencer</button></div>';
+    h += '<div style="margin-top:10px"><button class="btn-gray btn-small" onclick="backMenu()">← Autre chapitre</button></div>';
+  }
+  app.innerHTML = h;
+}
+
+// Programme : liste cliquable des niveaux/chapitres
+(function(){
+  var v = document.getElementById('view-prog'); var h = '';
+  PROGRAMME.forEach(function(niv){
+    h += '<h2 class="niveau">' + esc(niv.n) + '</h2>';
+    niv.ch.forEach(function(ch){
+      if (ch.id) {
+        h += '<button class="chap-btn" onclick="goCours(\'' + ch.id + '\')"><span>📖 ' + esc(ch.t) + '</span></button>';
+      } else {
+        h += '<div class="chap-btn soon"><span>📖 ' + esc(ch.t) + '</span><span class="soon-badge">à venir</span></div>';
+      }
+    });
+  });
+  v.innerHTML = '<section class="card"><h2>📋 Programme de sciences et technologie</h2><p style="font-size:.9rem;margin-bottom:8px">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p><div style="margin:12px 0 0"><input type="text" id="prog-search" oninput="progSearchList(this.value)" placeholder="🔎 Rechercher dans les cours..." style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:.9rem;font-family:inherit;outline:none"></div><div id="prog-search-results"></div>' + h + '</section>';
+})();
+// Recherche dans les cours
+function progNorm(s){ return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function progSearchList(q){
+  var box = document.getElementById('prog-search-results'); if (!box) return;
+  var raw = (q || '').trim();
+  q = progNorm(raw);
+  if (q.length < 2) { box.innerHTML = ''; return; }
+  var res = [];
+  COURS_META.forEach(function(c){ if (progNorm((c.titre || '') + ' ' + (c.cours || '')).indexOf(q) !== -1) res.push(c); });
+  var html = '';
+  if (!res.length) html = '<p style="font-size:.85rem;color:#64748b;margin:6px 0 0">Aucun résultat pour « ' + esc(raw) + ' ».</p>';
+  else {
+    html = '<p style="font-size:.8rem;color:#4338ca;margin:10px 0 4px;font-weight:700">' + res.length + ' cours trouvé' + (res.length > 1 ? 's' : '') + ' :</p>';
+    res.forEach(function(c){ html += '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">voir</span></button>'; });
+  }
+  box.innerHTML = html;
+}
+
+// Cours : rendu contextuel
+function renderCours(){
+  var v = document.getElementById('view-cours'); var h = '';
+  if (currentChap && META_BY_ID[currentChap]) {
+    var m = META_BY_ID[currentChap];
+    h += chapHeadHTML(m);
+    h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
+  } else {
+    var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
+    h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + list + '</section>';
+    COURS_META.forEach(function(c){
+      h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
+    });
+  }
+  v.innerHTML = h;
+}
+renderCours();
+
+var backTop = document.getElementById('back-top');
+backTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+window.addEventListener('scroll', function(){ if (window.scrollY > 300) backTop.classList.add('visible'); else backTop.classList.remove('visible'); }, { passive: true });
+showTab('prog');
+</script>
+</body>
+</html>
