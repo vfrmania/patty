@@ -124,6 +124,12 @@
   ol li { margin: 4px 0; font-size: .92rem; }
   .fiche h3, .fiche-body h3 { font-size: .98rem; margin: 14px 0 6px; color: #4f46e5; }
 </style>
+<style>
+  .pg-resume { margin-top: 14px; display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); border-radius: 14px; padding: 8px 14px; color: #e0e7ff; font-size: .85rem; flex-wrap: wrap; }
+  .pg-resume svg { flex-shrink: 0; }
+  .pg-rz { margin-left: auto; background: none; border: none; color: #e0e7ff; cursor: pointer; font-size: .75rem; text-decoration: underline; padding: 0; font-family: inherit; }
+  .pg-rz:hover { color: #fff; }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -132,6 +138,7 @@
 <p>Révisions — programme, cours complets, fiches synthétiques et QCM.</p>
 <div class="badges"><span class="badge">13 chapitres au programme</span></div>
 <a class="hero-back" href="../index.html">↩ Autres matières</a>
+<div id="pg-resume" class="pg-resume" style="display:none"></div>
 </header>
 <nav class="tabs">
 <button class="tab-back no-print" onclick="location.href='../index.html'" title="Autres matières" aria-label="Retour aux autres matières">↩ Anglais</button>
@@ -2297,12 +2304,46 @@ function printFiche(id){
 }
 
 var state = { mode:'menu', theme:null, idx:0, qs:[], answers:[] };
+// ===== Progression QCM (enregistrement local, navigateur uniquement) =====
+var PG_MATIERE = 'anglais';
+function pgHash(s){ var h = 5381; for (var i = 0; i < s.length; i++){ h = ((h << 5) + h + s.charCodeAt(i)) | 0; } return (h >>> 0).toString(36); }
+function pgKey(){ return 'patty-qcm-pg-' + PG_MATIERE; }
+function pgLoad(){ try { return JSON.parse(localStorage.getItem(pgKey()) || '{}'); } catch(e){ return {}; } }
+function pgSave(q, ok){
+  try {
+    var d = pgLoad(); var t = q.t;
+    if (!d[t]) d[t] = { n: 0, q: {} };
+    d[t].n = QUESTIONS.filter(function(x){ return x.t === t; }).length;
+    if (!d[t].q) d[t].q = {};
+    d[t].q[pgHash(q.q)] = ok ? 1 : 0;
+    localStorage.setItem(pgKey(), JSON.stringify(d));
+    pgResume();
+  } catch(e) {}
+}
+function pgReset(){ if (!window.confirm('Réinitialiser la progression de cette matière ?')) return; try { localStorage.removeItem(pgKey()); } catch(e){} pgResume(); }
+function pgResume(){
+  var el = document.getElementById('pg-resume'); if (!el) return;
+  var d = pgLoad(); var ans = 0, ok = 0;
+  Object.keys(d).forEach(function(t){ var qq = (d[t] && d[t].q) || {}; Object.keys(qq).forEach(function(h){ ans++; if (qq[h]) ok++; }); });
+  if (!ans) { el.style.display = 'none'; return; }
+  var tot = QUESTIONS.length || 1;
+  var pctA = Math.round(100 * Math.min(ans, tot) / tot);
+  var pctR = Math.round(100 * ok / ans);
+  var c = (2 * Math.PI * 14).toFixed(1);
+  var col = pctR >= 70 ? '#4ade80' : (pctR >= 50 ? '#fbbf24' : '#f87171');
+  el.style.display = 'flex';
+  el.innerHTML = '<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\" aria-hidden=\"true\"><circle cx=\"17\" cy=\"17\" r=\"14\" fill=\"none\" stroke=\"rgba(255,255,255,.30)\" stroke-width=\"5\"/><circle cx=\"17\" cy=\"17\" r=\"14\" fill=\"none\" stroke=\"' + col + '\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-dasharray=\"' + (c * pctA / 100).toFixed(1) + ' ' + c + '\" transform=\"rotate(-90 17 17)\"/></svg>'
+    + '<span><b>' + ans + ' / ' + tot + '</b> questions répondues (' + pctA + ' %) · réussite <b style=\"color:' + col + '\">' + pctR + ' %</b></span>'
+    + '<button class=\"pg-rz\" onclick=\"pgReset()\" title=\"Réinitialiser la progression de cette matière\">réinitialiser</button>';
+}
+
 function shuffle(arr){ var a = arr.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function startTraining(theme){ state.mode='train'; state.theme = theme; state.qs = shuffle(QUESTIONS.filter(function(q){ return q.t === theme; })); state.idx = 0; state.answers = []; render(); }
 function backMenu(){ state.mode='menu'; render(); }
 function select(i){
   if (state.mode !== 'train' || state.idx >= state.qs.length) return;
   state.answers[state.idx] = i;
+  pgSave(state.qs[state.idx], i === state.qs[state.idx].a);
   var q = state.qs[state.idx]; var btns = document.querySelectorAll('#quiz-app .choice');
   btns.forEach(function(b, k){ b.classList.remove('sel'); if (k === q.a) b.classList.add('ok'); else if (k === i) b.classList.add('ko'); else b.classList.add('dim'); b.disabled = true; });
   var ex = document.getElementById('expl');
@@ -2402,6 +2443,7 @@ var backTop = document.getElementById('back-top');
 backTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
 window.addEventListener('scroll', function(){ if (window.scrollY > 300) backTop.classList.add('visible'); else backTop.classList.remove('visible'); }, { passive: true });
 showTab('prog');
+pgResume();
 </script>
 </body>
 </html>
