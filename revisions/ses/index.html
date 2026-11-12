@@ -144,12 +144,6 @@
   @media (max-width: 640px) { .nc-t { display: none; } }
 
 </style>
-<style>
-.cours-next { margin-top: 18px; text-align: right; }
-.cours-next a { display: inline-block; background: #4f46e5; color: #fff; text-decoration: none; font-weight: 700; font-size: .85rem; padding: 10px 16px; border-radius: 10px; box-shadow: 0 2px 8px rgba(79,70,229,.25); cursor: pointer; }
-.cours-next a:hover { background: #4338ca; }
-@media (max-width: 700px) { .cn-name { display: none; } .cours-next { text-align: center; } }
-</style>
 </head>
 <body>
 <div class="wrap">
@@ -958,24 +952,18 @@ function progSearchList(q){
   box.innerHTML = html;
 }
 
-function nextCoursHTML(m){
-  var i = -1; for (var k = 0; k < COURS_META.length; k++){ if (COURS_META[k].id === m.id){ i = k; break; } }
-  var n = COURS_META[i + 1];
-  if (!n) return '';
-  return '<div class="cours-next"><a onclick="goCours(\'' + n.id + '\')">Cours suivant : <span class="cn-name">' + esc(n.titre) + '</span> →</a></div>';
-}
 // Cours : rendu contextuel
 function renderCours(){
   var v = document.getElementById('view-cours'); var h = '';
   if (currentChap && META_BY_ID[currentChap]) {
     var m = META_BY_ID[currentChap];
     h += chapHeadHTML(m);
-    h += '<section class="card" id="cours-' + m.id + '">' + m.cours + nextCoursHTML(m) + '</section>';
+    h += '<section class="card" id="cours-' + m.id + '">' + m.cours + '</section>';
   } else {
     var list = COURS_META.map(function(c){ return '<button class="theme-btn" onclick="goCours(\'' + c.id + '\')"><span>📖 ' + esc(c.titre) + ' <span style="color:#94a3b8;font-size:.8rem">(' + c.niveau + ')</span></span><span class="cnt">cours</span></button>'; }).join('');
     h += '<section class="card"><h2>📖 Les cours</h2><p style="font-size:.92rem">En début du cours selectionné, vous trouverez la « 🗂️ Fiche synthétique de cours » et le « 🧪 QCM ».</p>' + list + '</section>';
     COURS_META.forEach(function(c){
-      h += '<section class="card" id="cours-' + c.id + '">' + c.cours + nextCoursHTML(c) + '</section>';
+      h += '<section class="card" id="cours-' + c.id + '">' + c.cours + '</section>';
     });
   }
   v.innerHTML = h;
